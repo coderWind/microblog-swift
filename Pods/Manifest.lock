@@ -22,6 +22,18 @@ PODS:
     - AFNetworking/NSURLSession
   - MJExtension (2.5.14)
   - MJRefresh (2.4.12)
+  - ReactiveCocoa (4.0.4-alpha-1):
+    - ReactiveCocoa/UI (= 4.0.4-alpha-1)
+    - Result (~> 0.6-beta.1)
+  - ReactiveCocoa/Core (4.0.4-alpha-1):
+    - ReactiveCocoa/no-arc
+    - Result (~> 0.6-beta.1)
+  - ReactiveCocoa/no-arc (4.0.4-alpha-1):
+    - Result (~> 0.6-beta.1)
+  - ReactiveCocoa/UI (4.0.4-alpha-1):
+    - ReactiveCocoa/Core
+    - Result (~> 0.6-beta.1)
+  - Result (0.6.0-beta.5)
   - SDWebImage (3.7.3):
     - SDWebImage/Core (= 3.7.3)
   - SDWebImage/Core (3.7.3)
@@ -32,6 +44,7 @@ DEPENDENCIES:
   - AFNetworking
   - MJExtension
   - MJRefresh
+  - ReactiveCocoa (~> 4.0.4-alpha-1)
   - SDWebImage
   - SnapKit
   - SVProgressHUD
@@ -40,6 +53,8 @@ SPEC CHECKSUMS:
   AFNetworking: 8e4e60500beb8bec644cf575beee72990a76d399
   MJExtension: fb8e6e900fb44c9a7be435ba3d72b7fdf5f0994c
   MJRefresh: ca8e9589895977df32d379d46e6b8a5450b3ff44
+  ReactiveCocoa: 618a2fc13d4ed80e380aa6fa56547cef43c7341d
+  Result: 8ae33a29ed1e147514b9536de523a978d7faba1f
   SDWebImage: 1d2b1a1efda1ade1b00b6f8498865f8ddedc8a84
   SnapKit: 4962eed2ee18e48cbd2b2292fffc57efe7235f87
   SVProgressHUD: 748080e4f36e603f6c02aec292664239df5279c1

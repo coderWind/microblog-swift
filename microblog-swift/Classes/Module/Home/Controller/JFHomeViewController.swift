@@ -31,17 +31,29 @@ class JFHomeViewController: UIViewController,JFhomeVisitorViewDelegate {
             let visitor = JFHomeVisitorView()
             visitor.delegate = self
             view = visitor
+            
+            // 加载navigationBar上的注册和登陆
+            navigationItem.leftBarButtonItem = UIBarButtonItem(title: "注册", style: UIBarButtonItemStyle.Plain, target: self, action: "loadOAuthViewController")
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "登陆", style: UIBarButtonItemStyle.Plain, target: self, action: "loadOAuthViewController")
         }
+    }
+    
+    /**
+     登陆、注册都调用这个方法，加载授权控制器
+     */
+    func loadOAuthViewController() {
+        // 加载授权控制器
+        presentViewController(JFNavigationController(rootViewController: JFOAuthViewController()), animated: true, completion: nil)
     }
     
     /**
     *  MARK: - JFhomeVisitorViewDelegate
     */
     func homeVisitorView(homeVisitorView: JFHomeVisitorView, didTappedRegisterButton registerButton: UIButton) {
-        print("didTappedRegisterButton")
+        loadOAuthViewController()
     }
     
     func homeVisitorView(homeVisitorView: JFHomeVisitorView, didTappedLoginButton loginButton: UIButton) {
-        print("didTappedLoginButton")
+        loadOAuthViewController()
     }
 }

@@ -20,4 +20,5 @@ let kScreenH = kScreenBounds.size.height
 // tabBar渲染颜色
 let kOrangeColor = UIColor.orangeColor()
 
+let kSandDocumentPath = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true).last!
 

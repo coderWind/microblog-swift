@@ -10,6 +10,7 @@
 		45A43C0D5A8E8CD626DABAD0 /* Pods_microblog_swift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F5B03E7398D182F45B84102 /* Pods_microblog_swift.framework */; };
 		A50DC50C1BDCF33700FEF643 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50DC50B1BDCF33700FEF643 /* AppDelegate.swift */; };
 		A50DC5131BDCF33800FEF643 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A50DC5121BDCF33800FEF643 /* Assets.xcassets */; };
+		A5A7CC5F1BDE9545006B0D3D /* JFWelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A7CC5E1BDE9545006B0D3D /* JFWelcomeViewController.swift */; };
 		A5C7F95B1BDE0A54004EFA96 /* UIImage-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C7F9201BDE0A54004EFA96 /* UIImage-Extension.swift */; };
 		A5C7F95C1BDE0A54004EFA96 /* JFStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C7F9231BDE0A54004EFA96 /* JFStatus.swift */; };
 		A5C7F95D1BDE0A54004EFA96 /* JFUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C7F9241BDE0A54004EFA96 /* JFUser.swift */; };
@@ -40,6 +41,7 @@
 		A50DC50B1BDCF33700FEF643 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A50DC5121BDCF33800FEF643 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ../Assets.xcassets; sourceTree = "<group>"; };
 		A50DC5171BDCF33800FEF643 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A5A7CC5E1BDE9545006B0D3D /* JFWelcomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFWelcomeViewController.swift; sourceTree = "<group>"; };
 		A5C7F9201BDE0A54004EFA96 /* UIImage-Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage-Extension.swift"; sourceTree = "<group>"; };
 		A5C7F9231BDE0A54004EFA96 /* JFStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFStatus.swift; sourceTree = "<group>"; };
 		A5C7F9241BDE0A54004EFA96 /* JFUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFUser.swift; sourceTree = "<group>"; };
@@ -388,6 +390,7 @@
 			isa = PBXGroup;
 			children = (
 				A5C7F94B1BDE0A54004EFA96 /* JFNewFeatureViewController.swift */,
+				A5A7CC5E1BDE9545006B0D3D /* JFWelcomeViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -616,6 +619,7 @@
 				A5C7F9651BDE0A54004EFA96 /* JFNavigationController.swift in Sources */,
 				A5C7F96C1BDE0A54004EFA96 /* JFProfileVisitorView.swift in Sources */,
 				A5C7F9681BDE0A54004EFA96 /* JFMessageVisitorView.swift in Sources */,
+				A5A7CC5F1BDE9545006B0D3D /* JFWelcomeViewController.swift in Sources */,
 				A5C7F9611BDE0A54004EFA96 /* JFDiscoverViewController.swift in Sources */,
 				A5C7F95C1BDE0A54004EFA96 /* JFStatus.swift in Sources */,
 				A5C7F96D1BDE0A54004EFA96 /* JFNetworkTool.swift in Sources */,

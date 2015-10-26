@@ -25,13 +25,13 @@ class JFHomeVisitorView: UIView {
         super.init(frame: frame)
         
         // 背景颜色
-        backgroundColor = UIColor.whiteColor()
+        backgroundColor = UIColor(white: 237 / 255, alpha: 1)
         
         // 准备UI
         prepareUI()
         
         // 开始旋转
-        startRotate()
+        startRotationAnimation()
         
     }
 
@@ -58,7 +58,7 @@ class JFHomeVisitorView: UIView {
     /**
      开始旋转
      */
-    private func startRotate() {
+    private func startRotationAnimation() {
         // 创建动画
         let animation = CABasicAnimation(keyPath: "transform.rotation")
         animation.fromValue = 0
@@ -117,14 +117,14 @@ class JFHomeVisitorView: UIView {
         // 注册
         // 注册参照提示左对齐，注册顶部和提示底部距离固定，注册宽、高固定
         addConstraint(NSLayoutConstraint(item: registerButton, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: tipLabel, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0))
-        addConstraint(NSLayoutConstraint(item: registerButton, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: tipLabel, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 16))
+        addConstraint(NSLayoutConstraint(item: registerButton, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: tipLabel, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 32))
         addConstraint(NSLayoutConstraint(item: registerButton, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 100))
         addConstraint(NSLayoutConstraint(item: registerButton, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 30))
         
         // 登录
         // 登录参照提示右对齐，注册顶部和提示底部距离固定，注册宽、高固定
         addConstraint(NSLayoutConstraint(item: loginButton, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: tipLabel, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0))
-        addConstraint(NSLayoutConstraint(item: loginButton, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: tipLabel, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 16))
+        addConstraint(NSLayoutConstraint(item: loginButton, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: tipLabel, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 32))
         addConstraint(NSLayoutConstraint(item: loginButton, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 100))
         addConstraint(NSLayoutConstraint(item: loginButton, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 30))
     }

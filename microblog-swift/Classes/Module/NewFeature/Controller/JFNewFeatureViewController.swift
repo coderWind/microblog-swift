@@ -10,40 +10,18 @@ import UIKit
 
 class JFNewFeatureViewController: UIViewController,UIScrollViewDelegate {
     
-    // 懒加载全屏scrollView
-    lazy var scrollView: UIScrollView = {
-        let s = UIScrollView(frame: kScreenBounds)
-        s.delegate = self
-        s.contentSize = CGSize(width: kScreenW * CGFloat(self.picCount), height: kScreenH)
-        s.pagingEnabled = true
-        s.showsHorizontalScrollIndicator = false
-       return s
-    }()
-    
-    // 懒加载页码指示器
-    lazy var pageControl: UIPageControl = {
-        let p = UIPageControl()
-        p.numberOfPages = self.picCount
-        p.tintColor = UIColor.redColor()
-        p.currentPageIndicatorTintColor = kOrangeColor
-        p.sizeToFit()
-        return p
-    }()
-    
     // 图片数量
     let picCount = 4
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = UIColor.whiteColor()
-        
         // 添加scrollView
         self.view.addSubview(scrollView)
         // 添加pageControl
         self.view.addSubview(pageControl)
         pageControl.snp_makeConstraints { (make) -> Void in
-            make.bottom.equalTo(-80)
+            make.bottom.equalTo(-70)
             make.centerX.equalTo(view.snp_centerX)
         }
         
@@ -91,15 +69,31 @@ class JFNewFeatureViewController: UIViewController,UIScrollViewDelegate {
      进入微博按钮的点击事件
      */
     func didTappedEnterButton() {
-        // 判断是否授权，选择进入授权控制器或tabBarController
-        if JFUserAccount.shareUserAccount().isAuth {
-            // 已经
-        } else {
-            // 未授权，跳到访客视图
-        }
-        
+        // 进入首页
+        UIApplication.sharedApplication().keyWindow?.rootViewController = JFTabBarViewController()
     }
     
+    // MARK: - 懒加载
+    // 懒加载全屏scrollView
+    lazy var scrollView: UIScrollView = {
+        let scroll = UIScrollView(frame: kScreenBounds)
+        scroll.delegate = self
+        scroll.contentSize = CGSize(width: kScreenW * CGFloat(self.picCount), height: kScreenH)
+        scroll.pagingEnabled = true
+        scroll.bounces = false
+        scroll.showsHorizontalScrollIndicator = false
+        return scroll
+    }()
+    
+    // 懒加载页码指示器
+    lazy var pageControl: UIPageControl = {
+        let page = UIPageControl()
+        page.numberOfPages = self.picCount
+        page.pageIndicatorTintColor = UIColor.lightGrayColor()
+        page.currentPageIndicatorTintColor = kOrangeColor
+        page.sizeToFit()
+        return page
+    }()
     
     
 }

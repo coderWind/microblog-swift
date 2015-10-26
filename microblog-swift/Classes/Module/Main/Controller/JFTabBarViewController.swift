@@ -72,4 +72,18 @@ class JFTabBarViewController: UITabBarController {
         addChildViewController(nav)
     }
     
+    /**
+     设置全局样式
+     */
+    static func setupGlobalStyle() {
+        let navigationBar = UINavigationBar.appearance()
+        // 导航条背景色
+        navigationBar.barTintColor = UIColor.whiteColor()
+        
+        let barButtonItem = UIBarButtonItem.appearance()
+        // 文字颜色
+        barButtonItem.setTitleTextAttributes([NSForegroundColorAttributeName : UIColor.grayColor()], forState: UIControlState.Normal)
+        barButtonItem.setTitleTextAttributes([NSForegroundColorAttributeName : UIColor.orangeColor()], forState: UIControlState.Highlighted)
+    }
+    
 }

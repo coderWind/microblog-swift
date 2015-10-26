@@ -10,5 +10,6 @@ pod 'MJExtension'
 pod 'MJRefresh'
 pod 'SDWebImage'
 pod 'SVProgressHUD'
+pod 'ReactiveCocoa', '~> 4.0.4-alpha-1'
 end
 

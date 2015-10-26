@@ -8,13 +8,13 @@
 
 import UIKit
 import SnapKit
+import ReactiveCocoa
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     
-
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
         // 创建window
@@ -22,6 +22,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // 设置window的根控制器
         setupKeyWindowOfRootViewController()
+        
+        // 设置全局样式
+        JFTabBarViewController.setupGlobalStyle()
         
         // 设置为主窗口并显示
         self.window?.makeKeyAndVisible()
@@ -34,7 +37,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
      */
     func setupKeyWindowOfRootViewController() {
         
-        // 是否已经授权，授权成功才显示新特性
+        // 是否已经授权，授权成功才显示新特性（第一次安装应用不显示）
         if JFUserAccount.shareUserAccount().isAuth {
             // 版本key
             let versionKey = kCFBundleVersionKey as String
