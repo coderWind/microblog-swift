@@ -7,21 +7,61 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		45A43C0D5A8E8CD626DABAD0 /* Pods_microblog_swift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F5B03E7398D182F45B84102 /* Pods_microblog_swift.framework */; };
 		A50DC50C1BDCF33700FEF643 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50DC50B1BDCF33700FEF643 /* AppDelegate.swift */; };
-		A50DC50E1BDCF33700FEF643 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50DC50D1BDCF33700FEF643 /* ViewController.swift */; };
-		A50DC5111BDCF33700FEF643 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A50DC50F1BDCF33700FEF643 /* Main.storyboard */; };
 		A50DC5131BDCF33800FEF643 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A50DC5121BDCF33800FEF643 /* Assets.xcassets */; };
-		A50DC5161BDCF33800FEF643 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A50DC5141BDCF33800FEF643 /* LaunchScreen.storyboard */; };
+		A5C7F95B1BDE0A54004EFA96 /* UIImage-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C7F9201BDE0A54004EFA96 /* UIImage-Extension.swift */; };
+		A5C7F95C1BDE0A54004EFA96 /* JFStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C7F9231BDE0A54004EFA96 /* JFStatus.swift */; };
+		A5C7F95D1BDE0A54004EFA96 /* JFUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C7F9241BDE0A54004EFA96 /* JFUser.swift */; };
+		A5C7F95E1BDE0A54004EFA96 /* JFUserAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C7F9251BDE0A54004EFA96 /* JFUserAccount.swift */; };
+		A5C7F95F1BDE0A54004EFA96 /* JFCenterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C7F9291BDE0A54004EFA96 /* JFCenterViewController.swift */; };
+		A5C7F9601BDE0A54004EFA96 /* JFComposeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C7F92E1BDE0A54004EFA96 /* JFComposeViewController.swift */; };
+		A5C7F9611BDE0A54004EFA96 /* JFDiscoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C7F9331BDE0A54004EFA96 /* JFDiscoverViewController.swift */; };
+		A5C7F9621BDE0A54004EFA96 /* JFDiscoverVisitorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C7F9361BDE0A54004EFA96 /* JFDiscoverVisitorView.swift */; };
+		A5C7F9631BDE0A54004EFA96 /* JFHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C7F9391BDE0A54004EFA96 /* JFHomeViewController.swift */; };
+		A5C7F9641BDE0A54004EFA96 /* JFHomeVisitorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C7F93C1BDE0A54004EFA96 /* JFHomeVisitorView.swift */; };
+		A5C7F9651BDE0A54004EFA96 /* JFNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C7F93F1BDE0A54004EFA96 /* JFNavigationController.swift */; };
+		A5C7F9661BDE0A54004EFA96 /* JFTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C7F9401BDE0A54004EFA96 /* JFTabBarViewController.swift */; };
+		A5C7F9671BDE0A54004EFA96 /* JFMessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C7F9451BDE0A54004EFA96 /* JFMessageViewController.swift */; };
+		A5C7F9681BDE0A54004EFA96 /* JFMessageVisitorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C7F9481BDE0A54004EFA96 /* JFMessageVisitorView.swift */; };
+		A5C7F9691BDE0A54004EFA96 /* JFNewFeatureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C7F94B1BDE0A54004EFA96 /* JFNewFeatureViewController.swift */; };
+		A5C7F96A1BDE0A54004EFA96 /* JFOAuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C7F9501BDE0A54004EFA96 /* JFOAuthViewController.swift */; };
+		A5C7F96B1BDE0A54004EFA96 /* JFProfileTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C7F9551BDE0A54004EFA96 /* JFProfileTableViewController.swift */; };
+		A5C7F96C1BDE0A54004EFA96 /* JFProfileVisitorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C7F9581BDE0A54004EFA96 /* JFProfileVisitorView.swift */; };
+		A5C7F96D1BDE0A54004EFA96 /* JFNetworkTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C7F95A1BDE0A54004EFA96 /* JFNetworkTool.swift */; };
+		A5D7CDB91BDD4B2100D1DF04 /* JFCommon.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D7CDB81BDD4B2100D1DF04 /* JFCommon.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2F5B03E7398D182F45B84102 /* Pods_microblog_swift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_microblog_swift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		983D9E66CD82891EC9114B2F /* Pods-microblog-swift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-microblog-swift.release.xcconfig"; path = "Pods/Target Support Files/Pods-microblog-swift/Pods-microblog-swift.release.xcconfig"; sourceTree = "<group>"; };
+		9C6CF6676D50074697495326 /* Pods-microblog-swift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-microblog-swift.debug.xcconfig"; path = "Pods/Target Support Files/Pods-microblog-swift/Pods-microblog-swift.debug.xcconfig"; sourceTree = "<group>"; };
 		A50DC5081BDCF33700FEF643 /* microblog-swift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "microblog-swift.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A50DC50B1BDCF33700FEF643 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		A50DC50D1BDCF33700FEF643 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		A50DC5101BDCF33700FEF643 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		A50DC5121BDCF33800FEF643 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		A50DC5151BDCF33800FEF643 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		A50DC5121BDCF33800FEF643 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ../Assets.xcassets; sourceTree = "<group>"; };
 		A50DC5171BDCF33800FEF643 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A5C7F9201BDE0A54004EFA96 /* UIImage-Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage-Extension.swift"; sourceTree = "<group>"; };
+		A5C7F9231BDE0A54004EFA96 /* JFStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFStatus.swift; sourceTree = "<group>"; };
+		A5C7F9241BDE0A54004EFA96 /* JFUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFUser.swift; sourceTree = "<group>"; };
+		A5C7F9251BDE0A54004EFA96 /* JFUserAccount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFUserAccount.swift; sourceTree = "<group>"; };
+		A5C7F9291BDE0A54004EFA96 /* JFCenterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFCenterViewController.swift; sourceTree = "<group>"; };
+		A5C7F92E1BDE0A54004EFA96 /* JFComposeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFComposeViewController.swift; sourceTree = "<group>"; };
+		A5C7F9331BDE0A54004EFA96 /* JFDiscoverViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFDiscoverViewController.swift; sourceTree = "<group>"; };
+		A5C7F9361BDE0A54004EFA96 /* JFDiscoverVisitorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFDiscoverVisitorView.swift; sourceTree = "<group>"; };
+		A5C7F9391BDE0A54004EFA96 /* JFHomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFHomeViewController.swift; sourceTree = "<group>"; };
+		A5C7F93C1BDE0A54004EFA96 /* JFHomeVisitorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFHomeVisitorView.swift; sourceTree = "<group>"; };
+		A5C7F93F1BDE0A54004EFA96 /* JFNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFNavigationController.swift; sourceTree = "<group>"; };
+		A5C7F9401BDE0A54004EFA96 /* JFTabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFTabBarViewController.swift; sourceTree = "<group>"; };
+		A5C7F9451BDE0A54004EFA96 /* JFMessageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFMessageViewController.swift; sourceTree = "<group>"; };
+		A5C7F9481BDE0A54004EFA96 /* JFMessageVisitorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFMessageVisitorView.swift; sourceTree = "<group>"; };
+		A5C7F94B1BDE0A54004EFA96 /* JFNewFeatureViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFNewFeatureViewController.swift; sourceTree = "<group>"; };
+		A5C7F9501BDE0A54004EFA96 /* JFOAuthViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFOAuthViewController.swift; sourceTree = "<group>"; };
+		A5C7F9551BDE0A54004EFA96 /* JFProfileTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFProfileTableViewController.swift; sourceTree = "<group>"; };
+		A5C7F9581BDE0A54004EFA96 /* JFProfileVisitorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFProfileVisitorView.swift; sourceTree = "<group>"; };
+		A5C7F95A1BDE0A54004EFA96 /* JFNetworkTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFNetworkTool.swift; sourceTree = "<group>"; };
+		A5D7CD7A1BDD1C7D00D1DF04 /* microblog-swift-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "microblog-swift-Bridging-Header.h"; sourceTree = "<group>"; };
+		A5D7CD7E1BDD1DCD00D1DF04 /* ReactiveCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveCocoa.framework; path = "Pods/../build/Debug-iphoneos/ReactiveCocoa.framework"; sourceTree = "<group>"; };
+		A5D7CDB81BDD4B2100D1DF04 /* JFCommon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFCommon.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,17 +69,38 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				45A43C0D5A8E8CD626DABAD0 /* Pods_microblog_swift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		98CB665F8392EBA723A8D334 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				9C6CF6676D50074697495326 /* Pods-microblog-swift.debug.xcconfig */,
+				983D9E66CD82891EC9114B2F /* Pods-microblog-swift.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		9AEB7DC5F7214B74A6D6C2B7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A5D7CD7E1BDD1DCD00D1DF04 /* ReactiveCocoa.framework */,
+				2F5B03E7398D182F45B84102 /* Pods_microblog_swift.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		A50DC4FF1BDCF33700FEF643 = {
 			isa = PBXGroup;
 			children = (
 				A50DC50A1BDCF33700FEF643 /* microblog-swift */,
 				A50DC5091BDCF33700FEF643 /* Products */,
+				98CB665F8392EBA723A8D334 /* Pods */,
+				9AEB7DC5F7214B74A6D6C2B7 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -54,14 +115,376 @@
 		A50DC50A1BDCF33700FEF643 /* microblog-swift */ = {
 			isa = PBXGroup;
 			children = (
-				A50DC50B1BDCF33700FEF643 /* AppDelegate.swift */,
-				A50DC50D1BDCF33700FEF643 /* ViewController.swift */,
-				A50DC50F1BDCF33700FEF643 /* Main.storyboard */,
-				A50DC5121BDCF33800FEF643 /* Assets.xcassets */,
-				A50DC5141BDCF33800FEF643 /* LaunchScreen.storyboard */,
+				A5D7CD8F1BDD2EFF00D1DF04 /* Resource */,
+				A5C7F91E1BDE0A54004EFA96 /* Classes */,
 				A50DC5171BDCF33800FEF643 /* Info.plist */,
+				A5D7CD7A1BDD1C7D00D1DF04 /* microblog-swift-Bridging-Header.h */,
+				A50DC50B1BDCF33700FEF643 /* AppDelegate.swift */,
+				A5D7CDB81BDD4B2100D1DF04 /* JFCommon.swift */,
 			);
 			path = "microblog-swift";
+			sourceTree = "<group>";
+		};
+		A5C7F91E1BDE0A54004EFA96 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				A5C7F91F1BDE0A54004EFA96 /* Extension */,
+				A5C7F9211BDE0A54004EFA96 /* Library */,
+				A5C7F9591BDE0A54004EFA96 /* Tools */,
+				A5C7F9221BDE0A54004EFA96 /* Model */,
+				A5C7F9261BDE0A54004EFA96 /* Module */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		A5C7F91F1BDE0A54004EFA96 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				A5C7F9201BDE0A54004EFA96 /* UIImage-Extension.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		A5C7F9211BDE0A54004EFA96 /* Library */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Library;
+			sourceTree = "<group>";
+		};
+		A5C7F9221BDE0A54004EFA96 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				A5C7F9231BDE0A54004EFA96 /* JFStatus.swift */,
+				A5C7F9241BDE0A54004EFA96 /* JFUser.swift */,
+				A5C7F9251BDE0A54004EFA96 /* JFUserAccount.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		A5C7F9261BDE0A54004EFA96 /* Module */ = {
+			isa = PBXGroup;
+			children = (
+				A5C7F93D1BDE0A54004EFA96 /* Main */,
+				A5C7F9371BDE0A54004EFA96 /* Home */,
+				A5C7F9431BDE0A54004EFA96 /* Message */,
+				A5C7F9271BDE0A54004EFA96 /* Center */,
+				A5C7F9311BDE0A54004EFA96 /* Discover */,
+				A5C7F9531BDE0A54004EFA96 /* Profile */,
+				A5C7F92C1BDE0A54004EFA96 /* Compose */,
+				A5C7F9491BDE0A54004EFA96 /* NewFeature */,
+				A5C7F94E1BDE0A54004EFA96 /* OAuth */,
+			);
+			path = Module;
+			sourceTree = "<group>";
+		};
+		A5C7F9271BDE0A54004EFA96 /* Center */ = {
+			isa = PBXGroup;
+			children = (
+				A5C7F9281BDE0A54004EFA96 /* Controller */,
+				A5C7F92A1BDE0A54004EFA96 /* Model */,
+				A5C7F92B1BDE0A54004EFA96 /* View */,
+			);
+			path = Center;
+			sourceTree = "<group>";
+		};
+		A5C7F9281BDE0A54004EFA96 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				A5C7F9291BDE0A54004EFA96 /* JFCenterViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		A5C7F92A1BDE0A54004EFA96 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		A5C7F92B1BDE0A54004EFA96 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		A5C7F92C1BDE0A54004EFA96 /* Compose */ = {
+			isa = PBXGroup;
+			children = (
+				A5C7F92D1BDE0A54004EFA96 /* Controller */,
+				A5C7F92F1BDE0A54004EFA96 /* Model */,
+				A5C7F9301BDE0A54004EFA96 /* View */,
+			);
+			path = Compose;
+			sourceTree = "<group>";
+		};
+		A5C7F92D1BDE0A54004EFA96 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				A5C7F92E1BDE0A54004EFA96 /* JFComposeViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		A5C7F92F1BDE0A54004EFA96 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		A5C7F9301BDE0A54004EFA96 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		A5C7F9311BDE0A54004EFA96 /* Discover */ = {
+			isa = PBXGroup;
+			children = (
+				A5C7F9321BDE0A54004EFA96 /* Controller */,
+				A5C7F9341BDE0A54004EFA96 /* Model */,
+				A5C7F9351BDE0A54004EFA96 /* View */,
+			);
+			path = Discover;
+			sourceTree = "<group>";
+		};
+		A5C7F9321BDE0A54004EFA96 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				A5C7F9331BDE0A54004EFA96 /* JFDiscoverViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		A5C7F9341BDE0A54004EFA96 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		A5C7F9351BDE0A54004EFA96 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				A5C7F9361BDE0A54004EFA96 /* JFDiscoverVisitorView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		A5C7F9371BDE0A54004EFA96 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				A5C7F9381BDE0A54004EFA96 /* Controller */,
+				A5C7F93A1BDE0A54004EFA96 /* Model */,
+				A5C7F93B1BDE0A54004EFA96 /* View */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		A5C7F9381BDE0A54004EFA96 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				A5C7F9391BDE0A54004EFA96 /* JFHomeViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		A5C7F93A1BDE0A54004EFA96 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		A5C7F93B1BDE0A54004EFA96 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				A5C7F93C1BDE0A54004EFA96 /* JFHomeVisitorView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		A5C7F93D1BDE0A54004EFA96 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				A5C7F93E1BDE0A54004EFA96 /* Controller */,
+				A5C7F9411BDE0A54004EFA96 /* Model */,
+				A5C7F9421BDE0A54004EFA96 /* View */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		A5C7F93E1BDE0A54004EFA96 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				A5C7F93F1BDE0A54004EFA96 /* JFNavigationController.swift */,
+				A5C7F9401BDE0A54004EFA96 /* JFTabBarViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		A5C7F9411BDE0A54004EFA96 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		A5C7F9421BDE0A54004EFA96 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		A5C7F9431BDE0A54004EFA96 /* Message */ = {
+			isa = PBXGroup;
+			children = (
+				A5C7F9441BDE0A54004EFA96 /* Controller */,
+				A5C7F9461BDE0A54004EFA96 /* Model */,
+				A5C7F9471BDE0A54004EFA96 /* View */,
+			);
+			path = Message;
+			sourceTree = "<group>";
+		};
+		A5C7F9441BDE0A54004EFA96 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				A5C7F9451BDE0A54004EFA96 /* JFMessageViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		A5C7F9461BDE0A54004EFA96 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		A5C7F9471BDE0A54004EFA96 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				A5C7F9481BDE0A54004EFA96 /* JFMessageVisitorView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		A5C7F9491BDE0A54004EFA96 /* NewFeature */ = {
+			isa = PBXGroup;
+			children = (
+				A5C7F94A1BDE0A54004EFA96 /* Controller */,
+				A5C7F94C1BDE0A54004EFA96 /* Model */,
+				A5C7F94D1BDE0A54004EFA96 /* View */,
+			);
+			path = NewFeature;
+			sourceTree = "<group>";
+		};
+		A5C7F94A1BDE0A54004EFA96 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				A5C7F94B1BDE0A54004EFA96 /* JFNewFeatureViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		A5C7F94C1BDE0A54004EFA96 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		A5C7F94D1BDE0A54004EFA96 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		A5C7F94E1BDE0A54004EFA96 /* OAuth */ = {
+			isa = PBXGroup;
+			children = (
+				A5C7F94F1BDE0A54004EFA96 /* Controller */,
+				A5C7F9511BDE0A54004EFA96 /* Model */,
+				A5C7F9521BDE0A54004EFA96 /* View */,
+			);
+			path = OAuth;
+			sourceTree = "<group>";
+		};
+		A5C7F94F1BDE0A54004EFA96 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				A5C7F9501BDE0A54004EFA96 /* JFOAuthViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		A5C7F9511BDE0A54004EFA96 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		A5C7F9521BDE0A54004EFA96 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		A5C7F9531BDE0A54004EFA96 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				A5C7F9541BDE0A54004EFA96 /* Controller */,
+				A5C7F9561BDE0A54004EFA96 /* Model */,
+				A5C7F9571BDE0A54004EFA96 /* View */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		A5C7F9541BDE0A54004EFA96 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				A5C7F9551BDE0A54004EFA96 /* JFProfileTableViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		A5C7F9561BDE0A54004EFA96 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		A5C7F9571BDE0A54004EFA96 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				A5C7F9581BDE0A54004EFA96 /* JFProfileVisitorView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		A5C7F9591BDE0A54004EFA96 /* Tools */ = {
+			isa = PBXGroup;
+			children = (
+				A5C7F95A1BDE0A54004EFA96 /* JFNetworkTool.swift */,
+			);
+			path = Tools;
+			sourceTree = "<group>";
+		};
+		A5D7CD8F1BDD2EFF00D1DF04 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				A50DC5121BDCF33800FEF643 /* Assets.xcassets */,
+			);
+			path = Resource;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -71,9 +494,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A50DC51A1BDCF33800FEF643 /* Build configuration list for PBXNativeTarget "microblog-swift" */;
 			buildPhases = (
+				AFB27213BDE2F06832D2F11D /* Check Pods Manifest.lock */,
 				A50DC5041BDCF33700FEF643 /* Sources */,
 				A50DC5051BDCF33700FEF643 /* Frameworks */,
 				A50DC5061BDCF33700FEF643 /* Resources */,
+				F45390CDC6FC30C55E5E8E5D /* Embed Pods Frameworks */,
+				32EDEADD8C47A721A574A887 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -90,6 +516,7 @@
 		A50DC5001BDCF33700FEF643 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				CLASSPREFIX = JF;
 				LastSwiftUpdateCheck = 0710;
 				LastUpgradeCheck = 0710;
 				ORGANIZATIONNAME = "六阿哥";
@@ -123,44 +550,90 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A50DC5161BDCF33800FEF643 /* LaunchScreen.storyboard in Resources */,
 				A50DC5131BDCF33800FEF643 /* Assets.xcassets in Resources */,
-				A50DC5111BDCF33700FEF643 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		32EDEADD8C47A721A574A887 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-microblog-swift/Pods-microblog-swift-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		AFB27213BDE2F06832D2F11D /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		F45390CDC6FC30C55E5E8E5D /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-microblog-swift/Pods-microblog-swift-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		A50DC5041BDCF33700FEF643 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A50DC50E1BDCF33700FEF643 /* ViewController.swift in Sources */,
+				A5D7CDB91BDD4B2100D1DF04 /* JFCommon.swift in Sources */,
+				A5C7F95D1BDE0A54004EFA96 /* JFUser.swift in Sources */,
+				A5C7F9641BDE0A54004EFA96 /* JFHomeVisitorView.swift in Sources */,
+				A5C7F95E1BDE0A54004EFA96 /* JFUserAccount.swift in Sources */,
+				A5C7F9651BDE0A54004EFA96 /* JFNavigationController.swift in Sources */,
+				A5C7F96C1BDE0A54004EFA96 /* JFProfileVisitorView.swift in Sources */,
+				A5C7F9681BDE0A54004EFA96 /* JFMessageVisitorView.swift in Sources */,
+				A5C7F9611BDE0A54004EFA96 /* JFDiscoverViewController.swift in Sources */,
+				A5C7F95C1BDE0A54004EFA96 /* JFStatus.swift in Sources */,
+				A5C7F96D1BDE0A54004EFA96 /* JFNetworkTool.swift in Sources */,
+				A5C7F95B1BDE0A54004EFA96 /* UIImage-Extension.swift in Sources */,
+				A5C7F9661BDE0A54004EFA96 /* JFTabBarViewController.swift in Sources */,
+				A5C7F9601BDE0A54004EFA96 /* JFComposeViewController.swift in Sources */,
 				A50DC50C1BDCF33700FEF643 /* AppDelegate.swift in Sources */,
+				A5C7F9671BDE0A54004EFA96 /* JFMessageViewController.swift in Sources */,
+				A5C7F96B1BDE0A54004EFA96 /* JFProfileTableViewController.swift in Sources */,
+				A5C7F9691BDE0A54004EFA96 /* JFNewFeatureViewController.swift in Sources */,
+				A5C7F96A1BDE0A54004EFA96 /* JFOAuthViewController.swift in Sources */,
+				A5C7F9621BDE0A54004EFA96 /* JFDiscoverVisitorView.swift in Sources */,
+				A5C7F9631BDE0A54004EFA96 /* JFHomeViewController.swift in Sources */,
+				A5C7F95F1BDE0A54004EFA96 /* JFCenterViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		A50DC50F1BDCF33700FEF643 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				A50DC5101BDCF33700FEF643 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		A50DC5141BDCF33800FEF643 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				A50DC5151BDCF33800FEF643 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		A50DC5181BDCF33800FEF643 /* Debug */ = {
@@ -246,23 +719,44 @@
 		};
 		A50DC51B1BDCF33800FEF643 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9C6CF6676D50074697495326 /* Pods-microblog-swift.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+				);
 				INFOPLIST_FILE = "microblog-swift/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "cn.6ag.microblog-swift";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "microblog-swift/microblog-swift-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
 		A50DC51C1BDCF33800FEF643 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 983D9E66CD82891EC9114B2F /* Pods-microblog-swift.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+				);
 				INFOPLIST_FILE = "microblog-swift/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "cn.6ag.microblog-swift";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "microblog-swift/microblog-swift-Bridging-Header.h";
 			};
 			name = Release;
 		};
@@ -285,6 +779,7 @@
 				A50DC51C1BDCF33800FEF643 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
