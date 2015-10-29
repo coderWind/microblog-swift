@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ReactiveCocoa
 
 class JFTabBarViewController: UITabBarController {
 
@@ -34,13 +35,17 @@ class JFTabBarViewController: UITabBarController {
      */
     private func setupCenterButton() {
         let centerBtn = UIButton(type: UIButtonType.Custom)
-        
         centerBtn.setBackgroundImage(UIImage(named: "tabbar_compose_button"), forState: UIControlState.Normal)
         centerBtn.setBackgroundImage(UIImage(named: "tabbar_compose_button_highlighted"), forState: UIControlState.Highlighted)
         centerBtn.setImage(UIImage(named: "tabbar_compose_icon_add"), forState: UIControlState.Normal)
         centerBtn.setImage(UIImage(named: "tabbar_compose_icon_add_highlighted"), forState: UIControlState.Highlighted)
         tabBar.addSubview(centerBtn)
         centerBtn.frame = CGRectInset(tabBar.bounds, 2 * tabBar.bounds.width / CGFloat(childViewControllers.count) - 1, 0)
+        // modal出中心加号控制器
+        centerBtn.rac_command = RACCommand(signalBlock: { (_) -> RACSignal! in
+            self.presentViewController(JFCenterViewController(), animated: false, completion: nil)
+            return RACSignal.empty()
+        })
     }
 
     /**
@@ -70,20 +75,6 @@ class JFTabBarViewController: UITabBarController {
         viewController.tabBarItem.badgeValue = badgeValue
         let nav = JFNavigationController(rootViewController: viewController)
         addChildViewController(nav)
-    }
-    
-    /**
-     设置全局样式
-     */
-    static func setupGlobalStyle() {
-        let navigationBar = UINavigationBar.appearance()
-        // 导航条背景色
-        navigationBar.barTintColor = UIColor.whiteColor()
-        
-        let barButtonItem = UIBarButtonItem.appearance()
-        // 文字颜色
-        barButtonItem.setTitleTextAttributes([NSForegroundColorAttributeName : UIColor.grayColor()], forState: UIControlState.Normal)
-        barButtonItem.setTitleTextAttributes([NSForegroundColorAttributeName : UIColor.orangeColor()], forState: UIControlState.Highlighted)
     }
     
 }

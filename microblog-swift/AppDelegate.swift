@@ -17,28 +17,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
+        // 设置全局样式
+        UINavigationBar.appearance().tintColor = UIColor.orangeColor()
+        
         // 创建window
-        self.window = UIWindow(frame: kScreenBounds)
+        window = UIWindow(frame: kScreenBounds)
         
         // 设置window的根控制器
         setupKeyWindowOfRootViewController()
-        
-        // 设置全局样式
-        JFTabBarViewController.setupGlobalStyle()
+//        window?.rootViewController = JFWelcomeViewController()
         
         // 设置为主窗口并显示
-        self.window?.makeKeyAndVisible()
+        window?.makeKeyAndVisible()
         
         return true
     }
     
-    /**
-     设置主窗口的根控制器
-     */
+    // MARK: - 设置主窗口的根控制器
     func setupKeyWindowOfRootViewController() {
         
         // 是否已经授权，授权成功才显示新特性（第一次安装应用不显示）
-        if JFUserAccount.shareUserAccount().isAuth {
+        if JFUserAccount.shareUserAccount.isAuth {
             // 版本key
             let versionKey = kCFBundleVersionKey as String
             
@@ -58,7 +57,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             } else {
                 
                 // 版本相等则直接加载首页
-                self.window?.rootViewController = JFTabBarViewController()
+                self.window?.rootViewController = JFWelcomeViewController()
             }
         } else {
             self.window?.rootViewController = JFTabBarViewController()

@@ -9,26 +9,27 @@
 import UIKit
 import AFNetworking
 
-/// 网络回调闭包
-typealias NetFinishedCallBack = ((result: [String: AnyObject]?, error: NSError?) -> ())
+/// 网络回调闭包别名
+typealias NetFinishedCallBack = ((result: [String : AnyObject]?, error: NSError?) -> ())
 
+// MARK: - 网络工具类
 class JFNetworkTool: NSObject {
     
-    /// AFN
+    /// 创建网络请求单例
+    static let shareNetworkTool = JFNetworkTool()
+    
+    /// AFN网络请求对象
     private var afnManager: AFHTTPSessionManager
     
-    /// 创建单例
-    static let shareNetworkTool: JFNetworkTool = JFNetworkTool()
-    
+    /**
+     重写初始化方法
+     */
     override init() {
-        let baseUrl = NSURL(string: "https://api.weibo.com/")
-        afnManager = AFHTTPSessionManager(baseURL: baseUrl)
-        afnManager.responseSerializer.acceptableContentTypes = NSSet(objects: "application/json", "text/json", "text/javascript", "text/plain") as Set<NSObject>
-        
-        super.init()
+        afnManager = AFHTTPSessionManager(baseURL: NSURL(string: "https://api.weibo.com"))
+        afnManager.responseSerializer.acceptableContentTypes?.insert("text/plain")
     }
     
-    /// MARK: - OAuth授权
+    // MARK: - OAuth授权信息
     private let client_id = "3574168239"
     private let app_secret = "3f7cc901506fd3c1c3255a78398ed340"
     let redirect_uri = "https://api.weibo.com/oauth2/default.html"
@@ -42,10 +43,15 @@ class JFNetworkTool: NSObject {
         return NSURL(string: urlString)!
     }
     
+}
+
+// MARK: - 发送网络请求
+extension JFNetworkTool {
+    
     /**
      根据code加载access_token，并返回给调用者
      
-     - parameter code:   code
+     - parameter code:   code码
      - parameter finish: 完成回调
      */
     func loadAccessToken(code: String, finish: NetFinishedCallBack) {
@@ -60,44 +66,32 @@ class JFNetworkTool: NSObject {
         ]
         
         // 发送POST请求，获取access_token并返回给调用者
-        afnManager.POST("https://api.weibo.com/oauth2/access_token", parameters: parameters, success: { (_, responseObject) -> Void in
-            // 将结果传递给调用者
-            finish(result: responseObject as? [String : AnyObject], error: nil)
-            }) { (_, error) -> Void in
-                // 将结果传递给调用者
-                finish(result: nil, error: error)
-        }
+        requestPOST("oauth2/access_token", parameters: parameters, finish: finish)
     }
-
-    /**
-    加载用户数据,负责获取数据.不处理数据
     
-    - parameter finish: 完成回调
-    */
+    /**
+     加载用户数据,负责获取数据,不处理数据
+     
+     - parameter finish: 完成回调
+     */
     func loadUserInfo(finish: NetFinishedCallBack) {
-        // 判断access token是否存在
-        if JFUserAccount.shareUserAccount().access_token == nil {
-            print("没有access_token")
-            return
-        }
         
-        // 判断uid是否存在
-        if JFUserAccount.shareUserAccount().uid == nil {
-            print("没有uid")
+        // 判断access_token和uid是否已经存在
+        if JFUserAccount.shareUserAccount.access_token == nil || JFUserAccount.shareUserAccount.uid == nil {
+            // 不存在就不继续执行
             return
         }
         
         let urlString = "2/users/show.json"
-        let params = ["access_token": JFUserAccount.shareUserAccount().access_token!, "uid": JFUserAccount.shareUserAccount().uid!]
+        let params = ["access_token": JFUserAccount.shareUserAccount.access_token!, "uid": JFUserAccount.shareUserAccount.uid!]
         
-        afnManager.GET(urlString, parameters: params, success: { (_, result) -> Void in
-            
-            finish(result: result as? [String: AnyObject], error: nil)
-            }) { (_, error) -> Void in
-                
-                finish(result: nil, error: error)
-        }
+        // 发送get请求，加载用户数据
+        requestGET(urlString, parameters: params, finish: finish)
     }
+}
+
+// MARK: - 封装GET、POST请求
+extension JFNetworkTool {
     
     /**
      GET请求
@@ -110,11 +104,24 @@ class JFNetworkTool: NSObject {
         afnManager.GET(urlString, parameters: parameters, success: { (_, result) -> Void in
             // 将请求结果传给调用者
             finish(result: result as? [String: AnyObject], error: nil)
-            
             }) { (_, error) -> Void in
-                print("error = \(error)")
                 finish(result: nil, error: error)
         }
     }
     
+    /**
+     POST请求
+     
+     - parameter urlString:  URL字符串
+     - parameter parameters: 参数字典
+     - parameter finish:     完成回调
+     */
+    func requestPOST(urlString: String, parameters: [String: AnyObject], finish: NetFinishedCallBack) {
+        afnManager.GET(urlString, parameters: parameters, success: { (_, result) -> Void in
+            // 将请求结果传给调用者
+            finish(result: result as? [String: AnyObject], error: nil)
+            }) { (_, error) -> Void in
+                finish(result: nil, error: error)
+        }
+    }
 }

@@ -7,19 +7,12 @@
 //
 
 import UIKit
-
-/**
- *  首页访客视图协议
- */
-protocol JFhomeVisitorViewDelegate {
-    func homeVisitorView(homeVisitorView: JFHomeVisitorView, didTappedRegisterButton registerButton: UIButton)
-    func homeVisitorView(homeVisitorView: JFHomeVisitorView, didTappedLoginButton loginButton: UIButton)
-}
+import ReactiveCocoa
 
 class JFHomeVisitorView: UIView {
     
-    // 代理属性
-    var delegate: JFhomeVisitorViewDelegate?
+    // 代理信号
+    var delegateSignal: RACSubject?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -30,9 +23,6 @@ class JFHomeVisitorView: UIView {
         // 准备UI
         prepareUI()
         
-        // 开始旋转
-        startRotationAnimation()
-        
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -40,25 +30,9 @@ class JFHomeVisitorView: UIView {
     }
     
     /**
-     已经点击了注册按钮
-     */
-    func didTappedRegisterButton(button: UIButton) {
-        // 调用代理方法传递事件
-        delegate?.homeVisitorView(self, didTappedRegisterButton: button)
-    }
-    
-    /**
-     已经点击了登录按钮
-     */
-    func didTappedLoginButton(button: UIButton) {
-        // 调用代理方法传递事件
-        delegate?.homeVisitorView(self, didTappedLoginButton: button)
-    }
-    
-    /**
      开始旋转
      */
-    private func startRotationAnimation() {
+    func startRotationAnimation() {
         // 创建动画
         let animation = CABasicAnimation(keyPath: "transform.rotation")
         animation.fromValue = 0
@@ -67,7 +41,7 @@ class JFHomeVisitorView: UIView {
         animation.repeatCount = MAXFLOAT
         // 如果不加切换控制器会退出后就停止动画了
         animation.removedOnCompletion = false
-        rotateView.layer.addAnimation(animation, forKey: "animation")
+        rotateView.layer.addAnimation(animation, forKey: "homeAnimation")
     }
     
     /**
@@ -127,6 +101,52 @@ class JFHomeVisitorView: UIView {
         addConstraint(NSLayoutConstraint(item: loginButton, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: tipLabel, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 32))
         addConstraint(NSLayoutConstraint(item: loginButton, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 100))
         addConstraint(NSLayoutConstraint(item: loginButton, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 30))
+        
+        // 注册按钮点击事件
+        registerButton.rac_command = RACCommand(signalBlock: { (_) -> RACSignal! in
+            // 订阅者不为空就发送信号
+            if self.delegateSignal != nil {
+                self.delegateSignal?.sendNext(nil)
+            }
+            return RACSignal.empty()
+        })
+        
+        // 登录按钮点击事件
+        loginButton.rac_command = RACCommand(signalBlock: { (_) -> RACSignal! in
+            // 订阅者不为空就发送信号
+            if self.delegateSignal != nil {
+                self.delegateSignal?.sendNext(nil)
+            }
+            return RACSignal.empty()
+        })
+        
+        //MARK: - RAC通知
+        // 进入后台
+        NSNotificationCenter.defaultCenter().rac_addObserverForName(UIApplicationDidEnterBackgroundNotification, object: nil).subscribeNext({ (_) -> Void in
+            
+            // 记录暂停时间
+            let pauseTime = self.rotateView.layer.convertTime(CACurrentMediaTime(), fromLayer: nil)
+            
+            // 设置动画速度为0
+            self.rotateView.layer.speed = 0
+            // 设置动画偏移时间
+            self.rotateView.layer.timeOffset = pauseTime
+            
+        })
+        // 进入前台
+        NSNotificationCenter.defaultCenter().rac_addObserverForName(UIApplicationDidBecomeActiveNotification, object: nil).subscribeNext({ (_) -> Void in
+            
+            // 获取暂停时间
+            let pauseTime = self.rotateView.layer.timeOffset
+    
+            // 设置动画速度为1
+            self.rotateView.layer.speed = 1
+            self.rotateView.layer.timeOffset = 0
+            self.rotateView.layer.beginTime = 0
+            let timeSincePause = self.rotateView.layer.convertTime(CACurrentMediaTime(), fromLayer: nil) - pauseTime
+            self.rotateView.layer.beginTime = timeSincePause
+        })
+        
     }
     
     // MARK: - 懒加载
@@ -177,7 +197,6 @@ class JFHomeVisitorView: UIView {
         button.setTitle("注册", forState: UIControlState.Normal)
         button.setTitleColor(UIColor.orangeColor(), forState: UIControlState.Normal)
         button.setBackgroundImage(UIImage(named: "common_button_white_disable"), forState: UIControlState.Normal)
-        button.addTarget(self, action: "didTappedRegisterButton:", forControlEvents: UIControlEvents.TouchUpInside)
         return button
     }()
     
@@ -188,7 +207,6 @@ class JFHomeVisitorView: UIView {
         button.setTitle("登录", forState: UIControlState.Normal)
         button.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
         button.setBackgroundImage(UIImage(named: "common_button_white_disable"), forState: UIControlState.Normal)
-        button.addTarget(self, action: "didTappedLoginButton:", forControlEvents: UIControlEvents.TouchUpInside)
         return button
     }()
 

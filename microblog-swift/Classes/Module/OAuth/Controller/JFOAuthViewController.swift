@@ -11,12 +11,11 @@ import SVProgressHUD
 
 class JFOAuthViewController: UIViewController, UIWebViewDelegate {
     
-    lazy var webView: UIWebView = {
-        let web = UIWebView()
-        web.delegate = self
-        return web
-    }()
-
+    // 替换控制器的view
+    override func loadView() {
+        view = webView
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -25,12 +24,6 @@ class JFOAuthViewController: UIViewController, UIWebViewDelegate {
         // 加载授权界面
         webView.loadRequest(NSURLRequest(URL: JFNetworkTool.shareNetworkTool.oauthUrl()))
         
-        
-    }
-    
-    // 替换控制器的view
-    override func loadView() {
-        view = webView
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -51,14 +44,15 @@ class JFOAuthViewController: UIViewController, UIWebViewDelegate {
      自动填充用户名和密码
      */
     func autoFillUsernameAndPassword() {
-        
+        // --------------------- 这里需要改改改，不然就不能自动填充 ----------------------------
+        webView.stringByEvaluatingJavaScriptFromString("document.getElementById('userId').value = '你的微博账号';" + "document.getElementById('passwd').value = '你的微博密码';")
     }
     
     /**
-    *  MARK: - UIWebViewDelegate
-    */
+     *  MARK: - UIWebViewDelegate
+     */
     func webViewDidStartLoad(webView: UIWebView) {
-        SVProgressHUD.show()
+        SVProgressHUD.showWithStatus("加载授权界面", maskType: SVProgressHUDMaskType.Black)
     }
     
     func webViewDidFinishLoad(webView: UIWebView) {
@@ -69,71 +63,68 @@ class JFOAuthViewController: UIViewController, UIWebViewDelegate {
      栏架webView的请求操作，跟踪重定向URL，是否要加载
      */
     func webView(webView: UIWebView, shouldStartLoadWithRequest request: NSURLRequest, navigationType: UIWebViewNavigationType) -> Bool {
-
+        
         let urlString = request.URL!.absoluteString
         
-        // 如果不包含回调前缀则说明不是回调地址，加载URL
+        // 如果不包含回调前缀则说明不是回调地址，正常加载URL
         if !urlString.hasPrefix(JFNetworkTool.shareNetworkTool.redirect_uri) {
             return true
         }
         
-        // 判断后面是否跟有参数
+        // 点击了取消或授权后
         if let query = request.URL?.query {
-//            code=cbf7002e420f3a8697cbec8536eb83a3
             let tempQuery = query as NSString
             let codeString = "code="
             
             if tempQuery.hasPrefix(codeString) {
-                // 点击了授权
+                // 参数前缀是code=则表示点击了授权，截取code
                 let code = tempQuery.substringFromIndex(codeString.characters.count)
                 
                 // 根据code获取access_token
                 JFNetworkTool.shareNetworkTool.loadAccessToken(code, finish: { (result, error) -> () in
                     
-                    if result == nil || error != nil {
-                        SVProgressHUD.showErrorWithStatus("授权失败")
-                        dispatch_after(1, dispatch_get_main_queue(), { () -> Void in
-                            // 这里没有处理。。。。。。。。。。。。。。。
-                            self.cancelOAuth()
-                            return
-                        })
+                    if error != nil || result == nil {
+                        self.netError("获取access_token失败")
                     } else {
                         // 保存用户信息（access_token）
-                        JFUserAccount.shareUserAccount().saveUserAccount(result!)
+                        JFUserAccount.shareUserAccount.saveUserAccount(result!)
                         
-                        JFUserAccount.shareUserAccount().loadUserInfo({ (error) -> () in
+                        // 加载用户信息
+                        JFUserAccount.shareUserAccount.loadUserInfo({ (error) -> () in
                             if error != nil {
-                                self.netError()
-                                return
+                                self.netError("加载用户信息错误")
+                            } else {
+                                // 切换到欢迎控制器
+                                UIApplication.sharedApplication().keyWindow?.rootViewController = JFWelcomeViewController()
+                                self.cancelOAuth()
                             }
                         })
-                        // 切换到欢迎控制器
-                        UIApplication.sharedApplication().keyWindow?.rootViewController = JFWelcomeViewController()
-                        self.cancelOAuth()
                     }
-                    
                 })
-                
-                return false
                 
             } else {
                 // 点击了取消
                 cancelOAuth()
-                
-                return false
             }
         }
-        
-        return true
+        return false
     }
     
-    /// 网络数据加载出错.提示
-    private func netError() {
-        SVProgressHUD.showErrorWithStatus("您的网络不给力")
-        
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (Int64)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), { () -> Void in
+    /**
+     网络数据加载出错时提示
+     */
+    private func netError(errorMessage: String) {
+        SVProgressHUD.showErrorWithStatus(errorMessage, maskType: SVProgressHUDMaskType.Black)
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (Int64)(1 * NSEC_PER_SEC)), dispatch_get_main_queue()) { () -> Void in
             self.cancelOAuth()
-        })
+        }
     }
-
+    
+    // MARK: - 懒加载
+    lazy var webView: UIWebView = {
+        let web = UIWebView()
+        web.delegate = self
+        return web
+    }()
+    
 }
