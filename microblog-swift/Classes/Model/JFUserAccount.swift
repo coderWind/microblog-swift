@@ -64,7 +64,6 @@ class JFUserAccount: NSObject, NSCoding {
     // 当字典的key在模型中没有对应的属性
     override func setValue(value: AnyObject?, forUndefinedKey key: String) {}
     
-    
     // MARK: - 保存用户信息到沙盒
     /**
      保存用户信息到沙盒

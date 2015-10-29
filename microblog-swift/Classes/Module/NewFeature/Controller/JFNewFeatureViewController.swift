@@ -12,6 +12,8 @@ class JFNewFeatureViewController: UIViewController,UIScrollViewDelegate {
     
     // 图片数量
     let picCount = 4
+    
+    var enterBtn: UIButton?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,20 +43,35 @@ class JFNewFeatureViewController: UIViewController,UIScrollViewDelegate {
             if index == picCount - 1 {
                 imgView.userInteractionEnabled = true
                 // 创建进入微博按钮
-                let enterBtn = UIButton(type: UIButtonType.Custom)
-                enterBtn.setBackgroundImage(UIImage(named: "new_feature_button"), forState: UIControlState.Normal)
-                enterBtn.setBackgroundImage(UIImage(named: "new_feature_button_highlighted"), forState: UIControlState.Highlighted)
-                imgView.addSubview(enterBtn)
-                enterBtn.snp_makeConstraints(closure: { (make) -> Void in
-                    make.size.equalTo(CGSize(width: 186, height: 42.5))
+                enterBtn = UIButton(type: UIButtonType.Custom)
+                enterBtn!.setBackgroundImage(UIImage(named: "new_feature_button"), forState: UIControlState.Normal)
+                enterBtn!.setBackgroundImage(UIImage(named: "new_feature_button_highlighted"), forState: UIControlState.Highlighted)
+                imgView.addSubview(enterBtn!)
+                enterBtn!.snp_makeConstraints(closure: { (make) -> Void in
+                    make.size.equalTo(CGSize(width: 80, height: 30))
                     make.centerX.equalTo(imgView.snp_centerX)
-                    make.bottom.equalTo(-120)
+                    make.bottom.equalTo(-180)
                 })
                 // 添加点击事件信号
-                enterBtn.addTarget(self, action: "didTappedEnterButton", forControlEvents: UIControlEvents.TouchUpInside)
+                enterBtn!.addTarget(self, action: "didTappedEnterButton", forControlEvents: UIControlEvents.TouchUpInside)
+                
             }
         }
         
+    }
+    
+    
+    
+    /**
+     开始缩放动画
+     */
+    func startScaleAnimation(button: UIButton) {
+        button.transform = CGAffineTransformMakeScale(0, 0)
+        UIView.animateWithDuration(1.0, delay: 0.1, usingSpringWithDamping: 0.6, initialSpringVelocity: 5, options: UIViewAnimationOptions(rawValue: 0), animations: { () -> Void in
+            button.transform = CGAffineTransformMakeScale(1.5, 1.2)
+            }) { (_) -> Void in
+                
+        }
     }
     
     /**
@@ -63,6 +80,14 @@ class JFNewFeatureViewController: UIViewController,UIScrollViewDelegate {
     func scrollViewDidScroll(scrollView: UIScrollView) {
         let index = scrollView.contentOffset.x / kScreenW
         pageControl.currentPage = Int(index)
+        
+        if self.scrollView.contentOffset.x >= kScreenW * 3 && enterBtn != nil {
+            enterBtn?.alpha = 1
+            // 调用缩放动画方法
+            startScaleAnimation(enterBtn!)
+        } else if self.scrollView.contentOffset.x <= kScreenW * 2 {
+            enterBtn?.alpha = 0
+        }
     }
     
     /**

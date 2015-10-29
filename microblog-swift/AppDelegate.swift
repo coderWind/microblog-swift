@@ -25,7 +25,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // 设置window的根控制器
         setupKeyWindowOfRootViewController()
-//        window?.rootViewController = JFWelcomeViewController()
         
         // 设置为主窗口并显示
         window?.makeKeyAndVisible()
@@ -36,33 +35,44 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: - 设置主窗口的根控制器
     func setupKeyWindowOfRootViewController() {
         
-        // 是否已经授权，授权成功才显示新特性（第一次安装应用不显示）
+        // 是否已经授权
         if JFUserAccount.shareUserAccount.isAuth {
-            // 版本key
-            let versionKey = kCFBundleVersionKey as String
             
-            // 获取当前应用版本号
-            let currentVersion = NSBundle.mainBundle().infoDictionary![versionKey] as? String
-            
-            // 获取沙盒中的版本号
-            let sandBoxVersion = NSUserDefaults.standardUserDefaults().valueForKey(versionKey) as? String
-            
-            if currentVersion != sandBoxVersion {
-                // 不等于说明是新版本，或者是第一次运行呈现，加载新特性控制器
+            // 能进说明已经授权，再继续判断是否是新版本
+            if isNewVersion() {
+                // 新版本加载 新特性控制器
                 self.window?.rootViewController = JFNewFeatureViewController()
-                
-                // 存储版本到沙盒
-                NSUserDefaults.standardUserDefaults().setValue(currentVersion, forKey: versionKey)
-                
             } else {
-                
-                // 版本相等则直接加载首页
+                // 不是新版本加载 欢迎控制器
                 self.window?.rootViewController = JFWelcomeViewController()
             }
         } else {
+            // 没有授权则加载 主控制器
             self.window?.rootViewController = JFTabBarViewController()
         }
         
+    }
+    
+    /**
+     是否是新版本
+     
+     - returns: 返回true则表示当前版本是新版本
+     */
+    func isNewVersion() -> Bool {
+        
+        // 版本key
+        let versionKey = kCFBundleVersionKey as String
+        
+        // 获取当前应用版本号
+        let currentVersion = NSBundle.mainBundle().infoDictionary![versionKey] as? String
+        
+        // 获取沙盒中的版本号
+        let sandBoxVersion = NSUserDefaults.standardUserDefaults().valueForKey(versionKey) as? String
+        
+        // 存储当前版本到沙盒
+        NSUserDefaults.standardUserDefaults().setValue(currentVersion, forKey: versionKey)
+        
+        return currentVersion > sandBoxVersion
     }
     
 }

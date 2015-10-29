@@ -26,7 +26,7 @@ class JFCenterViewController: UIViewController {
         super.viewWillAppear(animated)
         
         // 添加子控件
-        addAllSubviews()
+        prepareUI()
         
         // 背景颜色
         view.backgroundColor = UIColor(red: 237/255, green: 237/255, blue: 237/255, alpha: 0.95)
@@ -49,10 +49,8 @@ class JFCenterViewController: UIViewController {
         
     }
     
-    /**
-     添加所有子控件
-     */
-    func addAllSubviews() {
+    // MARK: - 添加所有子控件,准备UI
+    func prepareUI() {
         
         // 添加中间视图区
         view.addSubview(contentView)
@@ -112,6 +110,7 @@ class JFCenterViewController: UIViewController {
     
 }
 
+// MARK: - 中间内容视图区域的控件管理
 extension JFCenterViewController {
     
     /**

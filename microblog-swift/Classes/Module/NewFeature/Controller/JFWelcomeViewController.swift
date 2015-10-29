@@ -10,12 +10,35 @@ import UIKit
 import SDWebImage
 
 class JFWelcomeViewController: UIViewController {
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        // 更新约束
+        userIcon.snp_updateConstraints { (make) -> Void in
+            make.bottom.equalTo(-(kScreenH - 160))
+        }
+        
+        // 动画
+        UIView.animateWithDuration(1.0, delay: 0.1, usingSpringWithDamping: 0.6, initialSpringVelocity: 5, options: UIViewAnimationOptions(rawValue: 0), animations: { () -> Void in
+            self.view.layoutIfNeeded()
+            }) { (_) -> Void in
+            UIView.animateWithDuration(1.0, animations: { () -> Void in
+                self.userName.alpha = 1
+                }, completion: { (_) -> Void in
+                    // 进入主页
+                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (Int64)(1 * NSEC_PER_SEC)), dispatch_get_main_queue()) { () -> Void in
+                        UIApplication.sharedApplication().keyWindow?.rootViewController = JFTabBarViewController()
+                    }
+            })
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // 背景颜色
-        view.backgroundColor = UIColor.whiteColor()
+        view.backgroundColor = UIColor(patternImage: UIImage(named: "new_background")!)
         
         // 添加头像
         view.addSubview(userIcon)
@@ -26,28 +49,13 @@ class JFWelcomeViewController: UIViewController {
         userIcon.snp_makeConstraints { (make) -> Void in
             make.size.equalTo(CGSize(width:100, height: 100))
             make.centerX.equalTo(view.snp_centerX)
-            make.top.equalTo(80)
+            make.bottom.equalTo(-160)
         }
         
         // 约束用户名称
         userName.snp_makeConstraints { (make) -> Void in
-            make.centerX.equalTo(view.snp_centerX)
-            make.top.equalTo(userIcon.snp_bottom).offset(80)
-        }
-        
-        // 添加动画
-        let animation = CAKeyframeAnimation(keyPath: "position")
-        let value1 = NSValue(CGPoint: CGPoint(x: kScreenW * 0.5, y: 80))
-        let value2 = NSValue(CGPoint: CGPoint(x: kScreenW * 0.5, y: 250))
-        animation.values = [value1, value2]
-        animation.duration = 2
-        animation.autoreverses = true
-        animation.removedOnCompletion = false
-        userIcon.layer.addAnimation(animation, forKey: "animation")
-        
-        // 进入主页
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (Int64)(1 * NSEC_PER_SEC)), dispatch_get_main_queue()) { () -> Void in
-            UIApplication.sharedApplication().keyWindow?.rootViewController = JFTabBarViewController()
+            make.centerX.equalTo(userIcon.snp_centerX)
+            make.top.equalTo(userIcon.snp_bottom).offset(10)
         }
     
     }
@@ -66,7 +74,8 @@ class JFWelcomeViewController: UIViewController {
     /// 用户名称
     lazy var userName: UILabel = {
         let name = UILabel()
-        name.text = JFUserAccount.shareUserAccount.name
+        name.alpha = 0
+        name.text = "欢迎回来!\(JFUserAccount.shareUserAccount.name!)"
         return name
     }()
     

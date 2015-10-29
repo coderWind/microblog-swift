@@ -117,7 +117,7 @@ extension JFNetworkTool {
      - parameter finish:     完成回调
      */
     func requestPOST(urlString: String, parameters: [String: AnyObject], finish: NetFinishedCallBack) {
-        afnManager.GET(urlString, parameters: parameters, success: { (_, result) -> Void in
+        afnManager.POST(urlString, parameters: parameters, success: { (_, result) -> Void in
             // 将请求结果传给调用者
             finish(result: result as? [String: AnyObject], error: nil)
             }) { (_, error) -> Void in
