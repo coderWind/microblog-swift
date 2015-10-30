@@ -24,7 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: kScreenBounds)
         
         // 设置window的根控制器
-        setupKeyWindowOfRootViewController()
+        defaultViewController()
         
         // 设置为主窗口并显示
         window?.makeKeyAndVisible()
@@ -32,8 +32,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
-    // MARK: - 设置主窗口的根控制器
-    func setupKeyWindowOfRootViewController() {
+    /**
+     设置主窗口的根控制器
+     */
+    func defaultViewController() {
         
         // 是否已经授权
         if JFUserAccount.shareUserAccount.isAuth {
