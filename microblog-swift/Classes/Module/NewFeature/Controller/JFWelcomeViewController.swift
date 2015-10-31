@@ -11,29 +11,31 @@ import SDWebImage
 
 class JFWelcomeViewController: UIViewController {
     
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
         
         // 更新约束
         userIcon.snp_updateConstraints { (make) -> Void in
             make.bottom.equalTo(-(kScreenH - 160))
         }
         
-        // 动画
+        // 动画移动头像
         UIView.animateWithDuration(1.0, delay: 0.1, usingSpringWithDamping: 0.6, initialSpringVelocity: 5, options: UIViewAnimationOptions(rawValue: 0), animations: { () -> Void in
+            // 更新布局
             self.view.layoutIfNeeded()
             }) { (_) -> Void in
-            UIView.animateWithDuration(1.0, animations: { () -> Void in
-                self.userName.alpha = 1
-                }, completion: { (_) -> Void in
-                    // 进入主页
-                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (Int64)(1 * NSEC_PER_SEC)), dispatch_get_main_queue()) { () -> Void in
-                        UIApplication.sharedApplication().keyWindow?.rootViewController = JFTabBarViewController()
-                    }
-            })
+                // 动画渐变显示文字
+                UIView.animateWithDuration(1.0, animations: { () -> Void in
+                    self.userName.alpha = 1
+                    }, completion: { (_) -> Void in
+                        // 进入主页
+                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (Int64)(1 * NSEC_PER_SEC)), dispatch_get_main_queue()) { () -> Void in
+                            UIApplication.sharedApplication().keyWindow?.rootViewController = JFTabBarViewController()
+                        }
+                })
         }
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         

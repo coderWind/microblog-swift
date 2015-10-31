@@ -9,6 +9,8 @@
 import UIKit
 
 class JFPopViewController: UITableViewController {
+    
+    var content: [String] = ["首页", "好友圈", "群微博", "我的微博", "新浪微博"]
 
     override func viewDidLoad() {
         super.viewDidLoad()

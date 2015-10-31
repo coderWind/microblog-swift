@@ -39,15 +39,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // 是否已经授权
         if JFUserAccount.shareUserAccount.isAuth {
-            
             // 能进说明已经授权，再继续判断是否是新版本
-            if isNewVersion() {
-                // 新版本加载 新特性控制器
-                self.window?.rootViewController = JFNewFeatureViewController()
-            } else {
-                // 不是新版本加载 欢迎控制器
-                self.window?.rootViewController = JFWelcomeViewController()
-            }
+            self.window?.rootViewController = isNewVersion() ? JFNewFeatureViewController() : JFWelcomeViewController()
         } else {
             // 没有授权则加载 主控制器
             self.window?.rootViewController = JFTabBarViewController()

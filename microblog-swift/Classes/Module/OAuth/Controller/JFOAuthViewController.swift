@@ -81,10 +81,10 @@ class JFOAuthViewController: UIViewController, UIWebViewDelegate {
                 let code = tempQuery.substringFromIndex(codeString.characters.count)
                 
                 // 根据code获取access_token
-                JFNetworkTool.shareNetworkTool.loadAccessToken(code, finish: { (result, error) -> () in
+                JFNetworkTool.shareNetworkTool.loadAccessToken(code, finished: { (result, error) -> () in
                     
                     if error != nil || result == nil {
-                        self.netError("获取access_token失败")
+                        self.netError("获取access_token失败\(error)")
                     } else {
                         // 保存用户信息（access_token）
                         JFUserAccount.shareUserAccount.saveUserAccount(result!)
@@ -92,11 +92,12 @@ class JFOAuthViewController: UIViewController, UIWebViewDelegate {
                         // 加载用户信息
                         JFUserAccount.shareUserAccount.loadUserInfo({ (error) -> () in
                             if error != nil {
-                                self.netError("加载用户信息错误")
+                                self.netError("加载用户信息错误\(error)")
                             } else {
+                                // 关闭控制器
+                                self.cancelOAuth()
                                 // 切换到欢迎控制器
                                 UIApplication.sharedApplication().keyWindow?.rootViewController = JFWelcomeViewController()
-                                self.cancelOAuth()
                             }
                         })
                     }
@@ -115,13 +116,13 @@ class JFOAuthViewController: UIViewController, UIWebViewDelegate {
      */
     private func netError(errorMessage: String) {
         SVProgressHUD.showErrorWithStatus(errorMessage, maskType: SVProgressHUDMaskType.Black)
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (Int64)(1 * NSEC_PER_SEC)), dispatch_get_main_queue()) { () -> Void in
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (Int64)(2 * NSEC_PER_SEC)), dispatch_get_main_queue()) { () -> Void in
             self.cancelOAuth()
         }
     }
     
     // MARK: - 懒加载
-    lazy var webView: UIWebView = {
+    private lazy var webView: UIWebView = {
         let web = UIWebView()
         web.delegate = self
         return web

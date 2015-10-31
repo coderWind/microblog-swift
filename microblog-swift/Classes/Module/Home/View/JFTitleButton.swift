@@ -10,6 +10,18 @@ import UIKit
 
 class JFTitleButton: UIButton {
 
+     convenience init(title: String) {
+        self.init()
+        
+        setTitle(title, forState: UIControlState.Normal)
+        adjustsImageWhenHighlighted = false
+        titleLabel?.font = UIFont.systemFontOfSize(17)
+        setImage(UIImage(named: "navigationbar_arrow_down"), forState: UIControlState.Normal)
+        setImage(UIImage(named: "navigationbar_arrow_up"), forState: UIControlState.Selected)
+        setBackgroundImage(UIImage(named: "tabbar_compose_below_button_highlighted"), forState: UIControlState.Highlighted)
+        setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
+        sizeToFit()
+    }
     
     /**
      重新布局子控件
@@ -17,10 +29,11 @@ class JFTitleButton: UIButton {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        let str = titleLabel!.text! as NSString
-        let textSize = str.sizeWithAttributes([NSFontAttributeName : titleLabel!.font])
-        titleLabel?.frame = CGRect(x: (bounds.width - textSize.width - 13) * 0.5, y: 0, width: textSize.width, height: bounds.height)
-        imageView?.frame = CGRect(x: textSize.width + 15, y: 12, width: 13, height: 7)
+        // 把label移动到左边
+        titleLabel?.frame.origin.x = 0
+        
+        // 把图片移到label的后面
+        imageView?.frame.origin.x = titleLabel!.frame.width + 2
     }
     
 }

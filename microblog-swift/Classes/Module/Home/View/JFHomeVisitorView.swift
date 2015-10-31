@@ -8,6 +8,7 @@
 
 import UIKit
 import ReactiveCocoa
+import SnapKit
 
 class JFHomeVisitorView: UIView {
     
@@ -23,6 +24,8 @@ class JFHomeVisitorView: UIView {
         // 准备UI
         prepareUI()
         
+        // 开始旋转
+        startRotationAnimation()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -32,7 +35,7 @@ class JFHomeVisitorView: UIView {
     /**
      开始旋转
      */
-    func startRotationAnimation() {
+    private func startRotationAnimation() {
         // 创建动画
         let animation = CABasicAnimation(keyPath: "transform.rotation")
         animation.fromValue = 0
@@ -57,50 +60,43 @@ class JFHomeVisitorView: UIView {
         addSubview(tipLabel)
         addSubview(registerButton)
         addSubview(loginButton)
-        
-        // 约束布局子控件
-        rotateView.translatesAutoresizingMaskIntoConstraints = false
-        shadowView.translatesAutoresizingMaskIntoConstraints = false
-        houseView.translatesAutoresizingMaskIntoConstraints = false
-        tipLabel.translatesAutoresizingMaskIntoConstraints = false
-        registerButton.translatesAutoresizingMaskIntoConstraints = false
-        loginButton.translatesAutoresizingMaskIntoConstraints = false
-        
-        // MARK: - 创建约束
+
+        // MARK: - 约束布局子控件
         // 转轮
-        // 转轮图片参照父控件水平、垂直居中
-        addConstraint(NSLayoutConstraint(item: rotateView, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0))
-        addConstraint(NSLayoutConstraint(item: rotateView, attribute: NSLayoutAttribute.CenterY, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.CenterY, multiplier: 1, constant: 0))
-        
+        rotateView.snp_makeConstraints { (make) -> Void in
+            make.center.equalTo(self.snp_center)
+        }
+ 
         // 遮罩
-        // 遮罩参照转轮水平、垂直居中
-        addConstraint(NSLayoutConstraint(item: shadowView, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: rotateView, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0))
-        addConstraint(NSLayoutConstraint(item: shadowView, attribute: NSLayoutAttribute.CenterY, relatedBy: NSLayoutRelation.Equal, toItem: rotateView, attribute: NSLayoutAttribute.CenterY, multiplier: 1, constant: 0))
-        
+        shadowView.snp_makeConstraints { (make) -> Void in
+            make.center.equalTo(rotateView.snp_center)
+        }
+
         // 房子
-        // 房子参照转轮水平、垂直居中
-        addConstraint(NSLayoutConstraint(item: houseView, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: rotateView, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0))
-        addConstraint(NSLayoutConstraint(item: houseView, attribute: NSLayoutAttribute.CenterY, relatedBy: NSLayoutRelation.Equal, toItem: rotateView, attribute: NSLayoutAttribute.CenterY, multiplier: 1, constant: 0))
-        
+        houseView.snp_makeConstraints { (make) -> Void in
+            make.center.equalTo(rotateView)
+        }
+
         // 提示
-        // 提示参照转轮水平居中，提示的顶部与转轮底部固定距离，提示限制最大宽度，以便自动换行
-        addConstraint(NSLayoutConstraint(item: tipLabel, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: rotateView, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0))
-        addConstraint(NSLayoutConstraint(item: tipLabel, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: rotateView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 16))
-        addConstraint(NSLayoutConstraint(item: tipLabel, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 240))
+        tipLabel.snp_makeConstraints { (make) -> Void in
+            make.centerX.equalTo(rotateView.snp_centerX)
+            make.top.equalTo(rotateView.snp_bottom).offset(16)
+            make.width.equalTo(240)
+        }
         
         // 注册
-        // 注册参照提示左对齐，注册顶部和提示底部距离固定，注册宽、高固定
-        addConstraint(NSLayoutConstraint(item: registerButton, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: tipLabel, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0))
-        addConstraint(NSLayoutConstraint(item: registerButton, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: tipLabel, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 32))
-        addConstraint(NSLayoutConstraint(item: registerButton, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 100))
-        addConstraint(NSLayoutConstraint(item: registerButton, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 30))
+        registerButton.snp_makeConstraints { (make) -> Void in
+            make.left.equalTo(tipLabel.snp_left)
+            make.top.equalTo(tipLabel.snp_bottom).offset(32)
+            make.size.equalTo(CGSizeMake(100, 30))
+        }
         
         // 登录
-        // 登录参照提示右对齐，注册顶部和提示底部距离固定，注册宽、高固定
-        addConstraint(NSLayoutConstraint(item: loginButton, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: tipLabel, attribute: NSLayoutAttribute.Right, multiplier: 1, constant: 0))
-        addConstraint(NSLayoutConstraint(item: loginButton, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: tipLabel, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 32))
-        addConstraint(NSLayoutConstraint(item: loginButton, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 100))
-        addConstraint(NSLayoutConstraint(item: loginButton, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 30))
+        loginButton.snp_makeConstraints { (make) -> Void in
+            make.right.equalTo(tipLabel.snp_right)
+            make.top.equalTo(tipLabel.snp_bottom).offset(32)
+            make.size.equalTo(CGSizeMake(100, 30))
+        }
         
         // 注册按钮点击事件
         registerButton.rac_command = RACCommand(signalBlock: { (_) -> RACSignal! in

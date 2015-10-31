@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ReactiveCocoa
 
 class JFNewFeatureViewController: UIViewController,UIScrollViewDelegate {
     
@@ -53,14 +54,15 @@ class JFNewFeatureViewController: UIViewController,UIScrollViewDelegate {
                     make.bottom.equalTo(-180)
                 })
                 // 添加点击事件信号
-                enterBtn!.addTarget(self, action: "didTappedEnterButton", forControlEvents: UIControlEvents.TouchUpInside)
-                
+                enterBtn?.rac_command = RACCommand(signalBlock: { (_) -> RACSignal! in
+                    // 进入首页
+                    UIApplication.sharedApplication().keyWindow?.rootViewController = JFTabBarViewController()
+                    return RACSignal.empty()
+                })
             }
         }
         
     }
-    
-    
     
     /**
      开始缩放动画
@@ -88,14 +90,6 @@ class JFNewFeatureViewController: UIViewController,UIScrollViewDelegate {
         } else if self.scrollView.contentOffset.x <= kScreenW * 2 {
             enterBtn?.alpha = 0
         }
-    }
-    
-    /**
-     进入微博按钮的点击事件
-     */
-    func didTappedEnterButton() {
-        // 进入首页
-        UIApplication.sharedApplication().keyWindow?.rootViewController = JFTabBarViewController()
     }
     
     // MARK: - 懒加载
