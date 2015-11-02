@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class JFStatus: NSObject {
     
@@ -21,12 +22,33 @@ class JFStatus: NSObject {
     
     /// 微博创建时间
     var created_at: String?
+    
     /// 微博ID
     var id: Int = 0
     /// 微博信息内容
     var text: String?
     /// 微博来源
     var source: String?
+    
+    var sourceString: String? {
+        get {
+            // 来源
+            if let source = source {
+                
+                let string = source as NSString
+                
+                if string.length > 0 {
+                    // 起点
+                    let location = string.rangeOfString("\">").location + 2
+                    // 长度
+                    let length = string.rangeOfString("</a>").location - location
+                    let newString = string.substringWithRange(NSMakeRange(location, length))
+                    return "来自 \(newString)"
+                }
+            }
+            return ""
+        }
+    }
     
     /// 图片地址数组
     var pic_urls: [[String: AnyObject]]? {
@@ -51,9 +73,11 @@ class JFStatus: NSObject {
     // 存储原创微博对应的pic_urls里面对象的URL
     var storePictureURLs: [NSURL]?
     
-    /// 存储型属性,存储的是pic_urls里面对应的URL
+    /// 计算型属性,存储的是pic_urls里面对应的URL
     var pictureURLs: [NSURL]? {
-        return retweeted_status == nil ? storePictureURLs : retweeted_status?.storePictureURLs
+        get {
+            return retweeted_status == nil ? storePictureURLs : retweeted_status?.storePictureURLs
+        }
     }
     
     // 重写构造方法，为属性赋值
@@ -92,17 +116,81 @@ class JFStatus: NSObject {
     }
     
     /**
+     缓存微博图片
+     
+     - parameter lists:    微博模型数组
+     - parameter finished: 缓存完成回调
+     */
+    class func cacheWebImage(lists: [JFStatus], finished: (list: [JFStatus]?, error: NSError?) -> ()) {
+        
+        // 定义任务组
+        let group = dispatch_group_create()
+        
+        // 记录下载图片的大小
+        var length = 0
+        
+        // 遍历模型数组
+        for status in lists {
+            
+            // 获取配图URL
+            guard let urls = status.pictureURLs else {
+                // 没有图片继续遍历下一个模型
+                continue
+            }
+            
+            // 只缓存一张图片
+            if urls.count == 1 {
+                
+                // 取出图片URL
+                let url = urls[0]
+                
+                // 进入任务组
+                dispatch_group_enter(group)
+                
+                // 使用SDWebImage下载图片
+                SDWebImageManager.sharedManager().downloadImageWithURL(url, options: SDWebImageOptions(rawValue: 0), progress: nil, completed: { (image, error, _, _, _) -> Void in
+                    // 离开任务组
+                    dispatch_group_leave(group)
+                    
+                    // 判断下载是否有错误
+                    if  error != nil {
+                        print("缓存图片出错")
+                        return
+                    }
+                    
+                    // 获取下载图片的大小
+                    
+                    if let data = UIImagePNGRepresentation(image) {
+                        length += data.length
+                    }
+                    
+                })
+            }
+        }
+        
+        // 下载完成所有图片才通知调用者微博数据加载完成
+        dispatch_group_notify(group, dispatch_get_main_queue()) { () -> Void in
+            print("缓存图片完成")
+            // 回调返回微博模型数组
+            finished(list: lists, error: nil)
+        }
+        
+        
+    }
+    
+    /**
      加载微博数据并转模型
      
      - parameter finished: 完成回调
      - parameter list: 模型数组
      - parameter error: 错误
      */
-    class func loadStatus(finished: (list: [JFStatus]?, error: NSError?) -> ()) {
-        JFNetworkTool.shareNetworkTool.loadStatus { (result, error) -> () in
+    class func loadStatus(since_id: Int, max_id: Int, finished: (list: [JFStatus]?, error: NSError?) -> ()) {
+        JFNetworkTool.shareNetworkTool.loadStatus(since_id, max_id: max_id) { (result, error) -> () in
             // 判断是否有错误
             if error != nil {
                 print("加载微博数据出错:\(error!)")
+                finished(list: nil, error: error)
             }
             
             // 获取返回数据里的微博数据
@@ -116,9 +204,11 @@ class JFStatus: NSObject {
                     list.append(JFStatus(dict: dict))
                 }
                 
-                // 回调数据
-                finished(list: list, error: nil)
+                // 缓存并回调数据
+                cacheWebImage(list, finished: finished)
+            
             } else {
+                
                 // 没有加载到数据
                 finished(list: nil, error: nil)
             }

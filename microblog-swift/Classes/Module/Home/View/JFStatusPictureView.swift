@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class JFStatusPictureView: UICollectionView {
     
@@ -18,28 +19,31 @@ class JFStatusPictureView: UICollectionView {
             
             // 刷新数据
             reloadData()
+            
+            // 背景颜色
+            backgroundColor = status?.retweeted_status == nil ? UIColor.whiteColor() : UIColor(white: 0.9, alpha: 0.4)
         }
     }
+    
+    // 唯一标示符
+    let identifier = "picCell"
     
     // collectionView流水布局
     private var pictureLayout = UICollectionViewFlowLayout()
     
-    // MARK: - 重写构造方法，添加流水布局
+    // MARK: - 重写构造方法，设置布局
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
-        super.init(frame: frame, collectionViewLayout: pictureLayout)
+    init() {
+        super.init(frame: CGRectZero, collectionViewLayout: pictureLayout)
         
         // 注册cell
-        registerClass(JFStatusPictureViewCell.self, forCellWithReuseIdentifier: "picCell")
+        registerClass(JFStatusPictureViewCell.self, forCellWithReuseIdentifier: identifier)
         
         // 设置数据源
         dataSource = self
-        
-        // 背景颜色
-        backgroundColor = status?.retweeted_status == nil ? UIColor.whiteColor() : UIColor(white: 0.9, alpha: 0.4)
     }
     
     /**
@@ -60,8 +64,9 @@ class JFStatusPictureView: UICollectionView {
      */
     func calculateViewSize() -> CGSize {
         
+        let itemWidth: CGFloat = (kScreenW - 34) / 3
         // 每个item的大小
-        let itemSize = CGSize(width: 90, height: 90)
+        let itemSize = CGSize(width: itemWidth, height: itemWidth)
         
         // 设置布局的itemSize
         pictureLayout.itemSize = itemSize
@@ -69,7 +74,7 @@ class JFStatusPictureView: UICollectionView {
         pictureLayout.minimumLineSpacing = 0
         
         // cell之间的间距
-        let margin: CGFloat = 10
+        let margin: CGFloat = 5
         
         // 最大列数
         let column = 3
@@ -77,7 +82,6 @@ class JFStatusPictureView: UICollectionView {
         // 获取配图的数量
         let count = status?.pictureURLs?.count ?? 0
         
-        // 根据配图数量计算配图尺寸
         // 无图
         if count == 0 {
             return CGSizeZero
@@ -85,8 +89,24 @@ class JFStatusPictureView: UICollectionView {
         
         // 一张图
         if count == 1 {
-            let size = CGSize(width: 150, height: 120)
+            
+            // 获取图片URL地址
+            let urlString = status?.pictureURLs?[0].absoluteString
+            
+            var size = CGSize(width: 150, height: 120)
+            
+            // 获取图片，有图片设置size为图片的size，没有则使用默认的
+            if let image = SDWebImageManager.sharedManager().imageCache.imageFromDiskCacheForKey(urlString) {
+                size = image.size
+            }
+            
+            // 设置最小宽度
+            if size.width < 40 {
+                size.width = 40
+            }
+            
             pictureLayout.itemSize = size
+            
             return size
         }
         
@@ -96,7 +116,7 @@ class JFStatusPictureView: UICollectionView {
         
         // 四张图片
         if count == 4 {
-            let width = 2 * itemSize.width + margin
+            let width = 2 * itemWidth + margin
             return CGSize(width: width, height: width)
         }
         
@@ -105,10 +125,10 @@ class JFStatusPictureView: UICollectionView {
         let row = (count + column - 1) / column
         
         // 计算宽度
-        let width = (CGFloat(column) * itemSize.width) + (CGFloat(column) - 1) * margin
+        let width = (CGFloat(column) * itemWidth) + (CGFloat(column) - 1) * margin
         
         // 计算高度
-        let height = (CGFloat(row) * itemSize.height) + (CGFloat(row) - 1) * margin
+        let height = (CGFloat(row) * itemWidth) + (CGFloat(row) - 1) * margin
         
         return CGSize(width: width, height: height)
         
@@ -125,14 +145,14 @@ extension JFStatusPictureView: UICollectionViewDataSource {
     
     // 返回图片张数
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-
+        
         return status?.pictureURLs?.count ?? 0
     }
     
     // 返回cell
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("picCell", forIndexPath: indexPath) as! JFStatusPictureViewCell
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(identifier, forIndexPath: indexPath) as! JFStatusPictureViewCell
         
         // 设置cell数据
         cell.imageURL = status?.pictureURLs?[indexPath.item]

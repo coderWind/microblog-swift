@@ -16,7 +16,7 @@ class JFStatusTopView: UIView {
             // 更新topView的数据
             // 头像
             if let url = status?.user?.profileImageUrl {
-                iconView.sd_setImageWithURL(url, placeholderImage: UIImage(named: "avatar"))
+                iconView.jf_setImageWithURL(url, placeholderImage: UIImage(named: "avatar"))
             }
             
             // 认证
@@ -29,10 +29,14 @@ class JFStatusTopView: UIView {
             memberView.image = status?.user?.mbrankImage
             
             // 时间标签
-            timeLabel.text = status?.created_at
+            if let sinaTime = status?.created_at {
+                timeLabel.text = NSDate.sinaDateToDate(sinaTime)?.dateDescription()
+            }
             
             // 来源
-            sourceLabel.text = "微博"
+            sourceLabel.text = status?.sourceString
+
+            
         }
     }
     
@@ -54,13 +58,13 @@ class JFStatusTopView: UIView {
     private func prepareUI() {
         
         // 添加控件
+        addSubview(topSeparatorView)
         addSubview(iconView)
         addSubview(verifiedView)
         addSubview(nameLabel)
         addSubview(memberView)
         addSubview(timeLabel)
         addSubview(sourceLabel)
-        addSubview(topSeparatorView)
         
         // 约束控件
         // 顶部分割线
@@ -72,8 +76,8 @@ class JFStatusTopView: UIView {
         // 头像图标
         iconView.snp_makeConstraints { (make) -> Void in
             make.size.equalTo(CGSize(width: 35, height: 35))
-            make.top.equalTo(topSeparatorView.snp_bottom).offset(12)
-            make.left.equalTo(12)
+            make.top.equalTo(topSeparatorView.snp_bottom).offset(statusMargin)
+            make.left.equalTo(statusMargin)
         }
         
         // 认证图标
@@ -85,7 +89,7 @@ class JFStatusTopView: UIView {
         
         // 名称
         nameLabel.snp_makeConstraints { (make) -> Void in
-            make.left.equalTo(iconView.snp_right).offset(12)
+            make.left.equalTo(iconView.snp_right).offset(statusMargin)
             make.top.equalTo(iconView.snp_top).offset(1)
         }
         
@@ -105,7 +109,7 @@ class JFStatusTopView: UIView {
         // 来源
         sourceLabel.snp_makeConstraints { (make) -> Void in
             make.top.equalTo(timeLabel.snp_top)
-            make.left.equalTo(timeLabel.snp_right).offset(12)
+            make.left.equalTo(timeLabel.snp_right).offset(statusMargin)
         }
         
     }
@@ -113,8 +117,7 @@ class JFStatusTopView: UIView {
     // MARK: - 懒加载topView子控件
     // 用户头像
     private lazy var iconView: UIImageView = {
-        let image = UIImage(named: "avatar")
-        let imageView = UIImageView(image: image)
+        let imageView = UIImageView()
         imageView.layer.cornerRadius = 17.5
         imageView.layer.masksToBounds = true
         return imageView

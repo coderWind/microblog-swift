@@ -7,8 +7,6 @@
 //
 
 import UIKit
-import SnapKit
-import ReactiveCocoa
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -42,7 +40,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             // 能进说明已经授权，再继续判断是否是新版本
             self.window?.rootViewController = isNewVersion() ? JFNewFeatureViewController() : JFWelcomeViewController()
         } else {
-            // 没有授权则加载 主控制器
+            // 没有授权则加载主控制器
             self.window?.rootViewController = JFTabBarViewController()
         }
         
@@ -59,15 +57,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let versionKey = kCFBundleVersionKey as String
         
         // 获取当前应用版本号
-        let currentVersion = NSBundle.mainBundle().infoDictionary![versionKey] as? String
+        let currentVersion = NSBundle.mainBundle().infoDictionary![versionKey] as? NSString
         
         // 获取沙盒中的版本号
-        let sandBoxVersion = NSUserDefaults.standardUserDefaults().valueForKey(versionKey) as? String
+        let sandBoxVersion = NSUserDefaults.standardUserDefaults().valueForKey(versionKey) as? NSString
         
         // 存储当前版本到沙盒
         NSUserDefaults.standardUserDefaults().setValue(currentVersion, forKey: versionKey)
         
-        return currentVersion > sandBoxVersion
+        return currentVersion?.doubleValue > sandBoxVersion?.doubleValue
     }
     
 }

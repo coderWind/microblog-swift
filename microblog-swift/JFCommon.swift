@@ -20,5 +20,11 @@ let kScreenH = kScreenBounds.size.height
 // tabBar渲染颜色
 let kOrangeColor = UIColor.orangeColor()
 
+// 沙盒文档路径
 let kSandDocumentPath = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true).last!
 
+// 保存用户信息的路径
+let filePath = "\(kSandDocumentPath)/userAccount.data"
+
+// 微博cell各种边距
+let statusMargin: CGFloat = 12

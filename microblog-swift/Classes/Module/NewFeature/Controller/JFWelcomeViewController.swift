@@ -42,9 +42,8 @@ class JFWelcomeViewController: UIViewController {
         // 背景颜色
         view.backgroundColor = UIColor(patternImage: UIImage(named: "new_background")!)
         
-        // 添加头像
+        // 添加控件
         view.addSubview(userIcon)
-        // 添加名称
         view.addSubview(userName)
         
         // 约束头像
@@ -67,7 +66,7 @@ class JFWelcomeViewController: UIViewController {
     lazy var userIcon: UIImageView = {
         let iconView = UIImageView()
         // 加载用户头像
-        iconView.sd_setImageWithURL(NSURL(string: JFUserAccount.shareUserAccount.avatar_large!))
+        iconView.jf_setImageWithURL(NSURL(string: JFUserAccount.shareUserAccount.avatar_large!))
         iconView.layer.cornerRadius = 50
         iconView.clipsToBounds = true
         return iconView
@@ -77,7 +76,7 @@ class JFWelcomeViewController: UIViewController {
     lazy var userName: UILabel = {
         let name = UILabel()
         name.alpha = 0
-        name.text = "欢迎回来!\(JFUserAccount.shareUserAccount.name!)"
+        name.text = "欢迎\(JFUserAccount.shareUserAccount.name!)归来"
         return name
     }()
     

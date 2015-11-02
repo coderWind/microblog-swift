@@ -1,5 +1,5 @@
 //
-//  UILabel-Extension.swift
+//  UILabel+Extension.swift
 //  microblog-swift
 //
 //  Created by jianfeng on 15/10/31.

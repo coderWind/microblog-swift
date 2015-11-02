@@ -1,5 +1,5 @@
 //
-//  UIButton-Extension.swift
+//  UIButton+Extension.swift
 //  microblog-swift
 //
 //  Created by jianfeng on 15/10/31.
@@ -16,9 +16,9 @@ extension UIButton {
      - parameter fontSize:  按钮文字大小
      - parameter textColor: 按钮文字颜色
      - parameter imageName: 按钮图片名称
-     - returns: 按钮
+     - returns: 按钮 
      */
-    convenience init(title: String, fontSize: CGFloat, textColor: UIColor, imageName: String) {
+    convenience init(title: String, fontSize: CGFloat = 12, textColor: UIColor = UIColor.darkGrayColor(), imageName: String) {
         self.init()
         
         // 文字内容
@@ -33,7 +33,7 @@ extension UIButton {
         // 图片
         setImage(UIImage(named: imageName), forState: UIControlState.Normal)
         
-        // 设置按钮边框
+        // 设置按钮背景色
         backgroundColor = UIColor.whiteColor()
     
     }

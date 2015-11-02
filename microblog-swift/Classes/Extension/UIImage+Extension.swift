@@ -1,5 +1,5 @@
 //
-//  UIImage-Extension.swift
+//  UIImage+Extension.swift
 //  microblog-swift
 //
 //  Created by jianfeng on 15/10/16.

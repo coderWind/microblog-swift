@@ -10,6 +10,7 @@ import UIKit
 
 class JFStatusBottomView: UIView {
     
+    // MARK: - 构造方法
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -65,13 +66,13 @@ class JFStatusBottomView: UIView {
     
     // MARK: - 懒加载控件
     // 转发
-    private lazy var forwardButton = UIButton(title: "转发", fontSize: 12, textColor: UIColor.darkGrayColor(), imageName: "timeline_icon_retweet")
+    private lazy var forwardButton = UIButton(title: "转发", imageName: "timeline_icon_retweet")
     
     // 评论
-    private lazy var commentButton = UIButton(title: "评论", fontSize: 12, textColor: UIColor.darkGrayColor(), imageName: "timeline_icon_comment")
+    private lazy var commentButton = UIButton(title: "评论", imageName: "timeline_icon_comment")
     
     // 赞
-    private lazy var likeButton = UIButton(title: "赞", fontSize: 12, textColor: UIColor.darkGrayColor(), imageName: "timeline_icon_unlike")
+    private lazy var likeButton = UIButton(title: "赞", imageName: "timeline_icon_unlike")
     
     // 水平分割线
     private lazy var separatorViewOne = UIImageView(image: UIImage(named: "timeline_card_bottom_line_highlighted"))

@@ -20,6 +20,7 @@ class JFTabBarViewController: UITabBarController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        
         // 添加加号按钮
         setupCenterButton()
         
@@ -35,11 +36,11 @@ class JFTabBarViewController: UITabBarController {
      */
     private func setupCenterButton() {
         let centerBtn = UIButton(type: UIButtonType.Custom)
+        tabBar.addSubview(centerBtn)
         centerBtn.setBackgroundImage(UIImage(named: "tabbar_compose_button"), forState: UIControlState.Normal)
         centerBtn.setBackgroundImage(UIImage(named: "tabbar_compose_button_highlighted"), forState: UIControlState.Highlighted)
         centerBtn.setImage(UIImage(named: "tabbar_compose_icon_add"), forState: UIControlState.Normal)
         centerBtn.setImage(UIImage(named: "tabbar_compose_icon_add_highlighted"), forState: UIControlState.Highlighted)
-        tabBar.addSubview(centerBtn)
         centerBtn.frame = CGRectInset(tabBar.bounds, 2 * tabBar.bounds.width / CGFloat(childViewControllers.count) - 1, 0)
         // modal出中心加号控制器
         centerBtn.rac_command = RACCommand(signalBlock: { (_) -> RACSignal! in
@@ -72,6 +73,7 @@ class JFTabBarViewController: UITabBarController {
         
         viewController.title = title
         viewController.tabBarItem.image = UIImage(named: itemImageName)
+        viewController.tabBarItem.selectedImage = UIImage(named: "\(itemImageName)_selected")
         viewController.tabBarItem.badgeValue = badgeValue
         let nav = JFNavigationController(rootViewController: viewController)
         addChildViewController(nav)

@@ -11,12 +11,12 @@ import AFNetworking
 
 /// 网络请求方式
 enum JFNetworkMethod: String {
-    case GET = "GET"
-    case POST = "POST"
+    case GET
+    case POST
 }
 
 /// 网络回调闭包别名
-typealias NetFinishedCallBack = (result: [String : AnyObject]?, error: NSError?) -> ()
+typealias NetworkFinishedCallBack = (result: [String : AnyObject]?, error: NSError?) -> ()
 
 // MARK: - 网络工具类
 class JFNetworkTool: NSObject {
@@ -58,17 +58,17 @@ extension JFNetworkTool {
      根据code加载access_token，并返回给调用者
      
      - parameter code:   code码
-     - parameter finish: 完成回调
+     - parameter finished: 完成回调
      */
-    func loadAccessToken(code: String, finished: NetFinishedCallBack) {
+    func loadAccessToken(code: String, finished: NetworkFinishedCallBack) {
         
         // 请求参数
         let parameters = [
             "client_id" : client_id,
             "client_secret" : app_secret,
             "grant_type" : grant_type,
-            "code" : code,
-            "redirect_uri" : redirect_uri
+            "redirect_uri" : redirect_uri,
+            "code" : code
         ]
         
         // 发送POST请求，获取access_token并返回给调用者
@@ -78,9 +78,9 @@ extension JFNetworkTool {
     /**
      加载用户数据,负责获取数据,不处理数据
      
-     - parameter finish: 完成回调
+     - parameter finished: 完成回调
      */
-    func loadUserInfo(finished: NetFinishedCallBack) {
+    func loadUserInfo(finished: NetworkFinishedCallBack) {
         
         // 判断access_token和uid是否已经存在
         if JFUserAccount.shareUserAccount.access_token == nil || JFUserAccount.shareUserAccount.uid == nil {
@@ -113,19 +113,24 @@ extension JFNetworkTool {
      
      - parameter finished: 完成回调
      */
-    func loadStatus(finished: NetFinishedCallBack) {
+    func loadStatus(since_id: Int, max_id: Int, finished: NetworkFinishedCallBack) {
         
         // 判断access_token是否为空
         if JFUserAccount.shareUserAccount.access_token == nil {
-            
             // 回调错误
             finished(result: nil, error: JFNetworkError.emptyToken.error())
             return
         }
         
         // guard守卫，如果没有值才执行else里，否则赋值给parameters后继续执行后面代码
-        guard let parameters = tokenDict(finished) else {
+        guard var parameters = tokenDict(finished) else {
             return
+        }
+        
+        if since_id > 0 {
+            parameters["since_id"] = since_id
+        } else if max_id > 0 {
+            parameters["max_id"] = max_id - 1
         }
         
         // 请求URL字符串
@@ -135,6 +140,8 @@ extension JFNetworkTool {
         request(JFNetworkMethod.GET, URLString: urlString, parameters: parameters, finished: finished)
         
     }
+    
+
 }
 
 // MARK: - 封装GET、POST请求、判断access_token
@@ -148,24 +155,34 @@ extension JFNetworkTool {
      - parameter parameters:    请求参数字典
      - parameter finish:        完成回调
      */
-    private func request(requestMethod: JFNetworkMethod, URLString: String, parameters: [String : AnyObject], finished: NetFinishedCallBack) {
-        
-        // 定义成功时的回调
-        let successCallback = { (_: NSURLSessionDataTask, result: AnyObject) -> Void in
-            finished(result: result as? [String : AnyObject], error: nil)
-        }
-        
-        // 定义失败时的回调
-        let failureCallback = { (_: NSURLSessionDataTask, error: NSError) -> Void in
-            finished(result: nil, error: error)
-        }
+    private func request(requestMethod: JFNetworkMethod, URLString: String, parameters: [String : AnyObject], finished: NetworkFinishedCallBack) {
         
         // 根据请求方式，发送请求
         switch requestMethod {
+            
+            // GET方式
         case .GET:
-            self.afnManager.GET(URLString, parameters: parameters, success: successCallback, failure: failureCallback)
+            self.afnManager.GET(URLString, parameters: parameters, success: { (_, result: AnyObject) -> Void in
+                // 成功回调
+                finished(result: result as? [String : AnyObject], error: nil)
+                }
+                , failure: { (_, error: NSError) -> Void in
+                    // 失败回调
+                    finished(result: nil, error: error)
+                }
+            )
+            
+            // POST方式
         case .POST:
-            self.afnManager.POST(URLString, parameters: parameters, success: successCallback, failure: failureCallback)
+            self.afnManager.POST(URLString, parameters: parameters, success: { (_, result: AnyObject) -> Void in
+                // 成功回调
+                finished(result: result as? [String : AnyObject], error: nil)
+                }
+                , failure: { (_, error: NSError) -> Void in
+                    // 失败回调
+                    finished(result: nil, error: error)
+                }
+            )
         }
         
     }
@@ -177,12 +194,12 @@ extension JFNetworkTool {
      
      - returns: 返回key为 access_token的字典，可能没有值
      */
-    func tokenDict(finished: NetFinishedCallBack) -> [String : AnyObject]? {
+    func tokenDict(finished: NetworkFinishedCallBack) -> [String : AnyObject]? {
         
         // 判断access_token是否为空
         if JFUserAccount.shareUserAccount.access_token == nil {
             
-            // 回调错误
+            // 失败回调
             finished(result: nil, error: JFNetworkError.emptyToken.error())
             return nil
         }

@@ -8,9 +8,6 @@
 
 import UIKit
 
-/// 保存用户信息的文件
-let filePath = "\(kSandDocumentPath)/userAccount.data"
-
 class JFUserAccount: NSObject, NSCoding {
     
     /// 用户名称
@@ -74,11 +71,7 @@ class JFUserAccount: NSObject, NSCoding {
         JFUserAccount.shareUserAccount.setValuesForKeysWithDictionary(userAccount)
         
         // 保存信息到指定文件
-        if NSKeyedArchiver.archiveRootObject(self, toFile: filePath) {
-            print("保存账号信息成功")
-        } else {
-            print("保存账号信息失败")
-        }
+        NSKeyedArchiver.archiveRootObject(self, toFile: filePath)
     }
     
     // MARK: - 加载用户信息

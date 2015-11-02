@@ -17,6 +17,7 @@ import SVProgressHUD
  - ForwardCell: 转发微博cell
  */
 enum JFStatusCellIdentifier: String {
+    
     case NormalCell = "NormalCell"
     case ForwardCell = "ForwardCell"
     
@@ -41,6 +42,7 @@ class JFHomeViewController: UITableViewController {
     根据登录状态加载不同的view
     */
     override func loadView() {
+        
         // 选择加载访客视图或已经授权的视图
         chooseView()
     }
@@ -51,8 +53,17 @@ class JFHomeViewController: UITableViewController {
         // 授权了才执行
         if JFUserAccount.shareUserAccount.isAuth {
             
-            // 加载微博数据
-            loadStatus()
+            // 初始化下拉刷新控件
+            refreshControl = JFRefreshControl(frame: CGRectZero)
+            
+            // 手动触发刷新控件的值改变事件
+            refreshControl?.sendActionsForControlEvents(UIControlEvents.ValueChanged)
+            
+            // 刷新控件的值改变事件
+            refreshControl?.rac_signalForControlEvents(UIControlEvents.ValueChanged).subscribeNext({ (_) -> Void in
+                // 加载微博数据
+                self.loadStatus()
+            })
             
             // 注册可重用的cell
             tableView.registerClass(JFStatusNormalCell.self, forCellReuseIdentifier: JFStatusCellIdentifier.NormalCell.rawValue)
@@ -61,9 +72,58 @@ class JFHomeViewController: UITableViewController {
             // 去掉分割线
             tableView.separatorStyle = UITableViewCellSeparatorStyle.None
             
+            // 上拉控件
+            tableView.tableFooterView = pullUpView
         }
         
     }
+    
+    /**
+     显示下拉信息
+     */
+    private func showPullMessage(count: Int) {
+        
+        tipLabel.text = count == 0 ? "没有新的微博" : "加载了\(count)条微博"
+        
+        // 初始frame
+        let srcFrame = tipLabel.frame
+        
+        // 动画显示、隐藏tipLabel
+        UIView.animateWithDuration(0.75, animations: { () -> Void in
+            self.tipLabel.frame.origin.y = self.navigationController!.navigationBar.frame.height
+            }) { (_) -> Void in
+                UIView.animateWithDuration(0.75, delay: 0.25, options: UIViewAnimationOptions(rawValue: 0), animations: { () -> Void in
+                    // 还原frame
+                    self.tipLabel.frame = srcFrame
+                    }, completion: nil)
+        }
+        
+    }
+    
+    // MARK: - 懒加载控件
+    /// 上拉菊花
+    private lazy var pullUpView: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.WhiteLarge)
+        indicator.color = UIColor.grayColor()
+        return indicator
+    }()
+    
+    /// 提示Label
+    private lazy var tipLabel: UILabel = {
+        // Label高度
+        let tipHeight = 44
+        
+        // 创建提示信息Label
+        let label = UILabel(frame: CGRect(x: 0, y: -20 - tipHeight, width: Int(kScreenW), height: tipHeight))
+        label.backgroundColor = UIColor.orangeColor()
+        label.textColor = UIColor.whiteColor()
+        label.font = UIFont.systemFontOfSize(14)
+        label.textAlignment = NSTextAlignment.Center
+        
+        // 将提示信息Label 插入 导航条
+        self.navigationController?.navigationBar.insertSubview(label, atIndex: 0)
+        return label
+    }()
     
 }
 
@@ -77,7 +137,9 @@ extension JFHomeViewController {
         if JFUserAccount.shareUserAccount.isAuth {
             // 已经授权就正常加载
             super.loadView()
+            
         } else {
+            
             // 未授权就加载访客视图
             let visitor = JFHomeVisitorView()
             // 设置代理信号
@@ -151,37 +213,65 @@ extension JFHomeViewController {
      加载微博数据
      */
     private func loadStatus() {
-        SVProgressHUD.showWithStatus("正在加载数据", maskType: SVProgressHUDMaskType.Black)
-        // [weak self]: 占有列表, 表示闭包里面用到的self是 weak引用的
-        JFStatus.loadStatus { [weak self](list, error) -> () in
+
+        var since_id = statuses?.first?.id ?? 0
+        var max_id = 0
+        
+        // 菊花在钻洞，表示正在上拉加载
+        if pullUpView.isAnimating() {
+            // 清空since_id
+            since_id = 0
+            
+            // max_id 等于当前最小的微博id
+            max_id = statuses?.last?.id ?? 0
+        }
+        
+        JFStatus.loadStatus(since_id, max_id: max_id) { [weak self](list, error) -> () in
+            // 停止刷新
+            self?.refreshControl?.endRefreshing()
+            self?.pullUpView.stopAnimating()
             
             // 加载失败
             if error != nil {
-                SVProgressHUD.showErrorWithStatus("网络不给力", maskType: SVProgressHUDMaskType.Black)
+                JFProgressHUD.jf_showErrorWithStatus("网络不给力")
                 return
             }
             
-            // 判断是否有数据
-            if list == nil || list?.count == 0 {
-                SVProgressHUD.showInfoWithStatus("没有新的微博", maskType: SVProgressHUDMaskType.Black)
+            // 获取返回的数据总数
+            let count = list?.count ?? 0
+            
+            if since_id > 0 {
+                
+                // 提示下拉刷新了多少条数据
+                self?.showPullMessage(count)
+                
+                // 下拉加载的数据拼接到已有的微博模型数组前面
+                self?.statuses = list! + self!.statuses!
+                
+            } else if max_id > 0 {
+                
+                // 上拉加载的数据拼接到已有的微博模型数组后面
+                self?.statuses = self!.statuses! + list!
+            } else {
+                
+                self?.statuses = list
             }
-            
-            // 隐藏HUD
-            SVProgressHUD.dismiss()
-            
-            // 将加载好的数据赋值给微博数组属性
-            self?.statuses = list
+
         }
     }
     
-    // 第section组有多少行cell
+    /**
+     第section组有多少行cell
+     */
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // 第一个?表示statuses有值才返回statuses.count
         // ?? statuses == nil 时返回 0
         return statuses?.count ?? 0
     }
     
-    // 创建每行cell
+    /**
+     创建每行cell
+     */
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         // 获取微博模型
@@ -193,25 +283,38 @@ extension JFHomeViewController {
         // 设置cell数据
         cell.status = status
         
+        // 如果是最后一个cell，并且上拉没有动画。就上拉加载更多数据
+        if indexPath.row == statuses!.count - 1 && !pullUpView.isAnimating() {
+            // 上拉加载数据
+            pullUpView.startAnimating()
+            
+            // 加载数据
+            loadStatus()
+        }
+        
         return cell
     }
     
-    // 选中某行cell
+    /**
+     选中某行cell
+     */
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         // 取消选中效果
         tableView.deselectRowAtIndexPath(indexPath, animated: false)
         
     }
     
-    // 返回cell行高
+    /**
+     返回cell行高
+     */
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         
         // 获取当前cell的微博模型
         let status = statuses![indexPath.row]
         
         // 先从模型里取，如果没有缓存再计算
-        if let status = status.rowHeight {
-            return status
+        if let tempRowHeight = status.rowHeight {
+            return tempRowHeight
         }
         
         // 获取当前cell
@@ -226,7 +329,6 @@ extension JFHomeViewController {
         return rowHeight
         
     }
-    
-    
+
 }
 

@@ -31,10 +31,7 @@ class JFStatusCell: UITableViewCell {
     // 接收计算好的配图区size
     var size: CGSize = CGSizeZero
     
-    // 微博cell各种边距
-    let statusMargin: CGFloat = 12
-    
-    // 构造方法,从sb/xib加载时调用
+    // MARK: - 构造方法
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -68,9 +65,6 @@ class JFStatusCell: UITableViewCell {
     func rowHeight(status: JFStatus) -> CGFloat {
         // 重新赋值微博模型会重新设置cell里的内容
         self.status = status
-        
-        // 更新布局
-        layoutIfNeeded()
         
         // 返回cell高度，cell高度就是最底部控件的底部y值
         return CGRectGetMaxY(bottomView.frame)

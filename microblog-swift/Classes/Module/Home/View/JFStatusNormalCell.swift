@@ -15,7 +15,7 @@ class JFStatusNormalCell: JFStatusCell {
             
             // 更新配图区约束
             pictureView.snp_updateConstraints { (make) -> Void in
-                make.size.equalTo(CGSize(width: size.width, height: size.height))
+                make.size.equalTo(size)
             }
             // 更新约束后重新布局
             layoutIfNeeded()
@@ -43,7 +43,7 @@ class JFStatusNormalCell: JFStatusCell {
         pictureView.snp_makeConstraints { (make) -> Void in
             make.left.equalTo(statusMargin)
             make.top.equalTo(contentLabel.snp_bottom).offset(statusMargin)
-            make.size.equalTo(CGSize(width: 290, height: 290))
+            make.size.equalTo(CGSizeZero)
         }
         
         // 底部视图
@@ -60,5 +60,4 @@ class JFStatusNormalCell: JFStatusCell {
         
     }
     
-
 }

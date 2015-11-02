@@ -14,20 +14,20 @@ class JFStatusPictureViewCell: UICollectionViewCell {
     var imageURL: NSURL? {
         didSet {
             // 加载图片
-            iconView.sd_setImageWithURL(imageURL)
+            iconView.jf_setImageWithURL(imageURL)
         }
     }
 
     // MARK: - 构造方法
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         // 准备UI
         prepareUI()
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
     
     /**
@@ -45,6 +45,11 @@ class JFStatusPictureViewCell: UICollectionViewCell {
     }
     
     // 图片
-    private lazy var iconView = UIImageView()
+    private lazy var iconView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = UIViewContentMode.ScaleAspectFill
+        imageView.clipsToBounds = true
+        return imageView
+    }()
     
 }
