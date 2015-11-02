@@ -18,7 +18,7 @@ import SVProgressHUD
  */
 enum JFStatusCellIdentifier: String {
     
-    case NormalCell = "NormalCell"
+    case NormalCell  = "NormalCell"
     case ForwardCell = "ForwardCell"
     
     // 根据微博模型返回重用标示符
@@ -56,14 +56,14 @@ class JFHomeViewController: UITableViewController {
             // 初始化下拉刷新控件
             refreshControl = JFRefreshControl(frame: CGRectZero)
             
-            // 手动触发刷新控件的值改变事件
-            refreshControl?.sendActionsForControlEvents(UIControlEvents.ValueChanged)
-            
             // 刷新控件的值改变事件
             refreshControl?.rac_signalForControlEvents(UIControlEvents.ValueChanged).subscribeNext({ (_) -> Void in
                 // 加载微博数据
                 self.loadStatus()
             })
+            
+            // 手动触发刷新控件的值改变事件
+            refreshControl?.sendActionsForControlEvents(UIControlEvents.ValueChanged)
             
             // 注册可重用的cell
             tableView.registerClass(JFStatusNormalCell.self, forCellReuseIdentifier: JFStatusCellIdentifier.NormalCell.rawValue)
@@ -74,6 +74,7 @@ class JFHomeViewController: UITableViewController {
             
             // 上拉控件
             tableView.tableFooterView = pullUpView
+            
         }
         
     }
@@ -103,7 +104,7 @@ class JFHomeViewController: UITableViewController {
     // MARK: - 懒加载控件
     /// 上拉菊花
     private lazy var pullUpView: UIActivityIndicatorView = {
-        let indicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.WhiteLarge)
+        let indicator   = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.WhiteLarge)
         indicator.color = UIColor.grayColor()
         return indicator
     }()
@@ -114,12 +115,12 @@ class JFHomeViewController: UITableViewController {
         let tipHeight = 44
         
         // 创建提示信息Label
-        let label = UILabel(frame: CGRect(x: 0, y: -20 - tipHeight, width: Int(kScreenW), height: tipHeight))
+        let label             = UILabel(frame: CGRect(x: 0, y: -20 - tipHeight, width: Int(kScreenW), height: tipHeight))
         label.backgroundColor = UIColor.orangeColor()
-        label.textColor = UIColor.whiteColor()
-        label.font = UIFont.systemFontOfSize(14)
-        label.textAlignment = NSTextAlignment.Center
-        
+        label.textColor       = UIColor.whiteColor()
+        label.font            = UIFont.systemFontOfSize(14)
+        label.textAlignment   = NSTextAlignment.Center
+
         // 将提示信息Label 插入 导航条
         self.navigationController?.navigationBar.insertSubview(label, atIndex: 0)
         return label

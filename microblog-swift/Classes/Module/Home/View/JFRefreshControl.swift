@@ -79,10 +79,10 @@ class JFRefreshControl: UIRefreshControl {
         }
         
         // 创建动画
-        let animation = CABasicAnimation(keyPath: "transform.rotation")
-        animation.toValue = M_PI * 2
-        animation.duration = 0.5
-        animation.repeatCount = MAXFLOAT
+        let animation                 = CABasicAnimation(keyPath: "transform.rotation")
+        animation.toValue             = M_PI * 2
+        animation.duration            = 0.5
+        animation.repeatCount         = MAXFLOAT
         animation.removedOnCompletion = false
         
         // 添加动画

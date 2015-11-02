@@ -37,11 +37,11 @@ class JFHomeVisitorView: UIView {
      */
     private func startRotationAnimation() {
         // 创建动画
-        let animation = CABasicAnimation(keyPath: "transform.rotation")
-        animation.fromValue = 0
-        animation.toValue = 2 * M_PI
-        animation.duration = 20
-        animation.repeatCount = MAXFLOAT
+        let animation                 = CABasicAnimation(keyPath: "transform.rotation")
+        animation.fromValue           = 0
+        animation.toValue             = 2 * M_PI
+        animation.duration            = 20
+        animation.repeatCount         = MAXFLOAT
         // 如果不加切换控制器会退出后就停止动画了
         animation.removedOnCompletion = false
         rotateView.layer.addAnimation(animation, forKey: "homeAnimation")

@@ -48,17 +48,17 @@ class JFStatusBottomView: UIView {
         let buttonHeight = self.bounds.height
         
         // 转发
-        forwardButton.frame = CGRectMake(0, 0, buttonWidth, buttonHeight)
+        forwardButton.frame       = CGRectMake(0, 0, buttonWidth, buttonHeight)
         // 评论
-        commentButton.frame = CGRectMake(buttonWidth, 0, buttonWidth, buttonHeight)
+        commentButton.frame       = CGRectMake(buttonWidth, 0, buttonWidth, buttonHeight)
         // 赞
-        likeButton.frame = CGRectMake(buttonWidth * 2, 0, buttonWidth, buttonHeight)
+        likeButton.frame          = CGRectMake(buttonWidth * 2, 0, buttonWidth, buttonHeight)
         // 分割线1
-        separatorViewOne.frame = CGRectMake(buttonWidth, 8, 1, buttonHeight - 16)
+        separatorViewOne.frame    = CGRectMake(buttonWidth, 8, 1, buttonHeight - 16)
         // 分割线2
-        separatorViewTwo.frame = CGRectMake(buttonWidth * 2, 8, 1, buttonHeight - 16)
+        separatorViewTwo.frame    = CGRectMake(buttonWidth * 2, 8, 1, buttonHeight - 16)
         // 顶部分割线
-        separatorViewTop.frame = CGRectMake(0, 0, kScreenW, 1)
+        separatorViewTop.frame    = CGRectMake(0, 0, kScreenW, 1)
         // 底部分割线
         separatorViewBottom.frame = CGRectMake(0, buttonHeight, kScreenW, 1)
 
