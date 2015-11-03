@@ -145,18 +145,9 @@ class JFStatus: NSObject {
                 dispatch_group_enter(group)
                 
                 // 使用SDWebImage下载图片
-                SDWebImageManager.sharedManager().downloadImageWithURL(url, options: SDWebImageOptions(rawValue: 0), progress: nil, completed: { (image, error, _, _, _) -> Void in
-                    
+                SDWebImageManager.sharedManager().downloadImageWithURL(url, options: SDWebImageOptions(rawValue: 0), progress: nil, completed: { (_, _, _, _, _) -> Void in
                     // 离开任务组
                     dispatch_group_leave(group)
-                    
-                    // 判断下载是否有错误
-                    if  error != nil {
-                        print("缓存图片出错")
-                        return
-                    }
-                    
-                    print("缓存完成\(url)")
                 })
             }
         }
@@ -167,7 +158,6 @@ class JFStatus: NSObject {
             // 回调返回微博模型数组
             finished(list: lists, error: nil)
         }
-        
         
     }
     

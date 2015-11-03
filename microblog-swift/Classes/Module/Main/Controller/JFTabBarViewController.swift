@@ -10,7 +10,7 @@ import UIKit
 import ReactiveCocoa
 
 class JFTabBarViewController: UITabBarController {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -42,13 +42,34 @@ class JFTabBarViewController: UITabBarController {
         centerBtn.setImage(UIImage(named: "tabbar_compose_icon_add"), forState: UIControlState.Normal)
         centerBtn.setImage(UIImage(named: "tabbar_compose_icon_add_highlighted"), forState: UIControlState.Highlighted)
         centerBtn.frame = CGRectInset(tabBar.bounds, 2 * tabBar.bounds.width / CGFloat(childViewControllers.count) - 1, 0)
+        
         // modal出中心加号控制器
         centerBtn.rac_command = RACCommand(signalBlock: { (_) -> RACSignal! in
             self.presentViewController(JFCenterViewController(), animated: false, completion: nil)
             return RACSignal.empty()
         })
+        
+        // 创建手势
+        let longPress = UILongPressGestureRecognizer(target: self, action: "didLongPressCenterButton")
+        
+        // 添加手势
+        centerBtn .addGestureRecognizer(longPress)
     }
-
+    
+    /**
+     按钮长按手势
+     */
+    @objc private func didLongPressCenterButton() {
+        
+        print("didLongPressCenterButton")
+        
+        if JFUserAccount.shareUserAccount.isAuth {
+            // 发微博控制器
+            presentViewController(JFNavigationController(rootViewController: JFComposeViewController()), animated: true, completion: nil)
+        }
+        
+    }
+    
     /**
      添加子控制器
      */

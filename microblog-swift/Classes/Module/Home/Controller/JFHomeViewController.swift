@@ -55,13 +55,16 @@ class JFHomeViewController: UITableViewController {
         if JFUserAccount.shareUserAccount.isAuth {
             
             // 初始化下拉刷新控件
-            refreshControl = JFRefreshControl(frame: CGRectZero)
+            refreshControl = JFRefreshControl()
             
             // 刷新控件的值改变事件
             refreshControl?.rac_signalForControlEvents(UIControlEvents.ValueChanged).subscribeNext({ (_) -> Void in
                 // 加载微博数据
                 self.loadStatus()
             })
+            
+            // 刷新动画
+            refreshControl?.beginRefreshing()
             
             // 手动触发刷新控件的值改变事件
             refreshControl?.sendActionsForControlEvents(UIControlEvents.ValueChanged)
@@ -92,12 +95,15 @@ class JFHomeViewController: UITableViewController {
         
         // 动画显示、隐藏tipLabel
         UIView.animateWithDuration(0.75, animations: { () -> Void in
-            self.tipLabel.frame.origin.y = self.navigationController!.navigationBar.frame.height
+            self.tipLabel.frame.origin.y = 44
             }) { (_) -> Void in
                 UIView.animateWithDuration(0.75, delay: 0.25, options: UIViewAnimationOptions(rawValue: 0), animations: { () -> Void in
                     // 还原frame
                     self.tipLabel.frame = srcFrame
-                    }, completion: nil)
+                    }, completion: {(_) -> Void in
+                        // 移除tipLabel
+//                       self.tipLabel.removeFromSuperview()
+                })
         }
         
     }
@@ -230,13 +236,13 @@ extension JFHomeViewController {
         
         JFStatus.loadStatus(since_id, max_id: max_id) { [weak self](list, error) -> () in
             
-            // 停止刷新
+            // 停止刷新控件动画
             self?.refreshControl?.endRefreshing()
             self?.pullUpView.stopAnimating()
             
             // 加载失败
             if error != nil {
-                JFProgressHUD.jf_showErrorWithStatus("网络不给力")
+                JFProgressHUD.jf_showErrorWithStatus("您的网络不给力")
                 return
             }
             
@@ -259,8 +265,6 @@ extension JFHomeViewController {
                 
                 self?.statuses = list
             }
-            
-            print(self?.statuses)
 
         }
     }
@@ -269,8 +273,6 @@ extension JFHomeViewController {
      第section组有多少行cell
      */
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // 第一个?表示statuses有值才返回statuses.count
-        // ?? statuses == nil 时返回 0
         return statuses?.count ?? 0
     }
     
@@ -290,6 +292,7 @@ extension JFHomeViewController {
         
         // 如果是最后一个cell，并且上拉没有动画。就上拉加载更多数据
         if indexPath.row == statuses!.count - 1 && !pullUpView.isAnimating() {
+            
             // 上拉加载数据
             pullUpView.startAnimating()
             

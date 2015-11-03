@@ -18,9 +18,8 @@ class JFRefreshControl: UIRefreshControl {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        
+    override init() {
+        super.init()
         // 隐藏菊花
         tintColor = UIColor.clearColor()
         
@@ -31,6 +30,8 @@ class JFRefreshControl: UIRefreshControl {
     // 覆盖父类frame属性
     override var frame: CGRect {
         didSet {
+            
+            print(frame)
             
             if frame.origin.y > 0 {
                 return
@@ -66,10 +67,7 @@ class JFRefreshControl: UIRefreshControl {
      开始加载动画
      */
     func startLoading() {
-        
-        // 隐藏pullBgView
-        pullBgView.hidden = true
-        
+
         // 动画的key
         let animationKey = "loadingAnimation"
         
@@ -78,10 +76,13 @@ class JFRefreshControl: UIRefreshControl {
             return
         }
         
+        // 隐藏pullBgView
+        pullBgView.hidden = true
+        
         // 创建动画
         let animation                 = CABasicAnimation(keyPath: "transform.rotation")
         animation.toValue             = M_PI * 2
-        animation.duration            = 0.5
+        animation.duration            = 0.25
         animation.repeatCount         = MAXFLOAT
         animation.removedOnCompletion = false
         
