@@ -9,6 +9,7 @@
 import UIKit
 import ReactiveCocoa
 import SVProgressHUD
+import MJRefresh
 
 /**
  cell重用标示符
@@ -136,9 +137,9 @@ extension JFHomeViewController {
      */
     private func chooseView() {
         if JFUserAccount.shareUserAccount.isAuth {
+            
             // 已经授权就正常加载
             super.loadView()
-            
         } else {
             
             // 未授权就加载访客视图
@@ -153,7 +154,7 @@ extension JFHomeViewController {
             view = visitor
         }
         
-        // 设置导航栏
+        // 根据授权状态设置导航栏
         setNavigationBar()
     }
     
@@ -228,6 +229,7 @@ extension JFHomeViewController {
         }
         
         JFStatus.loadStatus(since_id, max_id: max_id) { [weak self](list, error) -> () in
+            
             // 停止刷新
             self?.refreshControl?.endRefreshing()
             self?.pullUpView.stopAnimating()
@@ -257,6 +259,8 @@ extension JFHomeViewController {
                 
                 self?.statuses = list
             }
+            
+            print(self?.statuses)
 
         }
     }

@@ -126,9 +126,6 @@ class JFStatus: NSObject {
         // 定义任务组
         let group = dispatch_group_create()
         
-        // 记录下载图片的大小
-        var length = 0
-        
         // 遍历模型数组
         for status in lists {
             
@@ -149,6 +146,7 @@ class JFStatus: NSObject {
                 
                 // 使用SDWebImage下载图片
                 SDWebImageManager.sharedManager().downloadImageWithURL(url, options: SDWebImageOptions(rawValue: 0), progress: nil, completed: { (image, error, _, _, _) -> Void in
+                    
                     // 离开任务组
                     dispatch_group_leave(group)
                     
@@ -158,12 +156,7 @@ class JFStatus: NSObject {
                         return
                     }
                     
-                    // 获取下载图片的大小
-                    
-                    if let data = UIImagePNGRepresentation(image) {
-                        length += data.length
-                    }
-                    
+                    print("缓存完成\(url)")
                 })
             }
         }

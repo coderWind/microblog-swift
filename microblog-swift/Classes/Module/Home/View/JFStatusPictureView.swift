@@ -90,10 +90,10 @@ class JFStatusPictureView: UICollectionView {
         // 一张图
         if count == 1 {
             
+            var size = CGSize(width: 150, height: 120)
+            
             // 获取图片URL地址
             let urlString = status?.pictureURLs?[0].absoluteString
-            
-            var size = CGSize(width: 150, height: 120)
             
             // 获取图片，有图片设置size为图片的size，没有则使用默认的
             if let image = SDWebImageManager.sharedManager().imageCache.imageFromDiskCacheForKey(urlString) {

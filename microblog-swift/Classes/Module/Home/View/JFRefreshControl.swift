@@ -168,9 +168,9 @@ class JFRefreshControl: UIRefreshControl {
     lazy var startRefreshLabel: UILabel = {
         let label = UILabel()
         label.sizeToFit()
-        label.font = UIFont.systemFontOfSize(15)
+        label.font = UIFont.systemFontOfSize(14)
         label.textColor = UIColor.grayColor()
-        label.text = "加载中......"
+        label.text = "开始刷新数据"
         return label
     }()
     
@@ -194,7 +194,7 @@ class JFRefreshControl: UIRefreshControl {
     lazy var pullFrefreshLabel: UILabel = {
         let label = UILabel()
         label.sizeToFit()
-        label.font = UIFont.systemFontOfSize(15)
+        label.font = UIFont.systemFontOfSize(14)
         label.textColor = UIColor.grayColor()
         label.text = "下拉刷新"
         return label
