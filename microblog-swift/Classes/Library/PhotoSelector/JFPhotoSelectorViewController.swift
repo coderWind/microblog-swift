@@ -60,15 +60,16 @@ extension JFPhotoSelectorViewController {
     }
 }
 
-// MARK: - 扩展 CZPhotoSelectorViewController 实现 CZPhotoSelectorCellDelegate 协议
+// MARK: - JFPhotoSelectorCellDelegate 协议
 extension JFPhotoSelectorViewController: JFPhotoSelectorCellDelegate {
+    
     /// 添加图片
     func photoSelectorCellAddPhoto() {
-        print(__FUNCTION__)
+        
     }
     
     /// 删除图片
     func photoSelectorCellRemovePhoto() {
-        print(__FUNCTION__)
+        
     }
 }

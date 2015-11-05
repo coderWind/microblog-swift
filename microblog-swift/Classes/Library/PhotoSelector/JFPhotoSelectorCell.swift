@@ -13,6 +13,7 @@ import ReactiveCocoa
  *  cell代理
  */
 protocol JFPhotoSelectorCellDelegate {
+    
     // 加号按钮点击事件
     func photoSelectorCellAddPhoto()
     
@@ -66,10 +67,11 @@ class JFPhotoSelectorCell: UICollectionViewCell {
             self.cellDelegate?.photoSelectorCellAddPhoto()
         }
         // 移除
-        removeButton.rac_command = RACCommand(signalBlock: { (_) -> RACSignal! in
+        removeButton.rac_signalForControlEvents(UIControlEvents.TouchUpInside).subscribeNext { (_) -> Void in
             self.cellDelegate?.photoSelectorCellRemovePhoto()
-            return RACSignal.empty()
-        })
+        }
+        
+        
         
     }
     
