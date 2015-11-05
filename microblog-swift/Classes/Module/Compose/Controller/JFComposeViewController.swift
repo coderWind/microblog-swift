@@ -25,7 +25,7 @@ class JFComposeViewController: UIViewController {
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        
+
         // 主动弹出键盘
         textView.becomeFirstResponder()
         
@@ -56,12 +56,16 @@ class JFComposeViewController: UIViewController {
         
     }
     
-    /// 添加键盘监听
+    /**
+     添加键盘监听
+     */
     private func addkeyboardObserver() {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillChangeFrame:", name: UIKeyboardWillChangeFrameNotification, object: nil)
     }
     
-    /// 取消键盘监听
+    /**
+     取消键盘监听
+     */
     private func removeKeyboardObserver() {
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
@@ -123,6 +127,13 @@ class JFComposeViewController: UIViewController {
     /// 微博文本最大长度
     private let statusMaxLength = 20
     
+    /// 照片选择控制器
+    private lazy var photoSelectorViewController: JFPhotoSelectorViewController = {
+        let viewController = JFPhotoSelectorViewController()
+        self.addChildViewController(viewController)
+        return viewController
+    }()
+    
 }
 
 // MARK: - 准备UI扩展
@@ -133,47 +144,43 @@ extension JFComposeViewController {
      */
     private func prepareUI() {
         
+        // 添加子控件
+        view.addSubview(textView)
+        view.addSubview(photoSelectorViewController.view)
+        view.addSubview(toolBar)
+        view.addSubview(lengthTipLabel)
+        
         // 设置导航
         setupNavigationBar()
         
-        // 设置工具条
-        setupToolBar()
-        
-        // 设置文本框
-        setupTextView()
-        
-        // 设置最大文本长度
-        setupLengthTipLabel()
-        
-    }
-    
-    /// 准备微博文本长度标签
-    private func setupLengthTipLabel() {
-        // 添加子控件
-        view.addSubview(lengthTipLabel)
-        
-        // 添加约束
-        lengthTipLabel.snp_makeConstraints { (make) -> Void in
-            make.right.equalTo(-12)
-            make.bottom.equalTo(toolBar.snp_top).offset(-8)
-        }
-        
-        lengthTipLabel.text = "\(statusMaxLength)"
-    }
-    
-    /**
-     设置文本框
-     */
-    private func setupTextView() {
-        
-        // 添加文本框到控制器的view上
-        view.addSubview(textView)
-        
-        // 约束
+        // 文本框
         textView.snp_makeConstraints { (make) -> Void in
             make.left.top.right.equalTo(0)
             make.bottom.equalTo(toolBar.snp_top)
         }
+        
+        // 图片选择器
+        photoSelectorViewController.view.snp_makeConstraints { (make) -> Void in
+            make.left.right.equalTo(0)
+            make.top.equalTo(kScreenH * 2)
+            make.height.equalTo(kScreenH * 0.6)
+        }
+        
+        // 工具条
+        toolBar.snp_makeConstraints { (make) -> Void in
+            make.left.bottom.right.equalTo(0)
+            make.height.equalTo(44)
+        }
+        // 设置工具条
+        setupToolBar()
+        
+        // 长度提示文本
+        lengthTipLabel.snp_makeConstraints { (make) -> Void in
+            make.right.equalTo(-12)
+            make.bottom.equalTo(toolBar.snp_top).offset(-8)
+        }
+        // 设置文字
+        lengthTipLabel.text = "\(statusMaxLength)"
         
     }
     
@@ -181,15 +188,6 @@ extension JFComposeViewController {
      设置工具条
      */
     private func setupToolBar() {
-        
-        // 添加工具条到控制器的view
-        view.addSubview(toolBar)
-        
-        // 添加约束
-        toolBar.snp_makeConstraints { (make) -> Void in
-            make.left.bottom.right.equalTo(0)
-            make.height.equalTo(44)
-        }
         
         // 创建toolBar上的item数组
         var items = [UIBarButtonItem]()
@@ -240,6 +238,18 @@ extension JFComposeViewController {
     */
     @objc private func picture() {
         print("图片")
+        
+        // 显示 照片选择器
+        photoSelectorViewController.view.snp_updateConstraints { (make) -> Void in
+            make.top.equalTo(kScreenH * 0.4)
+        }
+        
+        // 隐藏键盘
+        textView.resignFirstResponder()
+        
+        UIView.animateWithDuration(0.25) { () -> Void in
+            self.view.layoutIfNeeded()
+        }
     }
     
     /**
@@ -261,18 +271,6 @@ extension JFComposeViewController {
      */
     @objc private func emotion() {
         print("表情")
-        switchKeyboard()
-    }
-    
-    /**
-     加号
-     */
-    @objc private func add() {
-        print("加号")
-    }
-    
-    func switchKeyboard() {
-        print("表情键盘:\(textView.inputView)")
         
         removeKeyboardObserver()
         
@@ -286,6 +284,13 @@ extension JFComposeViewController {
         
         // 再呼出键盘
         textView.becomeFirstResponder()
+    }
+    
+    /**
+     加号
+     */
+    @objc private func add() {
+        print("加号")
     }
     
     /**
@@ -323,6 +328,7 @@ extension JFComposeViewController {
      */
     @objc private func didTappedSendButton() {
         print("发送微博")
+        sendStatus()
     }
     
     /**
@@ -408,17 +414,22 @@ extension JFComposeViewController {
             return
         }
         
+        // 获取用户选择的图片
+        let image = photoSelectorViewController.photos.first
+        
         // 调用网络工具类发送微博
-        JFNetworkTool.shareNetworkTool.sendStatus(status) { (result, error) -> () in
+        JFNetworkTool.shareNetworkTool.sendStatus(status ,image: image) { (result, error) -> () in
             if error != nil {
                 JFProgressHUD.jf_showWithStatus("网络繁忙")
                 return
             }
             
+            // 发布成功
+            JFProgressHUD.jf_showWithStatus("发布成功")
+            
             // 关闭控制器
             self.didTappedCancelButton()
         }
     }
-    
     
 }

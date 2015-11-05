@@ -41,6 +41,8 @@ class JFEmoticonLayout: UICollectionViewFlowLayout {
         // 分页效果
         collectionView?.pagingEnabled = true
         
+        
+        
     }
 
 }

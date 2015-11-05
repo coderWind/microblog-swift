@@ -12,19 +12,33 @@ import ReactiveCocoa
 /**
  *  cell代理
  */
-protocol JFPhotoSelectorCellDelegate {
+protocol JFPhotoSelectorCellDelegate : NSObjectProtocol {
     
     // 加号按钮点击事件
-    func photoSelectorCellAddPhoto()
-    
+    func photoSelectorCellAddPhoto(cell: JFPhotoSelectorCell)
     // 删除按钮点击时间
-    func photoSelectorCellRemovePhoto()
+    func photoSelectorCellRemovePhoto(cell: JFPhotoSelectorCell)
 }
 
 class JFPhotoSelectorCell: UICollectionViewCell {
     
+    /// 显示的image
+    var image: UIImage? {
+        didSet {
+            // image == nil 表示最后一个按钮
+            if image == nil {
+                addButton.setImage(UIImage(named: "compose_pic_add"), forState: UIControlState.Normal)
+            } else {
+                addButton.setImage(image, forState: UIControlState.Normal)
+            }
+            
+            // 如果是最后一个按钮不需要显示删除按钮
+            removeButton.hidden = image == nil
+        }
+    }
+    
     /// 代理
-    var cellDelegate: JFPhotoSelectorCellDelegate?
+    var cellDelegate: protocol<JFPhotoSelectorCellDelegate>?
     
     // MARK: - 构造方法
     required init?(coder aDecoder: NSCoder) {
@@ -36,6 +50,9 @@ class JFPhotoSelectorCell: UICollectionViewCell {
         
         // 准备UI
         prepareUI()
+        
+        backgroundColor = UIColor.whiteColor()
+        
     }
     
     /**
@@ -64,13 +81,12 @@ class JFPhotoSelectorCell: UICollectionViewCell {
         // 按钮点击事件
         // 添加
         addButton.rac_signalForControlEvents(UIControlEvents.TouchUpInside).subscribeNext { (_) -> Void in
-            self.cellDelegate?.photoSelectorCellAddPhoto()
+            self.cellDelegate?.photoSelectorCellAddPhoto(self)
         }
         // 移除
         removeButton.rac_signalForControlEvents(UIControlEvents.TouchUpInside).subscribeNext { (_) -> Void in
-            self.cellDelegate?.photoSelectorCellRemovePhoto()
+            self.cellDelegate?.photoSelectorCellRemovePhoto(self)
         }
-        
         
         
     }
@@ -81,6 +97,8 @@ class JFPhotoSelectorCell: UICollectionViewCell {
         let button = UIButton()
         button.setImage(UIImage(named: "compose_pic_add"), forState: UIControlState.Normal)
         button.setImage(UIImage(named: "compose_pic_add_highlighted"), forState: UIControlState.Highlighted)
+        // 设置图片的填充模式
+        button.imageView?.contentMode = UIViewContentMode.ScaleAspectFill
         return button
     }()
     

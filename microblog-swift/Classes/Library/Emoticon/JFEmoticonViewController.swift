@@ -24,13 +24,15 @@ class JFEmoticonViewController: UIViewController {
         // 准备UI
         prepareUI()
         
+        view.backgroundColor = UIColor.whiteColor()
+        
     }
     
     // MARK: - 懒加载子控件
     /// 表情视图区
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: JFEmoticonLayout())
-        
+        collectionView.backgroundColor = UIColor.whiteColor()
         return collectionView
     }()
     
@@ -49,11 +51,6 @@ class JFEmoticonViewController: UIViewController {
     
     /// 按钮起始tag
     private let baseTag = 1000
-    
-}
-
-// MARK: - 表情输入
-extension JFEmoticonViewController {
     
 }
 
@@ -252,4 +249,5 @@ extension JFEmoticonViewController: UICollectionViewDataSource, UICollectionView
         return cell
         
     }
+    
 }
