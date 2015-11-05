@@ -118,7 +118,7 @@ class JFHomeVisitorView: UIView {
         
         //MARK: - RAC通知
         // 进入后台
-        NSNotificationCenter.defaultCenter().rac_addObserverForName(UIApplicationDidEnterBackgroundNotification, object: nil).subscribeNext({ (_) -> Void in
+        NSNotificationCenter.defaultCenter().rac_addObserverForName(UIApplicationDidEnterBackgroundNotification, object: self).subscribeNext({ (_) -> Void in
             
             // 记录暂停时间
             let pauseTime = self.rotateView.layer.convertTime(CACurrentMediaTime(), fromLayer: nil)
@@ -130,7 +130,7 @@ class JFHomeVisitorView: UIView {
             
         })
         // 进入前台
-        NSNotificationCenter.defaultCenter().rac_addObserverForName(UIApplicationDidBecomeActiveNotification, object: nil).subscribeNext({ (_) -> Void in
+        NSNotificationCenter.defaultCenter().rac_addObserverForName(UIApplicationDidBecomeActiveNotification, object: self).subscribeNext({ (_) -> Void in
             
             // 获取暂停时间
             let pauseTime = self.rotateView.layer.timeOffset
@@ -143,6 +143,11 @@ class JFHomeVisitorView: UIView {
             self.rotateView.layer.beginTime = timeSincePause
         })
         
+    }
+    
+    deinit {
+        // 移除通知
+        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
     // MARK: - 懒加载

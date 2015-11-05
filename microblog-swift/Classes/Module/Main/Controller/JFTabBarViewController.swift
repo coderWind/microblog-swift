@@ -61,11 +61,19 @@ class JFTabBarViewController: UITabBarController {
      */
     @objc private func didLongPressCenterButton() {
         
-        print("didLongPressCenterButton")
+        print(longPressFlag)
         
-        if JFUserAccount.shareUserAccount.isAuth {
+        if JFUserAccount.shareUserAccount.isAuth && !longPressFlag {
+            
+            print("didLongPressCenterButton")
+            
+            // 修改全局长按记号
+            longPressFlag = true
+            
             // 发微博控制器
             presentViewController(JFNavigationController(rootViewController: JFComposeViewController()), animated: true, completion: nil)
+        } else {
+            presentViewController(JFNavigationController(rootViewController: JFOAuthViewController()), animated: true, completion: nil)
         }
         
     }

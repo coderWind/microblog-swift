@@ -12,6 +12,25 @@
 		A50DC5131BDCF33800FEF643 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A50DC5121BDCF33800FEF643 /* Assets.xcassets */; };
 		A51298121BE48296005D4D73 /* JFStatusPictureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51298111BE48296005D4D73 /* JFStatusPictureView.swift */; };
 		A51298141BE48CC7005D4D73 /* JFStatusPictureViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51298131BE48CC7005D4D73 /* JFStatusPictureViewCell.swift */; };
+		A5380BF41BEA156F0033E8B2 /* Emoticons.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A5380BF31BEA156F0033E8B2 /* Emoticons.bundle */; };
+		A5380BF81BEA15A70033E8B2 /* JFEmoticonLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5380BF51BEA15A70033E8B2 /* JFEmoticonLayout.swift */; };
+		A5380BF91BEA15A70033E8B2 /* JFEmoticonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5380BF61BEA15A70033E8B2 /* JFEmoticonCell.swift */; };
+		A5380BFA1BEA15A70033E8B2 /* JFEmoticonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5380BF71BEA15A70033E8B2 /* JFEmoticonViewController.swift */; };
+		A5380BFC1BEA16440033E8B2 /* JFEmoticon.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5380BFB1BEA16440033E8B2 /* JFEmoticon.swift */; };
+		A5380C0F1BEA1D6B0033E8B2 /* compose_emotion_delete@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A5380C021BEA1D6B0033E8B2 /* compose_emotion_delete@2x.png */; };
+		A5380C101BEA1D6B0033E8B2 /* compose_emotion_delete_highlighted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A5380C031BEA1D6B0033E8B2 /* compose_emotion_delete_highlighted@2x.png */; };
+		A5380C111BEA1D6B0033E8B2 /* compose_emotion_table_left_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A5380C041BEA1D6B0033E8B2 /* compose_emotion_table_left_normal@2x.png */; };
+		A5380C121BEA1D6B0033E8B2 /* compose_emotion_table_left_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A5380C051BEA1D6B0033E8B2 /* compose_emotion_table_left_selected@2x.png */; };
+		A5380C131BEA1D6B0033E8B2 /* compose_emotion_table_mid_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A5380C061BEA1D6B0033E8B2 /* compose_emotion_table_mid_normal@2x.png */; };
+		A5380C141BEA1D6B0033E8B2 /* compose_emotion_table_mid_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A5380C071BEA1D6B0033E8B2 /* compose_emotion_table_mid_selected@2x.png */; };
+		A5380C151BEA1D6B0033E8B2 /* compose_emotion_table_right_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A5380C081BEA1D6B0033E8B2 /* compose_emotion_table_right_normal@2x.png */; };
+		A5380C161BEA1D6B0033E8B2 /* compose_emotion_table_right_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A5380C091BEA1D6B0033E8B2 /* compose_emotion_table_right_selected@2x.png */; };
+		A5380C171BEA1D6B0033E8B2 /* compose_keyboard_dot_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A5380C0A1BEA1D6B0033E8B2 /* compose_keyboard_dot_normal@2x.png */; };
+		A5380C181BEA1D6B0033E8B2 /* compose_keyboard_dot_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A5380C0B1BEA1D6B0033E8B2 /* compose_keyboard_dot_selected@2x.png */; };
+		A5380C191BEA1D6B0033E8B2 /* emoticon_keyboard_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A5380C0C1BEA1D6B0033E8B2 /* emoticon_keyboard_background@2x.png */; };
+		A5380C1A1BEA1D6B0033E8B2 /* emoticon_keyboard_magnifier@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A5380C0D1BEA1D6B0033E8B2 /* emoticon_keyboard_magnifier@2x.png */; };
+		A5380C1B1BEA1D6B0033E8B2 /* emoticon_keyboard_magnifier@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A5380C0E1BEA1D6B0033E8B2 /* emoticon_keyboard_magnifier@3x.png */; };
+		A5380C1D1BEA24490033E8B2 /* JFEmoticonPackage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5380C1C1BEA24490033E8B2 /* JFEmoticonPackage.swift */; };
 		A54C16421BE9182100100E1B /* JFPlaceholderTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54C16411BE9182100100E1B /* JFPlaceholderTextView.swift */; };
 		A555AA6B1BE2FDB600104563 /* UIBarButtonItem+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A555AA6A1BE2FDB600104563 /* UIBarButtonItem+Extension.swift */; };
 		A555AA701BE30C7000104563 /* JFError.swift in Sources */ = {isa = PBXBuildFile; fileRef = A555AA6F1BE30C7000104563 /* JFError.swift */; };
@@ -29,6 +48,10 @@
 		A5A7CC5F1BDE9545006B0D3D /* JFWelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A7CC5E1BDE9545006B0D3D /* JFWelcomeViewController.swift */; };
 		A5AE76D11BDF54F2000761F9 /* JFTitleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5AE76D01BDF54F2000761F9 /* JFTitleButton.swift */; };
 		A5AE76D31BDF5FE4000761F9 /* JFPopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5AE76D21BDF5FE4000761F9 /* JFPopViewController.swift */; };
+		A5BD857F1BEB22D900B520FE /* JFTextAttachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BD857E1BEB22D900B520FE /* JFTextAttachment.swift */; };
+		A5BD85811BEB266000B520FE /* UITextView+Emoticon.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BD85801BEB266000B520FE /* UITextView+Emoticon.swift */; };
+		A5BD85841BEB44C200B520FE /* JFPhotoSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BD85831BEB44C200B520FE /* JFPhotoSelectorViewController.swift */; };
+		A5BD85861BEB4AE700B520FE /* JFPhotoSelectorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BD85851BEB4AE700B520FE /* JFPhotoSelectorCell.swift */; };
 		A5C7F95B1BDE0A54004EFA96 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C7F9201BDE0A54004EFA96 /* UIImage+Extension.swift */; };
 		A5C7F95C1BDE0A54004EFA96 /* JFStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C7F9231BDE0A54004EFA96 /* JFStatus.swift */; };
 		A5C7F95D1BDE0A54004EFA96 /* JFUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C7F9241BDE0A54004EFA96 /* JFUser.swift */; };
@@ -62,6 +85,25 @@
 		A50DC5171BDCF33800FEF643 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A51298111BE48296005D4D73 /* JFStatusPictureView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFStatusPictureView.swift; sourceTree = "<group>"; };
 		A51298131BE48CC7005D4D73 /* JFStatusPictureViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFStatusPictureViewCell.swift; sourceTree = "<group>"; };
+		A5380BF31BEA156F0033E8B2 /* Emoticons.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Emoticons.bundle; sourceTree = "<group>"; };
+		A5380BF51BEA15A70033E8B2 /* JFEmoticonLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFEmoticonLayout.swift; sourceTree = "<group>"; };
+		A5380BF61BEA15A70033E8B2 /* JFEmoticonCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFEmoticonCell.swift; sourceTree = "<group>"; };
+		A5380BF71BEA15A70033E8B2 /* JFEmoticonViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFEmoticonViewController.swift; sourceTree = "<group>"; };
+		A5380BFB1BEA16440033E8B2 /* JFEmoticon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFEmoticon.swift; sourceTree = "<group>"; };
+		A5380C021BEA1D6B0033E8B2 /* compose_emotion_delete@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "compose_emotion_delete@2x.png"; sourceTree = "<group>"; };
+		A5380C031BEA1D6B0033E8B2 /* compose_emotion_delete_highlighted@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "compose_emotion_delete_highlighted@2x.png"; sourceTree = "<group>"; };
+		A5380C041BEA1D6B0033E8B2 /* compose_emotion_table_left_normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "compose_emotion_table_left_normal@2x.png"; sourceTree = "<group>"; };
+		A5380C051BEA1D6B0033E8B2 /* compose_emotion_table_left_selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "compose_emotion_table_left_selected@2x.png"; sourceTree = "<group>"; };
+		A5380C061BEA1D6B0033E8B2 /* compose_emotion_table_mid_normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "compose_emotion_table_mid_normal@2x.png"; sourceTree = "<group>"; };
+		A5380C071BEA1D6B0033E8B2 /* compose_emotion_table_mid_selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "compose_emotion_table_mid_selected@2x.png"; sourceTree = "<group>"; };
+		A5380C081BEA1D6B0033E8B2 /* compose_emotion_table_right_normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "compose_emotion_table_right_normal@2x.png"; sourceTree = "<group>"; };
+		A5380C091BEA1D6B0033E8B2 /* compose_emotion_table_right_selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "compose_emotion_table_right_selected@2x.png"; sourceTree = "<group>"; };
+		A5380C0A1BEA1D6B0033E8B2 /* compose_keyboard_dot_normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "compose_keyboard_dot_normal@2x.png"; sourceTree = "<group>"; };
+		A5380C0B1BEA1D6B0033E8B2 /* compose_keyboard_dot_selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "compose_keyboard_dot_selected@2x.png"; sourceTree = "<group>"; };
+		A5380C0C1BEA1D6B0033E8B2 /* emoticon_keyboard_background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "emoticon_keyboard_background@2x.png"; sourceTree = "<group>"; };
+		A5380C0D1BEA1D6B0033E8B2 /* emoticon_keyboard_magnifier@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "emoticon_keyboard_magnifier@2x.png"; sourceTree = "<group>"; };
+		A5380C0E1BEA1D6B0033E8B2 /* emoticon_keyboard_magnifier@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "emoticon_keyboard_magnifier@3x.png"; sourceTree = "<group>"; };
+		A5380C1C1BEA24490033E8B2 /* JFEmoticonPackage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFEmoticonPackage.swift; sourceTree = "<group>"; };
 		A54C16411BE9182100100E1B /* JFPlaceholderTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFPlaceholderTextView.swift; sourceTree = "<group>"; };
 		A555AA6A1BE2FDB600104563 /* UIBarButtonItem+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIBarButtonItem+Extension.swift"; sourceTree = "<group>"; };
 		A555AA6F1BE30C7000104563 /* JFError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFError.swift; sourceTree = "<group>"; };
@@ -79,6 +121,10 @@
 		A5A7CC5E1BDE9545006B0D3D /* JFWelcomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFWelcomeViewController.swift; sourceTree = "<group>"; };
 		A5AE76D01BDF54F2000761F9 /* JFTitleButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFTitleButton.swift; sourceTree = "<group>"; };
 		A5AE76D21BDF5FE4000761F9 /* JFPopViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFPopViewController.swift; sourceTree = "<group>"; };
+		A5BD857E1BEB22D900B520FE /* JFTextAttachment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFTextAttachment.swift; sourceTree = "<group>"; };
+		A5BD85801BEB266000B520FE /* UITextView+Emoticon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITextView+Emoticon.swift"; sourceTree = "<group>"; };
+		A5BD85831BEB44C200B520FE /* JFPhotoSelectorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFPhotoSelectorViewController.swift; sourceTree = "<group>"; };
+		A5BD85851BEB4AE700B520FE /* JFPhotoSelectorCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFPhotoSelectorCell.swift; sourceTree = "<group>"; };
 		A5C7F9201BDE0A54004EFA96 /* UIImage+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
 		A5C7F9231BDE0A54004EFA96 /* JFStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFStatus.swift; sourceTree = "<group>"; };
 		A5C7F9241BDE0A54004EFA96 /* JFUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFUser.swift; sourceTree = "<group>"; };
@@ -162,6 +208,43 @@
 			path = "microblog-swift";
 			sourceTree = "<group>";
 		};
+		A5380BF21BEA15670033E8B2 /* Emoticon */ = {
+			isa = PBXGroup;
+			children = (
+				A5380BFB1BEA16440033E8B2 /* JFEmoticon.swift */,
+				A5380C1C1BEA24490033E8B2 /* JFEmoticonPackage.swift */,
+				A5BD85801BEB266000B520FE /* UITextView+Emoticon.swift */,
+				A5BD857E1BEB22D900B520FE /* JFTextAttachment.swift */,
+				A5380BF61BEA15A70033E8B2 /* JFEmoticonCell.swift */,
+				A5380BF51BEA15A70033E8B2 /* JFEmoticonLayout.swift */,
+				A5380BF71BEA15A70033E8B2 /* JFEmoticonViewController.swift */,
+				A5380C011BEA1D6B0033E8B2 /* icon */,
+				A5380BF31BEA156F0033E8B2 /* Emoticons.bundle */,
+			);
+			path = Emoticon;
+			sourceTree = "<group>";
+		};
+		A5380C011BEA1D6B0033E8B2 /* icon */ = {
+			isa = PBXGroup;
+			children = (
+				A5380C021BEA1D6B0033E8B2 /* compose_emotion_delete@2x.png */,
+				A5380C031BEA1D6B0033E8B2 /* compose_emotion_delete_highlighted@2x.png */,
+				A5380C041BEA1D6B0033E8B2 /* compose_emotion_table_left_normal@2x.png */,
+				A5380C051BEA1D6B0033E8B2 /* compose_emotion_table_left_selected@2x.png */,
+				A5380C061BEA1D6B0033E8B2 /* compose_emotion_table_mid_normal@2x.png */,
+				A5380C071BEA1D6B0033E8B2 /* compose_emotion_table_mid_selected@2x.png */,
+				A5380C081BEA1D6B0033E8B2 /* compose_emotion_table_right_normal@2x.png */,
+				A5380C091BEA1D6B0033E8B2 /* compose_emotion_table_right_selected@2x.png */,
+				A5380C0A1BEA1D6B0033E8B2 /* compose_keyboard_dot_normal@2x.png */,
+				A5380C0B1BEA1D6B0033E8B2 /* compose_keyboard_dot_selected@2x.png */,
+				A5380C0C1BEA1D6B0033E8B2 /* emoticon_keyboard_background@2x.png */,
+				A5380C0D1BEA1D6B0033E8B2 /* emoticon_keyboard_magnifier@2x.png */,
+				A5380C0E1BEA1D6B0033E8B2 /* emoticon_keyboard_magnifier@3x.png */,
+			);
+			name = icon;
+			path = Emotion;
+			sourceTree = "<group>";
+		};
 		A555AA6C1BE305BB00104563 /* popover */ = {
 			isa = PBXGroup;
 			children = (
@@ -201,6 +284,15 @@
 			name = Cell;
 			sourceTree = "<group>";
 		};
+		A5BD85821BEB449400B520FE /* PhotoSelector */ = {
+			isa = PBXGroup;
+			children = (
+				A5BD85831BEB44C200B520FE /* JFPhotoSelectorViewController.swift */,
+				A5BD85851BEB4AE700B520FE /* JFPhotoSelectorCell.swift */,
+			);
+			path = PhotoSelector;
+			sourceTree = "<group>";
+		};
 		A5C7F91E1BDE0A54004EFA96 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
@@ -229,6 +321,8 @@
 		A5C7F9211BDE0A54004EFA96 /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				A5BD85821BEB449400B520FE /* PhotoSelector */,
+				A5380BF21BEA15670033E8B2 /* Emoticon */,
 			);
 			path = Library;
 			sourceTree = "<group>";
@@ -650,7 +744,21 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A5380C1A1BEA1D6B0033E8B2 /* emoticon_keyboard_magnifier@2x.png in Resources */,
+				A5380C101BEA1D6B0033E8B2 /* compose_emotion_delete_highlighted@2x.png in Resources */,
+				A5380C111BEA1D6B0033E8B2 /* compose_emotion_table_left_normal@2x.png in Resources */,
+				A5380C161BEA1D6B0033E8B2 /* compose_emotion_table_right_selected@2x.png in Resources */,
+				A5380C121BEA1D6B0033E8B2 /* compose_emotion_table_left_selected@2x.png in Resources */,
 				A50DC5131BDCF33800FEF643 /* Assets.xcassets in Resources */,
+				A5380C1B1BEA1D6B0033E8B2 /* emoticon_keyboard_magnifier@3x.png in Resources */,
+				A5380C151BEA1D6B0033E8B2 /* compose_emotion_table_right_normal@2x.png in Resources */,
+				A5380BF41BEA156F0033E8B2 /* Emoticons.bundle in Resources */,
+				A5380C0F1BEA1D6B0033E8B2 /* compose_emotion_delete@2x.png in Resources */,
+				A5380C191BEA1D6B0033E8B2 /* emoticon_keyboard_background@2x.png in Resources */,
+				A5380C141BEA1D6B0033E8B2 /* compose_emotion_table_mid_selected@2x.png in Resources */,
+				A5380C181BEA1D6B0033E8B2 /* compose_keyboard_dot_selected@2x.png in Resources */,
+				A5380C131BEA1D6B0033E8B2 /* compose_emotion_table_mid_normal@2x.png in Resources */,
+				A5380C171BEA1D6B0033E8B2 /* compose_keyboard_dot_normal@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -711,13 +819,17 @@
 			files = (
 				A5AE76D11BDF54F2000761F9 /* JFTitleButton.swift in Sources */,
 				A59291571BE096C900D647F5 /* JFItemButton.swift in Sources */,
+				A5380BFA1BEA15A70033E8B2 /* JFEmoticonViewController.swift in Sources */,
 				A59E3C151BE3C4F000E9543C /* JFStatusCell.swift in Sources */,
 				A5D7CDB91BDD4B2100D1DF04 /* JFCommon.swift in Sources */,
 				A5C7F95D1BDE0A54004EFA96 /* JFUser.swift in Sources */,
+				A5BD857F1BEB22D900B520FE /* JFTextAttachment.swift in Sources */,
 				A5C7F9641BDE0A54004EFA96 /* JFHomeVisitorView.swift in Sources */,
 				A5C7F95E1BDE0A54004EFA96 /* JFUserAccount.swift in Sources */,
+				A5BD85861BEB4AE700B520FE /* JFPhotoSelectorCell.swift in Sources */,
 				A5C7F9651BDE0A54004EFA96 /* JFNavigationController.swift in Sources */,
 				A5C7F96C1BDE0A54004EFA96 /* JFProfileVisitorView.swift in Sources */,
+				A5BD85811BEB266000B520FE /* UITextView+Emoticon.swift in Sources */,
 				A51298121BE48296005D4D73 /* JFStatusPictureView.swift in Sources */,
 				A5C7F9681BDE0A54004EFA96 /* JFMessageVisitorView.swift in Sources */,
 				A5A7CC5F1BDE9545006B0D3D /* JFWelcomeViewController.swift in Sources */,
@@ -726,20 +838,25 @@
 				A5C7F9611BDE0A54004EFA96 /* JFDiscoverViewController.swift in Sources */,
 				A59E3C171BE3E4C300E9543C /* UIButton+Extension.swift in Sources */,
 				A5916C481BE6017600B26DE5 /* UIImageView+Extension.swift in Sources */,
+				A5BD85841BEB44C200B520FE /* JFPhotoSelectorViewController.swift in Sources */,
 				A5A6EA851BE504E100DD47F4 /* JFStatusForwardCell.swift in Sources */,
 				A5916C461BE5FFC100B26DE5 /* NSDate+Extension.swift in Sources */,
 				A5AE76D31BDF5FE4000761F9 /* JFPopViewController.swift in Sources */,
 				A58654AF1BE6284A007679D0 /* JFProgressHUD.swift in Sources */,
 				A555AA701BE30C7000104563 /* JFError.swift in Sources */,
 				A51298141BE48CC7005D4D73 /* JFStatusPictureViewCell.swift in Sources */,
+				A5380BFC1BEA16440033E8B2 /* JFEmoticon.swift in Sources */,
 				A54C16421BE9182100100E1B /* JFPlaceholderTextView.swift in Sources */,
+				A5380BF91BEA15A70033E8B2 /* JFEmoticonCell.swift in Sources */,
 				A5C7F95C1BDE0A54004EFA96 /* JFStatus.swift in Sources */,
 				A5C7F96D1BDE0A54004EFA96 /* JFNetworkTool.swift in Sources */,
 				A555AA6B1BE2FDB600104563 /* UIBarButtonItem+Extension.swift in Sources */,
 				A5C7F95B1BDE0A54004EFA96 /* UIImage+Extension.swift in Sources */,
 				A5C7F9661BDE0A54004EFA96 /* JFTabBarViewController.swift in Sources */,
+				A5380C1D1BEA24490033E8B2 /* JFEmoticonPackage.swift in Sources */,
 				A5C7F9601BDE0A54004EFA96 /* JFComposeViewController.swift in Sources */,
 				A50DC50C1BDCF33700FEF643 /* AppDelegate.swift in Sources */,
+				A5380BF81BEA15A70033E8B2 /* JFEmoticonLayout.swift in Sources */,
 				A59E3C1B1BE3E53A00E9543C /* JFStatusBottomView.swift in Sources */,
 				A5C7F9671BDE0A54004EFA96 /* JFMessageViewController.swift in Sources */,
 				A5C7F96B1BDE0A54004EFA96 /* JFProfileTableViewController.swift in Sources */,

@@ -11,6 +11,7 @@ import SDWebImage
 
 class JFStatus: NSObject {
     
+    // MARK: - 属性
     // 转发微博
     var retweeted_status: JFStatus?
     

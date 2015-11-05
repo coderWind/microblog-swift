@@ -112,7 +112,7 @@ class JFHomeViewController: UITableViewController {
     /// 上拉菊花
     private lazy var pullUpView: UIActivityIndicatorView = {
         let indicator   = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.WhiteLarge)
-        indicator.color = UIColor.grayColor()
+        indicator.color = UIColor.redColor()
         return indicator
     }()
     
@@ -220,8 +220,8 @@ extension JFHomeViewController {
     /**
      加载微博数据
      */
-    private func loadStatus() {
-
+    @objc private func loadStatus() {
+        
         var since_id = statuses?.first?.id ?? 0
         var max_id = 0
         
@@ -291,7 +291,7 @@ extension JFHomeViewController {
         cell.status = status
         
         // 如果是最后一个cell，并且上拉没有动画。就上拉加载更多数据
-        if indexPath.row == statuses!.count - 1 && !pullUpView.isAnimating() {
+        if !pullUpView.isAnimating() && indexPath.row == statuses!.count - 1 {
             
             // 上拉加载数据
             pullUpView.startAnimating()

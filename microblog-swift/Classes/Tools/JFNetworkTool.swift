@@ -21,6 +21,7 @@ typealias NetworkFinishedCallBack = (result: [String : AnyObject]?, error: NSErr
 // MARK: - 网络工具类
 class JFNetworkTool: NSObject {
     
+    // MARK: - 属性
     /// 创建网络请求单例
     static let shareNetworkTool = JFNetworkTool()
     
@@ -141,7 +142,26 @@ extension JFNetworkTool {
         
     }
     
-
+    // MARK: - 发送微博
+    /**
+    发送不带图片的微博
+    
+    - parameter status:   微博内容
+    - parameter finished: 发送结果
+    */
+    func sendStatus(status: String, finished: NetworkFinishedCallBack) {
+        let urlString = "2/statuses/update.json"
+        
+        guard var parameters = tokenDict(finished) else {
+            print("没有token")
+            return
+        }
+        
+        parameters["status"] = status
+        
+        request(JFNetworkMethod.POST, URLString: urlString, parameters: parameters, finished: finished)
+    }
+    
 }
 
 // MARK: - 封装GET、POST请求、判断access_token

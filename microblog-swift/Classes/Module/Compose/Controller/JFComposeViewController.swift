@@ -20,7 +20,7 @@ class JFComposeViewController: UIViewController {
         prepareUI()
         
         // 添加键盘frame改变的通知
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillChangeFrame:", name: UIKeyboardWillChangeFrameNotification, object: nil)
+        addkeyboardObserver()
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -28,20 +28,22 @@ class JFComposeViewController: UIViewController {
         
         // 主动弹出键盘
         textView.becomeFirstResponder()
+        
     }
     
     // MARK: - 键盘frame改变方法
     /// 键盘frame改变方法
     func keyboardWillChangeFrame(notifiction: NSNotification) {
+        
         // 获取键盘最终的frame
         let endFrame = notifiction.userInfo![UIKeyboardFrameEndUserInfoKey]!.CGRectValue
         
         // toolBar底部到父控件的底部的距离 = 屏幕高度 - 键盘.frame.origin.y
-        let bottomOffset = -(kScreenH - endFrame.origin.y)
+        let bottomOffset = kScreenH - endFrame.origin.y
         
         // 更新约束
         toolBar.snp_updateConstraints { (make) -> Void in
-            make.bottom.equalTo(bottomOffset)
+            make.bottom.equalTo(-bottomOffset)
         }
         
         // 获取动画时间
@@ -51,11 +53,25 @@ class JFComposeViewController: UIViewController {
         UIView.animateWithDuration(duration) { () -> Void in
             self.view.layoutIfNeeded()
         }
+        
     }
     
-    // 注销通知
-    deinit {
+    /// 添加键盘监听
+    private func addkeyboardObserver() {
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillChangeFrame:", name: UIKeyboardWillChangeFrameNotification, object: nil)
+    }
+    
+    /// 取消键盘监听
+    private func removeKeyboardObserver() {
         NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+    
+    /**
+     相当于OC中的dealloc方法
+     */
+    deinit {
+        // 注销通知
+        removeKeyboardObserver()
     }
     
     // MARK: - 懒加载
@@ -67,12 +83,13 @@ class JFComposeViewController: UIViewController {
         return toolBar
     }()
     
-    /// textView
+    /// 文本框
     private lazy var textView: JFPlaceholderTextView = {
+        
         let textView = JFPlaceholderTextView()
         
         // 设置字体大小
-        textView.font = UIFont.systemFontOfSize(18)
+        textView.font = UIFont.systemFontOfSize(17)
         
         // 设置contentInset
         textView.contentInset = UIEdgeInsets(top: 64, left: 0, bottom: 0, right: 0)
@@ -83,19 +100,33 @@ class JFComposeViewController: UIViewController {
         // 拖动textView关闭键盘
         textView.keyboardDismissMode = UIScrollViewKeyboardDismissMode.OnDrag
         
-        // 添加代理,监听文字改变来设置导航栏右边按钮
+        // 添加代理，监听文字改变来设置导航栏右边按钮
         textView.delegate = self
         
+        // 自定义占位符
         textView.placeholder = "分享新鲜事..."
         
         return textView
     }()
     
+    /// 表情控制器
+    private lazy var emotiocnViewController: JFEmoticonViewController = {
+        let viewController = JFEmoticonViewController()
+        self.addChildViewController(viewController)
+        viewController.textView = self.textView
+        return viewController
+    }()
+    
+    /// 剩余微博文本长度标签
+    private lazy var lengthTipLabel = UILabel(textColor: UIColor.lightGrayColor(), fontSize: 12)
+    
+    /// 微博文本最大长度
+    private let statusMaxLength = 20
+    
 }
 
 // MARK: - 准备UI扩展
 extension JFComposeViewController {
-    
     
     /**
      准备UI
@@ -108,22 +139,39 @@ extension JFComposeViewController {
         // 设置工具条
         setupToolBar()
         
+        // 设置文本框
         setupTextView()
+        
+        // 设置最大文本长度
+        setupLengthTipLabel()
+        
+    }
+    
+    /// 准备微博文本长度标签
+    private func setupLengthTipLabel() {
+        // 添加子控件
+        view.addSubview(lengthTipLabel)
+        
+        // 添加约束
+        lengthTipLabel.snp_makeConstraints { (make) -> Void in
+            make.right.equalTo(-12)
+            make.bottom.equalTo(toolBar.snp_top).offset(-8)
+        }
+        
+        lengthTipLabel.text = "\(statusMaxLength)"
     }
     
     /**
-     设置textView
+     设置文本框
      */
     private func setupTextView() {
         
-        // 添加textView到控制器的view上
+        // 添加文本框到控制器的view上
         view.addSubview(textView)
         
         // 约束
         textView.snp_makeConstraints { (make) -> Void in
-            make.left.equalTo(0)
-            make.top.equalTo(0)
-            make.right.equalTo(0)
+            make.left.top.right.equalTo(0)
             make.bottom.equalTo(toolBar.snp_top)
         }
         
@@ -139,21 +187,19 @@ extension JFComposeViewController {
         
         // 添加约束
         toolBar.snp_makeConstraints { (make) -> Void in
-            make.left.equalTo(0)
-            make.bottom.equalTo(0)
-            make.right.equalTo(0)
+            make.left.bottom.right.equalTo(0)
             make.height.equalTo(44)
         }
         
-        // 创建toolBar上的item
+        // 创建toolBar上的item数组
         var items = [UIBarButtonItem]()
         
-        // 每个item对应的图片名称
+        // 每个item对应的图片名称和监听方法名称
         let itemSettings = [["imageName": "compose_toolbar_picture", "action" : "picture"],
-            ["imageName": "compose_mentionbutton_background", "action" : "mention"],
-            ["imageName": "compose_trendbutton_background", "action" : "trend"],
-            ["imageName": "compose_emoticonbutton_background", "action" : "emotion"],
-            ["imageName": "message_add_background", "action" : "add"]]
+                            ["imageName": "compose_mentionbutton_background", "action" : "mention"],
+                            ["imageName": "compose_trendbutton_background", "action" : "trend"],
+                            ["imageName": "compose_emoticonbutton_background", "action" : "emotion"],
+                            ["imageName": "message_add_background", "action" : "add"]]
         
         // 遍历 itemSettings 创建 UIBarbuttonItem
         for dict in itemSettings {
@@ -162,44 +208,84 @@ extension JFComposeViewController {
             let name = dict["imageName"]!
             let nameHighlighted = name + "_highlighted"
             
+            // 获取方法名
+            let action = dict["action"]!
+            
+            // 创建item按钮
+            let button = UIButton()
+            
             // 创建item
-            let item = UIBarButtonItem(button: UIButton(), imageName: name, highlightedImageName: nameHighlighted)
+            let item = UIBarButtonItem(button: button, imageName: name, highlightedImageName: nameHighlighted)
             
             // 添加点击事件
-            let button = item.customView as! UIButton
-            button.addTarget(self, action: Selector(dict["action"]!), forControlEvents: UIControlEvents.TouchUpInside)
+            button.addTarget(self, action: Selector(action), forControlEvents: UIControlEvents.TouchUpInside)
             
+            // 将创建好的item添加到items数组
             items.append(item)
             
-            // 添加弹簧
+            // 添加弹簧（第一个左边和最后一个右边没有弹簧，所以第一个弹簧要在第一个item添加后再添加）
             items.append(UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil))
         }
         
-        // 删除最后一根弹簧
+        // 删除最后一根弹簧，移除数组中最后一个元素
         items.removeLast()
         
+        // 设置工具条上的按钮
         toolBar.items = items
     }
     
-    // MARK: - toolBar item 点击事件
+    // MARK: - toolBar点击事件
+    /**
+    图片
+    */
     @objc private func picture() {
         print("图片")
     }
     
+    /**
+     @
+     */
     @objc private func mention() {
         print("@")
     }
     
+    /**
+     #
+     */
     @objc private func trend() {
         print("#")
     }
     
+    /**
+     表情键盘
+     */
     @objc private func emotion() {
         print("表情")
+        switchKeyboard()
     }
     
+    /**
+     加号
+     */
     @objc private func add() {
         print("加号")
+    }
+    
+    func switchKeyboard() {
+        print("表情键盘:\(textView.inputView)")
+        
+        removeKeyboardObserver()
+        
+        // 先将键盘退下
+        textView.resignFirstResponder()
+        
+        // 切换键盘
+        textView.inputView = textView.inputView == nil ? emotiocnViewController.view : nil
+        
+        addkeyboardObserver()
+        
+        // 再呼出键盘
+        textView.becomeFirstResponder()
     }
     
     /**
@@ -221,8 +307,14 @@ extension JFComposeViewController {
      取消按钮点击事件
      */
     @objc private func didTappedCancelButton() {
+        
         // 退出键盘
         textView.resignFirstResponder()
+        
+        // 修改全局长按记号
+        longPressFlag = false
+        
+        // 当前控制器出栈
         dismissViewControllerAnimated(true, completion: nil)
     }
     
@@ -238,8 +330,10 @@ extension JFComposeViewController {
      */
     private func setupTitle() {
         
+        // 标题
         let prefixString = "发微博"
         
+        // 根据是否有用户名来设置不同标题
         if let userName = JFUserAccount.shareUserAccount.name {
             
             // 创建标题标签
@@ -247,6 +341,7 @@ extension JFComposeViewController {
             titleLabel.numberOfLines = 0
             titleLabel.textAlignment = NSTextAlignment.Center
             
+            // 拼接完整标题字符串
             let titleString = prefixString + "\n" + userName
             
             // 创建属性字符串
@@ -262,12 +357,14 @@ extension JFComposeViewController {
             
             // 设置Label的attributedText值
             titleLabel.attributedText = attributeText
+            
             // 自适应
             titleLabel.sizeToFit()
             
             // 设置自定义的标题视图
             navigationItem.titleView = titleLabel
         } else {
+            
             // 没有昵称就直接显示 发微博
             navigationItem.title = prefixString
         }
@@ -280,6 +377,48 @@ extension JFComposeViewController: UITextViewDelegate {
     
     // 文字改变代理方法
     func textViewDidChange(textView: UITextView) {
+        // 设置发布按钮的禁用状态
         navigationItem.rightBarButtonItem?.enabled = textView.hasText()
+        
+        // 计算剩余文本的长度
+        let text = textView.emoticonText()
+        
+        let length = statusMaxLength - text.characters.count
+        
+        // 设置文本内容
+        lengthTipLabel.text = "\(length)"
+        
+        // 设置文本颜色, length < 0 红色
+        lengthTipLabel.textColor = length < 0 ? UIColor.redColor() : UIColor.lightGrayColor()
     }
+}
+
+// MARK: - 发送微博
+extension JFComposeViewController {
+    
+    /// 发微博
+    func sendStatus() {
+        
+        // 获取textView的文本内容
+        let status = textView.emoticonText()
+        
+        // 判断如果文字超过最大长度,提示用户
+        if status.characters.count > statusMaxLength {
+            JFProgressHUD.jf_showErrorWithStatus("微博内容超过长度")
+            return
+        }
+        
+        // 调用网络工具类发送微博
+        JFNetworkTool.shareNetworkTool.sendStatus(status) { (result, error) -> () in
+            if error != nil {
+                JFProgressHUD.jf_showWithStatus("网络繁忙")
+                return
+            }
+            
+            // 关闭控制器
+            self.didTappedCancelButton()
+        }
+    }
+    
+    
 }

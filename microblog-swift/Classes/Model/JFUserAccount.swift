@@ -10,6 +10,7 @@ import UIKit
 
 class JFUserAccount: NSObject, NSCoding {
     
+    // MARK: - 属性
     /// 用户名称
     var name: String?
     /// 用户头像地址 180 * 180

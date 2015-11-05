@@ -20,8 +20,10 @@ class JFRefreshControl: UIRefreshControl {
     
     override init() {
         super.init()
+        
         // 隐藏菊花
         tintColor = UIColor.clearColor()
+        
         
         // 准备UI
         prepareUI()
@@ -30,8 +32,6 @@ class JFRefreshControl: UIRefreshControl {
     // 覆盖父类frame属性
     override var frame: CGRect {
         didSet {
-            
-            print(frame)
             
             if frame.origin.y > 0 {
                 return
@@ -67,7 +67,7 @@ class JFRefreshControl: UIRefreshControl {
      开始加载动画
      */
     func startLoading() {
-
+        
         // 动画的key
         let animationKey = "loadingAnimation"
         

@@ -28,3 +28,6 @@ let filePath = "\(kSandDocumentPath)/userAccount.data"
 
 // 微博cell各种边距
 let statusMargin: CGFloat = 12
+
+// 搞全局到时候在发布控制器修改
+var longPressFlag: Bool = false

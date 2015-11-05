@@ -10,6 +10,7 @@ import UIKit
 
 class JFUser: NSObject {
     
+    // MARK: - 属性
     /// 用户UID
     var id: Int = 0
     

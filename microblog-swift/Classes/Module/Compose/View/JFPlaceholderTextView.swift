@@ -14,9 +14,12 @@ class JFPlaceholderTextView: UITextView {
     /// 占位文本
     var placeholder: String? {
         didSet {
+            
+            // 设置占位文本
             placeholderLabel.text = placeholder
             
-            placeholderLabel.sizeToFit()
+            // 设置占位文本的大小等于textView的大小
+            placeholderLabel.font = font
         }
     }
     
@@ -28,12 +31,10 @@ class JFPlaceholderTextView: UITextView {
     override init(frame: CGRect, textContainer: NSTextContainer?) {
         super.init(frame: frame, textContainer: textContainer)
         
+        // 准备UI
         prepareUI()
         
-        // 使用通知
-        // object: 表示通知的发送者.
-        // object = nil 表示任何人发送的 UITextViewTextDidChangeNotification 都能接受到
-        // 指定 object, 表示只有 object 发送出来的 UITextViewTextDidChangeNotification 才能接受到
+        // 注册通知监听者
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "textViewDidChange:", name: UITextViewTextDidChangeNotification, object: self)
     }
     
@@ -42,26 +43,29 @@ class JFPlaceholderTextView: UITextView {
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
+    /**
+     textView文本内容改变事件
+     */
     func textViewDidChange(notification: NSNotification) {
         // textView没有文本的时候显示占位文本
         placeholderLabel.hidden = hasText()
     }
     
     // MARK: - 准备UI
-    /// 准备UI
     private func prepareUI() {
+        
         // 添加子控件
         addSubview(placeholderLabel)
         
-        // 添加约束
-        // 如果想给别的项目使用,最好少依赖第三方框架
-        placeholderLabel.translatesAutoresizingMaskIntoConstraints = false
-        addConstraint(NSLayoutConstraint(item: placeholderLabel, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 8))
-        addConstraint(NSLayoutConstraint(item: placeholderLabel, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 5))
+        // 约束子控件
+        placeholderLabel.snp_makeConstraints { (make) -> Void in
+            make.top.equalTo(8)
+            make.left.equalTo(5)
+        }
     }
     
     // MARK: - 懒加载
-    // 添加占位文本
+    // 占位Label
     private lazy var placeholderLabel: UILabel = {
         // 创建label
         let label = UILabel()
@@ -71,8 +75,6 @@ class JFPlaceholderTextView: UITextView {
         
         // 设置文字颜色
         label.textColor = UIColor.lightGrayColor()
-        
-        label.sizeToFit()
         
         return label
     }()
