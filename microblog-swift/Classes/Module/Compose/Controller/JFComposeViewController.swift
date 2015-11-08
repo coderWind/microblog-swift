@@ -29,6 +29,9 @@ class JFComposeViewController: UIViewController {
         // 主动弹出键盘
         textView.becomeFirstResponder()
         
+        // 保证是系统键盘
+        textView.inputView = nil
+        
     }
     
     // MARK: - 键盘frame改变方法
@@ -64,7 +67,7 @@ class JFComposeViewController: UIViewController {
     }
     
     /**
-     取消键盘监听
+     移除键盘监听
      */
     private func removeKeyboardObserver() {
         NSNotificationCenter.defaultCenter().removeObserver(self)
@@ -94,9 +97,6 @@ class JFComposeViewController: UIViewController {
         
         // 设置字体大小
         textView.font = UIFont.systemFontOfSize(17)
-        
-        // 设置contentInset
-        textView.contentInset = UIEdgeInsets(top: 64, left: 0, bottom: 0, right: 0)
         
         // 设置 textView 有回弹效果
         textView.alwaysBounceVertical = true
@@ -313,6 +313,9 @@ extension JFComposeViewController {
      */
     @objc private func didTappedCancelButton() {
         
+        // 取消提示
+        JFProgressHUD.jf_dismiss()
+        
         // 退出键盘
         textView.resignFirstResponder()
         
@@ -405,6 +408,8 @@ extension JFComposeViewController {
     /// 发微博
     func sendStatus() {
         
+        JFProgressHUD.jf_showWithStatus("正在发送")
+        
         // 获取textView的文本内容
         let status = textView.emoticonText()
         
@@ -416,7 +421,7 @@ extension JFComposeViewController {
         
         // 获取用户选择的图片
         let image = photoSelectorViewController.photos.first
-        
+
         // 调用网络工具类发送微博
         JFNetworkTool.shareNetworkTool.sendStatus(status ,image: image) { (result, error) -> () in
             if error != nil {

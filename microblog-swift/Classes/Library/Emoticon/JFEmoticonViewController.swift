@@ -11,12 +11,6 @@ import UIKit
 // MARK: - 表情键盘控制器类
 class JFEmoticonViewController: UIViewController {
     
-    /// textView
-    weak var textView: UITextView?
-    
-    // cell重用标示符
-    private let emoticonCellIdentifier = "emoticonCell"
-    
     // MARK: - 视图声明周期
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,6 +46,11 @@ class JFEmoticonViewController: UIViewController {
     /// 按钮起始tag
     private let baseTag = 1000
     
+    /// textView
+    weak var textView: UITextView?
+    
+    // cell重用标示符
+    private let emoticonCellIdentifier = "emoticonCell"
 }
 
 // MARK: - UI相关扩展
@@ -70,17 +69,13 @@ extension JFEmoticonViewController {
             make.left.top.right.equalTo(0)
             make.bottom.equalTo(toolBar.snp_top)
         }
+        setupCollectionView()
         
         toolBar.snp_makeConstraints { (make) -> Void in
             make.left.bottom.right.equalTo(0)
             make.top.equalTo(collectionView.snp_bottom)
         }
-        
-        // 设置toolBar
         setupToolBar()
-        
-        // 设置collectionView
-        setupCollectionView()
         
     }
     
@@ -192,6 +187,7 @@ extension JFEmoticonViewController: UICollectionViewDataSource, UICollectionView
     
     // cell 点击
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        
         let emoticon = packages[indexPath.section].emoticons![indexPath.item]
         
         // 调用分类方法插入表情到textView

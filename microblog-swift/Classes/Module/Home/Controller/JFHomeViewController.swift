@@ -79,7 +79,29 @@ class JFHomeViewController: UITableViewController {
             // 上拉控件
             tableView.tableFooterView = pullUpView
             
+            // 注册通知
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: "didSelectedPhotoNotification:", name: UICollectionViewCellDidSelectedPhotoNotification, object: nil)
         }
+        
+    }
+    
+    /**
+     已经选中了某个图片时的通知方法
+     */
+    func didSelectedPhotoNotification(notifocation: NSNotification) {
+        
+        guard let index = notifocation.userInfo?[UICollectionViewCellDidSelectedPhotoIndexKey] as? Int else {
+            print("index没值")
+            return
+        }
+        
+        guard let urls = notifocation.userInfo?[UICollectionViewCellDidSelectedPhotoUrlsKey] as? [NSURL] else {
+            print("urls没值")
+            return
+        }
+        
+        // 图片浏览器
+        presentViewController(JFPhotoBrowserViewController(index: index, urls: urls), animated: true, completion: nil)
         
     }
     

@@ -27,10 +27,9 @@ class JFEmotionPackage: NSObject {
     // MARK: - 构造方法
     init(id: String) {
         self.id = id
-        
     }
     
-    // 每次从磁盘加载表情包耗性能,第一次从本地加载表情包数据,保存到内存中.以后重内存中加载
+    // 表情包持久化
     static let packages = JFEmotionPackage.loadEmoticonPackages()
     
     /**
@@ -50,23 +49,16 @@ class JFEmotionPackage: NSObject {
         
         // 创建最近表情包
         let recent = JFEmotionPackage(id: "")
-        
-        // 添加到表情包数组
         packages.append(recent)
-        
-        // 设置表情包名称
         recent.group_name_cn = "最近"
         
         // 追加空表情和删除按钮
         recent.appendEmptyEmoticon()
         
-        // 遍历表情包字典获取每个表情包的id
+        // 加载所有表情包
         for dict in packagesArray {
             
-            // id就是表情包文件夹名称
             let id = dict["id"] as! String
-            
-            // 创建表情包模型添加到数组中
             packages.append(JFEmotionPackage(id: id).loadEmoticons())
             
         }
@@ -82,13 +74,9 @@ class JFEmotionPackage: NSObject {
         // 获取info.plist路径
         let infoPlistPath = "\(bundlePath)/\(id)/info.plist"
         
-        // 取出表情包字典
+        // 取出表情包数据
         let emoticonDict = NSDictionary(contentsOfFile: infoPlistPath)!
-        
-        // 取出表情包名称
         group_name_cn = emoticonDict["group_name_cn"] as? String
-        
-        // 获取emoticons数组
         let emoticonArray = emoticonDict["emoticons"] as! [[String : String]]
         
         // 创建表情模型数组
@@ -98,7 +86,8 @@ class JFEmotionPackage: NSObject {
         
         // 遍历添加表情模型
         for dict in emoticonArray {
-            // 表情字典转模型，添加到表情字典里
+            
+            // 表情字典转模型，添加到表情模型数组里
             emoticons?.append(JFEmoticon(id: id, dict: dict))
             
             // 重置
@@ -116,7 +105,6 @@ class JFEmotionPackage: NSObject {
         appendEmptyEmoticon()
         
         return self
-        
     }
     
     /// 当表情加载完成的时候判断是否正好满一页,不满一页的添加空白按钮,并在最后位置添加删除按钮
@@ -130,11 +118,8 @@ class JFEmotionPackage: NSObject {
         // 获取到最后一页的个数
         let count = emoticons!.count % 21
 
-        // count > 0 表示最后一页有 count 个表情, 没满一页. 需要追加空白按钮
         if count > 0 || emoticons!.count == 0 {
-            // 追加多少个空白按钮?
-            // count == 1 需要追加20 - 1 = 19个空白按钮和一个删除按钮 1..<20
-            // count == 2 需要追加20 - 2 = 18个空白按钮和一个删除按钮 2..<20
+            // 追加空白按钮
             for _ in count..<20 {
                 emoticons?.append(JFEmoticon(removeEmoticon: false))
             }
@@ -155,7 +140,7 @@ class JFEmotionPackage: NSObject {
         // 使用次数加1
         emoticon.times++
         
-        // 获取到最近表情包里面的表情数组
+        // 获取到最近表情包里面的表情模型数组
         var recentEmoticonPackage = packages[0].emoticons!
         
         // 移除 删除按钮
@@ -184,7 +169,8 @@ class JFEmotionPackage: NSObject {
         // 重新赋值回去
         packages[0].emoticons = recentEmoticonPackage
         
-        print("最近表情: \(packages[0].emoticons)")
+//        print("最近表情: \(packages[0].emoticons)")
+        
     }
     // 调试打印
     override var description: String {

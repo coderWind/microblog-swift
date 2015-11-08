@@ -150,7 +150,6 @@ extension JFNetworkTool {
     - parameter finished: 发送结果
     */
     func sendStatus(status: String, image: UIImage?, finished: NetworkFinishedCallBack) {
-        let urlString = "2/statuses/update.json"
         
         guard var parameters = tokenDict(finished) else {
             print("没有token")
@@ -162,10 +161,19 @@ extension JFNetworkTool {
         // 判断是否有image
         if let newImage = image {
             // 有图片,发表带图片微博
-            sendImageStatus(newImage, urlString: "https://upload.api.weibo.com/2/statuses/upload.json", parameters: parameters, finished: finished)
+            afnManager.POST("https://upload.api.weibo.com/2/statuses/upload.json", parameters: parameters, constructingBodyWithBlock: { (formData) -> Void in
+                // 将图片转为二进制
+                if let data = UIImagePNGRepresentation(newImage) {
+                    formData.appendPartWithFileData(data, name: "pic", fileName: "upload", mimeType: "image/png")
+                }
+                }, success: { (_, result) -> Void in
+                    finished(result: result as? [String: AnyObject], error: nil)
+                }) { (_, error) -> Void in
+                    finished(result: nil, error: error)
+            }
         } else {
             // 没有图片.发表文本微博
-            request(JFNetworkMethod.POST, URLString: urlString, parameters: parameters, finished: finished)
+            request(JFNetworkMethod.POST, URLString: "2/statuses/update.json", parameters: parameters, finished: finished)
         }
     }
     
@@ -177,26 +185,8 @@ extension JFNetworkTool {
      - parameter finished:   发布微博结果回调
      */
     private func sendImageStatus(image: UIImage, urlString: String, parameters: [String: AnyObject], finished: NetworkFinishedCallBack) {
-        afnManager.POST(urlString, parameters: parameters, constructingBodyWithBlock: { (formData) -> Void in
-            if let data = UIImagePNGRepresentation(image) {
-                
-                /*
-                name: api文档中指定的参数名称
-                fileName: 图片保存在服务器上的名称.api上没有指定,可以随便写
-                mimeType: 资源类型
-                格式: 大类/小类
-                image/png
-                image/gif
-                image/jpeg
-                */
-                formData.appendPartWithFileData(data, name: "pic", fileName: "upload", mimeType: "image/png")
-            }
-            
-            }, success: { (_, result) -> Void in
-                finished(result: result as? [String: AnyObject], error: nil)
-            }) { (_, error) -> Void in
-                finished(result: nil, error: error)
-        }
+        
+        
     }
     
 }

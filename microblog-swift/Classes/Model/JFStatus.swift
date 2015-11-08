@@ -63,21 +63,38 @@ class JFStatus: NSObject {
             // 有值,遍历将pic_urls 里的string转成NSURL存放在pictureURLs数组里面
             storePictureURLs = [NSURL]()
             
+            // 原图
+            largeStorePictureURLs = [NSURL]()
+            
             for dict in pic_urls! {
-                // 取出 字典中的值
+                // 取出 字典中的值，缩略图URL字符串
                 let value = dict["thumbnail_pic"] as! String
                 storePictureURLs?.append(NSURL(string: value)!)
+                
+                // 获取大图URL字符串
+                let largeValue = value.stringByReplacingOccurrencesOfString("thumbnail", withString: "large")
+                largeStorePictureURLs?.append(NSURL(string: largeValue)!)
             }
         }
     }
     
-    // 存储原创微博对应的pic_urls里面对象的URL
-    var storePictureURLs: [NSURL]?
+    /// 缩图：存储微博对应的pic_urls里面对象的URL
+    private var storePictureURLs: [NSURL]?
     
-    /// 计算型属性,存储的是pic_urls里面对应的URL
+    /// 缩图：计算型属性,存储的是pic_urls里面对应的URL
     var pictureURLs: [NSURL]? {
         get {
             return retweeted_status == nil ? storePictureURLs : retweeted_status?.storePictureURLs
+        }
+    }
+    
+    /// 原图：存储微博对应的pic_urls里面对象的URL
+    private var largeStorePictureURLs: [NSURL]?
+    
+    /// 原图：计算型属性,存储的是pic_urls里面对应的URL
+    var largePictureURLs: [NSURL]? {
+        get {
+            return retweeted_status == nil ? largeStorePictureURLs : retweeted_status?.largeStorePictureURLs
         }
     }
     

@@ -15,6 +15,10 @@ class JFStatusPictureViewCell: UICollectionViewCell {
         didSet {
             // 加载图片
             iconView.jf_setImageWithURL(imageURL)
+            
+            // 根据URL字符串后缀判断是否显示gif图标
+            let isGif = (imageURL!.absoluteString as NSString).hasSuffix("gif")
+            gifView.hidden = !isGif
         }
     }
 
@@ -36,10 +40,15 @@ class JFStatusPictureViewCell: UICollectionViewCell {
     private func prepareUI() {
         // 添加子控件
         contentView.addSubview(iconView)
+        contentView.addSubview(gifView)
         
         // 添加约束
         iconView.snp_makeConstraints { (make) -> Void in
             make.edges.equalTo(contentView.snp_edges)
+        }
+        
+        gifView.snp_makeConstraints { (make) -> Void in
+            make.center.equalTo(contentView.snp_center)
         }
         
     }
@@ -51,5 +60,8 @@ class JFStatusPictureViewCell: UICollectionViewCell {
         imageView.clipsToBounds = true
         return imageView
     }()
+    
+    // gif图片
+    private lazy var gifView = UIImageView(image: UIImage(named: "timeline_image_gif"))
     
 }

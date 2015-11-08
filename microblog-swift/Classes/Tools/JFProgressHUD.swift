@@ -17,7 +17,7 @@ class JFProgressHUD: SVProgressHUD {
      
      - parameter string: 错误提示文字
      */
-    class func jf_showErrorWithStatus(string: String!) {
+    class func jf_showErrorWithStatus(string: String) {
         SVProgressHUD.showErrorWithStatus(string, maskType: SVProgressHUDMaskType.Black)
     }
 
@@ -26,8 +26,12 @@ class JFProgressHUD: SVProgressHUD {
      
      - parameter status: 需要显示的信息文字
      */
-    class func jf_showWithStatus(status: String!) {
+    class func jf_showWithStatus(status: String) {
         SVProgressHUD.showWithStatus("status", maskType: SVProgressHUDMaskType.Black)
+    }
+    
+    class func jf_showSuccessWithStatus(status: String) {
+        SVProgressHUD.showSuccessWithStatus(status, maskType: SVProgressHUDMaskType.Black)
     }
     
     /**

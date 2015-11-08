@@ -18,7 +18,7 @@ class JFTextAttachment: NSTextAttachment {
      根据emoticon创建属性文本
      */
     class func imageText(emoticon: JFEmoticon, font: UIFont) -> NSAttributedString{
-        // 1.创建附件
+        // 创建附件
         let attachment = JFTextAttachment()
         attachment.name = emoticon.chs
         attachment.image = UIImage(contentsOfFile: emoticon.pngPath!)
@@ -27,7 +27,7 @@ class JFTextAttachment: NSTextAttachment {
         let h = font.lineHeight
         attachment.bounds = CGRect(x: 0, y: -4, width: h, height: h)
         
-        // 2.创建属性文本
+        // 创建属性文本
         let imageText = NSMutableAttributedString(attributedString: NSAttributedString(attachment: attachment))
         imageText.addAttribute(NSFontAttributeName, value: font, range: NSRange(location: 0, length: 1))
         

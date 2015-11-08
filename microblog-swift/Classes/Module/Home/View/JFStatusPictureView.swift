@@ -9,6 +9,14 @@
 import UIKit
 import SDWebImage
 
+// 通知名称
+let UICollectionViewCellDidSelectedPhotoNotification = "collectionViewCellSelectedNotification"
+
+// 选中cell的索引
+let UICollectionViewCellDidSelectedPhotoIndexKey = "collectionViewCellSelectedIndex"
+// 选中cell的图片数组
+let UICollectionViewCellDidSelectedPhotoUrlsKey = "collectionViewCellSelectedUrls"
+
 class JFStatusPictureView: UICollectionView {
     
     /// 微博模型
@@ -19,7 +27,7 @@ class JFStatusPictureView: UICollectionView {
             
             // 刷新数据
             reloadData()
-            
+
             // 背景颜色
             backgroundColor = status?.retweeted_status == nil ? UIColor.whiteColor() : UIColor(white: 0.9, alpha: 0.4)
         }
@@ -44,6 +52,9 @@ class JFStatusPictureView: UICollectionView {
         
         // 设置数据源
         dataSource = self
+        
+        // 设置代理
+        delegate = self
     }
     
     /**
@@ -140,8 +151,8 @@ class JFStatusPictureView: UICollectionView {
     
 }
 
-// MARK: - UICollectionViewDataSource
-extension JFStatusPictureView: UICollectionViewDataSource {
+// MARK: - UICollectionViewDataSource, UICollectionViewDelegate
+extension JFStatusPictureView: UICollectionViewDataSource, UICollectionViewDelegate {
     
     // 返回图片张数
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -158,6 +169,21 @@ extension JFStatusPictureView: UICollectionViewDataSource {
         cell.imageURL = status?.pictureURLs?[indexPath.item]
         
         return cell
+    }
+    
+    // 选中某个cell时调用
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        
+        guard let urls = status?.largePictureURLs else {
+            print("url为空")
+            return
+        }
+        
+        // 选中图片的索引 和 图片URL数组
+        let userInfo = [UICollectionViewCellDidSelectedPhotoIndexKey : indexPath.item, UICollectionViewCellDidSelectedPhotoUrlsKey : urls] as [NSObject : AnyObject]
+        // 发送通知
+        NSNotificationCenter.defaultCenter().postNotificationName(UICollectionViewCellDidSelectedPhotoNotification, object: nil, userInfo: userInfo)
+        
     }
     
 }

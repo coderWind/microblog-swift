@@ -11,26 +11,27 @@ import UIKit
 // MARK: - 表情模型
 class JFEmoticon: NSObject {
     
+    // MARK: - 属性
     /// 使用次数
     var times = 0
     
     /// 是否是删除按钮, true表示删除按钮
     var removeEmoticon: Bool = false
     
-    /// 表情路径
-    var pngPath: String?
-    
     // 表情包文件夹名称
     var id: String?
     
-    // MARK: - 属性
     // 表情名称，用于网络传输 如：[笑哈哈]
     var chs: String?
+    
+    /// 表情路径
+    var pngPath: String?
     
     // 表情图片名称，用于表情键盘上显示
     var png: String? {
         didSet {
             
+            // 如果png没有值则pngPath也置空
             if png == nil {
                 pngPath = nil
             }
@@ -40,12 +41,15 @@ class JFEmoticon: NSObject {
         }
     }
     
+    // emoji字符串
+    var emoji: String?
+
     // emoji 16进制表情字符串
     var code: String? {
         didSet {
+            
             // 将 code 转成 emoji字符串
             let scanner = NSScanner(string: code!)
-            
             var result: UInt32 = 0
             scanner.scanHexInt(&result)
             
@@ -53,23 +57,20 @@ class JFEmoticon: NSObject {
         }
     }
     
-    // emoji字符串
-    var emoji: String?
-    
     // MARK: - 字典转模型
     init(id: String?, dict: [String : AnyObject]) {
-        
-        self.id = id
         super.init()
         
+        self.id = id
         // kvc为模型属性赋值
         setValuesForKeysWithDictionary(dict)
     }
     
-    /// 构造函数:只会给removeEmoticon属性赋值, removeEmoticon = true 表示删除按钮, false表示空白按钮
+    /// 构造方法 removeEmoticon = true 表示删除按钮, false表示空白按钮
     init(removeEmoticon: Bool) {
-        self.removeEmoticon = removeEmoticon
         super.init()
+        
+        self.removeEmoticon = removeEmoticon
     }
     
     // 字典中的key在模型中找不到对应的属性时调用

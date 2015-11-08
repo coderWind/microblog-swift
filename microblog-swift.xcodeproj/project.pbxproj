@@ -38,6 +38,8 @@
 		A5916C461BE5FFC100B26DE5 /* NSDate+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5916C451BE5FFC100B26DE5 /* NSDate+Extension.swift */; };
 		A5916C481BE6017600B26DE5 /* UIImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5916C471BE6017600B26DE5 /* UIImageView+Extension.swift */; };
 		A59291571BE096C900D647F5 /* JFItemButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59291561BE096C900D647F5 /* JFItemButton.swift */; };
+		A59C2DC21BEE05E9009AC523 /* JFPhotoBrowserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59C2DC11BEE05E9009AC523 /* JFPhotoBrowserViewController.swift */; };
+		A59C2DC41BEE0629009AC523 /* JFPhotoBrowserViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59C2DC31BEE0629009AC523 /* JFPhotoBrowserViewCell.swift */; };
 		A59E3C131BE3C41B00E9543C /* JFStatusTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59E3C121BE3C41B00E9543C /* JFStatusTopView.swift */; };
 		A59E3C151BE3C4F000E9543C /* JFStatusCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59E3C141BE3C4F000E9543C /* JFStatusCell.swift */; };
 		A59E3C171BE3E4C300E9543C /* UIButton+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59E3C161BE3E4C300E9543C /* UIButton+Extension.swift */; };
@@ -51,7 +53,6 @@
 		A5BD857F1BEB22D900B520FE /* JFTextAttachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BD857E1BEB22D900B520FE /* JFTextAttachment.swift */; };
 		A5BD85811BEB266000B520FE /* UITextView+Emoticon.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BD85801BEB266000B520FE /* UITextView+Emoticon.swift */; };
 		A5BD85841BEB44C200B520FE /* JFPhotoSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BD85831BEB44C200B520FE /* JFPhotoSelectorViewController.swift */; };
-		A5BD85861BEB4AE700B520FE /* JFPhotoSelectorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BD85851BEB4AE700B520FE /* JFPhotoSelectorCell.swift */; };
 		A5C7F95B1BDE0A54004EFA96 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C7F9201BDE0A54004EFA96 /* UIImage+Extension.swift */; };
 		A5C7F95C1BDE0A54004EFA96 /* JFStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C7F9231BDE0A54004EFA96 /* JFStatus.swift */; };
 		A5C7F95D1BDE0A54004EFA96 /* JFUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C7F9241BDE0A54004EFA96 /* JFUser.swift */; };
@@ -111,6 +112,8 @@
 		A5916C451BE5FFC100B26DE5 /* NSDate+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSDate+Extension.swift"; sourceTree = "<group>"; };
 		A5916C471BE6017600B26DE5 /* UIImageView+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extension.swift"; sourceTree = "<group>"; };
 		A59291561BE096C900D647F5 /* JFItemButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFItemButton.swift; sourceTree = "<group>"; };
+		A59C2DC11BEE05E9009AC523 /* JFPhotoBrowserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFPhotoBrowserViewController.swift; sourceTree = "<group>"; };
+		A59C2DC31BEE0629009AC523 /* JFPhotoBrowserViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFPhotoBrowserViewCell.swift; sourceTree = "<group>"; };
 		A59E3C121BE3C41B00E9543C /* JFStatusTopView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFStatusTopView.swift; sourceTree = "<group>"; };
 		A59E3C141BE3C4F000E9543C /* JFStatusCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFStatusCell.swift; sourceTree = "<group>"; };
 		A59E3C161BE3E4C300E9543C /* UIButton+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIButton+Extension.swift"; sourceTree = "<group>"; };
@@ -124,7 +127,6 @@
 		A5BD857E1BEB22D900B520FE /* JFTextAttachment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFTextAttachment.swift; sourceTree = "<group>"; };
 		A5BD85801BEB266000B520FE /* UITextView+Emoticon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITextView+Emoticon.swift"; sourceTree = "<group>"; };
 		A5BD85831BEB44C200B520FE /* JFPhotoSelectorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFPhotoSelectorViewController.swift; sourceTree = "<group>"; };
-		A5BD85851BEB4AE700B520FE /* JFPhotoSelectorCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFPhotoSelectorCell.swift; sourceTree = "<group>"; };
 		A5C7F9201BDE0A54004EFA96 /* UIImage+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
 		A5C7F9231BDE0A54004EFA96 /* JFStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFStatus.swift; sourceTree = "<group>"; };
 		A5C7F9241BDE0A54004EFA96 /* JFUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFUser.swift; sourceTree = "<group>"; };
@@ -215,8 +217,8 @@
 				A5380C1C1BEA24490033E8B2 /* JFEmoticonPackage.swift */,
 				A5BD85801BEB266000B520FE /* UITextView+Emoticon.swift */,
 				A5BD857E1BEB22D900B520FE /* JFTextAttachment.swift */,
-				A5380BF61BEA15A70033E8B2 /* JFEmoticonCell.swift */,
 				A5380BF51BEA15A70033E8B2 /* JFEmoticonLayout.swift */,
+				A5380BF61BEA15A70033E8B2 /* JFEmoticonCell.swift */,
 				A5380BF71BEA15A70033E8B2 /* JFEmoticonViewController.swift */,
 				A5380C011BEA1D6B0033E8B2 /* icon */,
 				A5380BF31BEA156F0033E8B2 /* Emoticons.bundle */,
@@ -270,6 +272,15 @@
 			name = Visitor;
 			sourceTree = "<group>";
 		};
+		A59C2DC01BEE05CE009AC523 /* PhotoBrowser */ = {
+			isa = PBXGroup;
+			children = (
+				A59C2DC11BEE05E9009AC523 /* JFPhotoBrowserViewController.swift */,
+				A59C2DC31BEE0629009AC523 /* JFPhotoBrowserViewCell.swift */,
+			);
+			path = PhotoBrowser;
+			sourceTree = "<group>";
+		};
 		A59E3C111BE3C40000E9543C /* Cell */ = {
 			isa = PBXGroup;
 			children = (
@@ -288,7 +299,6 @@
 			isa = PBXGroup;
 			children = (
 				A5BD85831BEB44C200B520FE /* JFPhotoSelectorViewController.swift */,
-				A5BD85851BEB4AE700B520FE /* JFPhotoSelectorCell.swift */,
 			);
 			path = PhotoSelector;
 			sourceTree = "<group>";
@@ -321,6 +331,7 @@
 		A5C7F9211BDE0A54004EFA96 /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				A59C2DC01BEE05CE009AC523 /* PhotoBrowser */,
 				A5BD85821BEB449400B520FE /* PhotoSelector */,
 				A5380BF21BEA15670033E8B2 /* Emoticon */,
 			);
@@ -826,11 +837,11 @@
 				A5BD857F1BEB22D900B520FE /* JFTextAttachment.swift in Sources */,
 				A5C7F9641BDE0A54004EFA96 /* JFHomeVisitorView.swift in Sources */,
 				A5C7F95E1BDE0A54004EFA96 /* JFUserAccount.swift in Sources */,
-				A5BD85861BEB4AE700B520FE /* JFPhotoSelectorCell.swift in Sources */,
 				A5C7F9651BDE0A54004EFA96 /* JFNavigationController.swift in Sources */,
 				A5C7F96C1BDE0A54004EFA96 /* JFProfileVisitorView.swift in Sources */,
 				A5BD85811BEB266000B520FE /* UITextView+Emoticon.swift in Sources */,
 				A51298121BE48296005D4D73 /* JFStatusPictureView.swift in Sources */,
+				A59C2DC41BEE0629009AC523 /* JFPhotoBrowserViewCell.swift in Sources */,
 				A5C7F9681BDE0A54004EFA96 /* JFMessageVisitorView.swift in Sources */,
 				A5A7CC5F1BDE9545006B0D3D /* JFWelcomeViewController.swift in Sources */,
 				A5A6EA871BE50D3800DD47F4 /* JFStatusNormalCell.swift in Sources */,
@@ -838,6 +849,7 @@
 				A5C7F9611BDE0A54004EFA96 /* JFDiscoverViewController.swift in Sources */,
 				A59E3C171BE3E4C300E9543C /* UIButton+Extension.swift in Sources */,
 				A5916C481BE6017600B26DE5 /* UIImageView+Extension.swift in Sources */,
+				A59C2DC21BEE05E9009AC523 /* JFPhotoBrowserViewController.swift in Sources */,
 				A5BD85841BEB44C200B520FE /* JFPhotoSelectorViewController.swift in Sources */,
 				A5A6EA851BE504E100DD47F4 /* JFStatusForwardCell.swift in Sources */,
 				A5916C461BE5FFC100B26DE5 /* NSDate+Extension.swift in Sources */,
@@ -909,7 +921,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -947,7 +959,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;

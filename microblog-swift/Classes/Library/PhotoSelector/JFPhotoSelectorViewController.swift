@@ -7,21 +7,24 @@
 //
 
 import UIKit
+import ReactiveCocoa
 
+// MARK: - 照片选择控制器
 class JFPhotoSelectorViewController: UICollectionViewController {
     
-    let photoCellIdentifier = "photoCell"
+    /// cell重用标示符
+    private let photoCellIdentifier = "photoCell"
     
-    /// collectionView 的流水布局
+    /// 布局属性
     private var layout = UICollectionViewFlowLayout()
     
-    /// 选择的图片
+    /// 已选择的图片数组
     var photos = [UIImage]()
     
     // 最大图片数量
     private let maxPhotoCount = 9
     
-    /// 当前点击cell的indexPath
+    /// 记录当前点击cell的indexPath
     private var currentIndexPath: NSIndexPath?
     
     /// 构造函数
@@ -40,7 +43,6 @@ class JFPhotoSelectorViewController: UICollectionViewController {
         prepareCollectionView()
         
         // 背景颜色
-        view.backgroundColor = UIColor.whiteColor()
         collectionView?.backgroundColor = UIColor.whiteColor()
     }
     
@@ -60,36 +62,31 @@ class JFPhotoSelectorViewController: UICollectionViewController {
         
     }
     
-
-}
-
-// MARK: - <#Description#>
-extension JFPhotoSelectorViewController {
-    
+    // MARK: - UICollectionViewDataSource数据源
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // 1.photos.count < maxPhotoCount 显示 photos.count + 1
-        // 2.photos.count = maxPhotoCount 显示 photos.count
         return photos.count < maxPhotoCount ? photos.count + 1 : photos.count
     }
     
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(photoCellIdentifier, forIndexPath: indexPath) as! JFPhotoSelectorCell
+        
+        // 设置cell代理
         cell.cellDelegate = self
         
         // 如果有照片,设置cell显示image
-        // 如果有照片,设置cell显示image
         if indexPath.item < photos.count {
-            cell.image = photos[indexPath.row]
+            cell.image = photos[indexPath.item]
         } else {
             cell.image = nil
         }
         
         return cell
     }
+
 }
 
-// MARK: - JFPhotoSelectorCellDelegate 协议
+// MARK: - JFPhotoSelectorCellDelegate委托方法
 extension JFPhotoSelectorViewController: JFPhotoSelectorCellDelegate {
     
     /// 添加图片
@@ -101,7 +98,6 @@ extension JFPhotoSelectorViewController: JFPhotoSelectorCellDelegate {
             return
         }
         
-        // 弹出系统相册
         let picker = UIImagePickerController()
         
         // 设置代理
@@ -110,6 +106,7 @@ extension JFPhotoSelectorViewController: JFPhotoSelectorCellDelegate {
         // 将点击的cell的indexPath记录下来
         currentIndexPath = collectionView?.indexPathForCell(cell)
         
+        // 弹出系统相册
         presentViewController(picker, animated: true, completion: nil)
         
     }
@@ -119,6 +116,7 @@ extension JFPhotoSelectorViewController: JFPhotoSelectorCellDelegate {
         
         // 获取cell的indexPath
         if let indexPath = collectionView?.indexPathForCell(cell) {
+            
             // 删除 photos 数组中对应的 iamge
             photos.removeAtIndex(indexPath.item)
             
@@ -129,19 +127,23 @@ extension JFPhotoSelectorViewController: JFPhotoSelectorCellDelegate {
     }
 }
 
-// MARK: - UIImagePickerControllerDelegate UINavigationControllerDelegate 协议.获取选取的图片
+// MARK: - UIImagePickerControllerDelegate委托方法
 extension JFPhotoSelectorViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     /// 选中图片时调用, 一旦实现这个方法,需要主动关闭控制器
     func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
         
-        // 点击加号按钮
-        if currentIndexPath?.item == photos.count {
-            // 将选中的图片添加到图片数组
-            photos.append(image)
-        } else {
+        // 压缩图片
+        let img = image.scaleImage()
+        
+        if currentIndexPath?.item < photos.count {
+            // 点击了图片
             // 替换图片
-            photos[currentIndexPath!.item] = image
+            photos[currentIndexPath!.item] = img
+        } else {
+            // 点击了加号按钮
+            // 将选中的图片添加到图片数组
+            photos.append(img)
         }
         
         // collectionView 刷新数据
@@ -161,7 +163,8 @@ extension UIImage {
      - newWidth 默认等于 300
      */
     func scaleImage(newWidth: CGFloat = 300) -> UIImage {
-        // 如果图片宽度小于 newWidth, 直接返回
+        
+        // 如果图片宽度小于 newWidth, 不用缩小直接返回
         if size.width < newWidth {
             return self
         }
@@ -169,11 +172,10 @@ extension UIImage {
         // 计算缩放好后的高度
         // newHeight / newWidth = height / width
         let newHeight = newWidth * size.height / size.width
-        
+        // 新的尺寸
         let newSize = CGSize(width: newWidth, height: newHeight)
         
         // 将图片等比例缩放到 newSize
-        
         // 开启图片上下文
         UIGraphicsBeginImageContext(newSize)
         
@@ -190,5 +192,105 @@ extension UIImage {
         return newImage
     }
     
+}
+
+// MARK: - cell代理
+protocol JFPhotoSelectorCellDelegate : NSObjectProtocol {
+    
+    // 加号按钮点击事件
+    func photoSelectorCellAddPhoto(cell: JFPhotoSelectorCell)
+    
+    // 删除按钮点击时间
+    func photoSelectorCellRemovePhoto(cell: JFPhotoSelectorCell)
+}
+
+
+// MARK: - 自定义cell
+class JFPhotoSelectorCell: UICollectionViewCell {
+    
+    /// 显示的image
+    var image: UIImage? {
+        didSet {
+            // 最后一个按钮就设置加号图片
+            if image == nil {
+                addButton.setImage(UIImage(named: "compose_pic_add"), forState: UIControlState.Normal)
+                addButton.setImage(UIImage(named: "compose_pic_add_highlighted"), forState: UIControlState.Highlighted)
+            } else {
+                addButton.setImage(image, forState: UIControlState.Normal)
+            }
+            
+            // 如果是最后一个按钮不需要显示删除按钮
+            removeButton.hidden = image == nil
+        }
+    }
+    
+    /// 代理属性
+    weak var cellDelegate: JFPhotoSelectorCellDelegate?
+    
+    // MARK: - 构造方法
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        // 准备UI
+        prepareUI()
+        
+        // 背景颜色
+        backgroundColor = UIColor.whiteColor()
+    }
+    
+    /**
+     准备UI
+     */
+    private func prepareUI() {
+        
+        // 添加子控件
+        contentView.addSubview(addButton)
+        contentView.addSubview(removeButton)
+        
+        // 约束子控件
+        // 添加按钮
+        addButton.snp_makeConstraints { (make) -> Void in
+            make.edges.equalTo(contentView.snp_edges)
+        }
+        
+        // 删除按钮
+        removeButton.snp_makeConstraints { (make) -> Void in
+            make.right.equalTo(addButton.snp_right)
+            make.top.equalTo(addButton.snp_top)
+        }
+        
+        // 按钮点击事件
+        // 添加
+        addButton.rac_signalForControlEvents(UIControlEvents.TouchUpInside).subscribeNext { (_) -> Void in
+            self.cellDelegate?.photoSelectorCellAddPhoto(self)
+        }
+        // 移除
+        removeButton.rac_signalForControlEvents(UIControlEvents.TouchUpInside).subscribeNext { (_) -> Void in
+            self.cellDelegate?.photoSelectorCellRemovePhoto(self)
+        }
+        
+    }
+    
+    // 懒加载
+    // 加号按钮
+    private lazy var addButton: UIButton = {
+        let button = UIButton()
+        // 设置按钮图片的填充模式
+        button.imageView?.contentMode = UIViewContentMode.ScaleAspectFill
+        return button
+    }()
+    
+    
+    // 删除按钮
+    private lazy var removeButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "pic_delete"), forState: UIControlState.Normal)
+        button.setImage(UIImage(named: "pic_delete_highlighted"), forState: UIControlState.Highlighted)
+        return button
+    }()
     
 }
