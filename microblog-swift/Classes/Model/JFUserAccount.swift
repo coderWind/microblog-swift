@@ -68,6 +68,7 @@ class JFUserAccount: NSObject, NSCoding {
      - parameter userAccount: 存储用户信息的字典
      */
     func saveUserAccount(userAccount: [String : AnyObject]) {
+        
         // kvc 为单例对象赋值
         JFUserAccount.shareUserAccount.setValuesForKeysWithDictionary(userAccount)
         

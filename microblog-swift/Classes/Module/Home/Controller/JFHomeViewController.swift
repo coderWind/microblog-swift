@@ -245,7 +245,7 @@ extension JFHomeViewController {
                 let vc = JFPopViewController()
                 vc.transitioningDelegate = self
                 vc.modalPresentationStyle = UIModalPresentationStyle.Custom
-                self.presentViewController(vc, animated: false, completion: nil)
+                self.presentViewController(vc, animated: true, completion: nil)
             })
             
         } else {
@@ -253,15 +253,6 @@ extension JFHomeViewController {
             navigationItem.leftBarButtonItem = UIBarButtonItem(title: "注册", style: UIBarButtonItemStyle.Plain, target: self, action: "loadOAuthViewController")
             navigationItem.rightBarButtonItem = UIBarButtonItem(title: "登陆", style: UIBarButtonItemStyle.Plain, target: self, action: "loadOAuthViewController")
         }
-    }
-    
-    /**
-     popoverView消失的通知
-     */
-    func popoverDismiss() {
-        // 获取导航栏标题按钮
-        let button = navigationItem.titleView as! JFTitleButton
-        button.selected = false
     }
     
     /**
@@ -402,8 +393,19 @@ extension JFHomeViewController {
 // MARK: - UIViewControllerTransitioningDelegate委托方法
 extension JFHomeViewController: UIViewControllerTransitioningDelegate {
     
+    // 返回一个控制modal视图大小的对象
     func presentationControllerForPresentedViewController(presented: UIViewController, presentingViewController presenting: UIViewController, sourceViewController source: UIViewController) -> UIPresentationController? {
         return JFPresentationController(presentedViewController: presented, presentingViewController: presenting)
+    }
+    
+    // 返回一个控制器modal动画效果的对象
+    func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return JFPopoverModalAnimation()
+    }
+    
+    // 返回一个控制dismiss动画效果的对象
+    func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return JFPopoverDismissAnimation()
     }
 }
 

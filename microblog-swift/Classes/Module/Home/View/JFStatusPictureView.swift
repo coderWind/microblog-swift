@@ -179,7 +179,6 @@ extension JFStatusPictureView: UICollectionViewDataSource, UICollectionViewDeleg
         // 创建模型数组
         var models = [JFPhotoBrowserModel]()
         
-        // 遍历创建模型
         for index in 0..<count {
             
             // 创建模型
@@ -194,7 +193,7 @@ extension JFStatusPictureView: UICollectionViewDataSource, UICollectionViewDeleg
             models.append(model)
         }
         
-        // 选中图片的索引 和 图片模型数组
+        // 选中图片的索引 和 模型数组
         let userInfo = [UICollectionViewCellDidSelectedPhotoIndexKey : indexPath.item, UICollectionViewCellDidSelectedPhotoUrlsKey : models] as [String : AnyObject]
         
         // 发送通知

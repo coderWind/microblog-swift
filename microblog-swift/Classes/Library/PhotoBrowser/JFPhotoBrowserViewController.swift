@@ -81,7 +81,6 @@ class JFPhotoBrowserViewController: UIViewController {
         view.addSubview(closeButton)
         view.addSubview(saveButton)
         
-        
         // 约束子控件
         // 背景
         backgroundView.snp_makeConstraints { (make) -> Void in
@@ -154,7 +153,7 @@ class JFPhotoBrowserViewController: UIViewController {
         button.rac_signalForControlEvents(UIControlEvents.TouchUpInside).subscribeNext({ (_) -> Void in
             
             // 获取真正显示的item的idnexPath
-            guard let indexPath = self.collectionView.indexPathsForVisibleItems().first  else {
+            guard let indexPath = self.collectionView.indexPathsForVisibleItems().first else {
                 return
             }
             
@@ -162,6 +161,7 @@ class JFPhotoBrowserViewController: UIViewController {
             let cell = self.collectionView.cellForItemAtIndexPath(indexPath) as! JFPhotoBrowserViewCell
             
             guard let image = cell.imgView.image else {
+                JFProgressHUD.jf_showErrorWithStatus("保存失败")
                 return
             }
 
@@ -230,98 +230,6 @@ extension JFPhotoBrowserViewController: UIViewControllerTransitioningDelegate {
     }
 }
 
-// MARK: - 自定义moadl动画的对象
-class JFPhotoBrowserModalAnimation: NSObject, UIViewControllerAnimatedTransitioning {
-    
-    /// 动画时长
-    func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
-        return 0.25
-    }
-    
-    /// 转场动画
-    func animateTransition(transitionContext: UIViewControllerContextTransitioning) {
-        
-        // 获取到 modal 的目标控制器
-        let toVC = transitionContext.viewControllerForKey(UITransitionContextToViewControllerKey) as! JFPhotoBrowserViewController
-        
-        // 创建 过渡视图
-        let tempView = toVC.modalTempImageView()
-        
-        // 获取到 modal 目标控制器的 view
-        let toView = transitionContext.viewForKey(UITransitionContextToViewKey)!
-        
-        // 添加 toView 到 容器视图
-        transitionContext.containerView()?.addSubview(toView)
-        
-        // 添加 过渡视图 到 容器视图
-        transitionContext.containerView()?.addSubview(tempView)
-        
-        // 设置toView的alpha
-        toView.alpha = 0
-        
-        // 隐藏collectionView
-        toVC.collectionView.hidden = true
-        
-        // 动画 toView的alpha 由 0 - 1 渐入效果
-        UIView.animateWithDuration(transitionDuration(transitionContext), animations: { () -> Void in
-            // 淡入动画
-            toView.alpha = 1
-            
-            // 放大动画
-            tempView.frame = toVC.modalTargetFrame()
-            }) { (_) -> Void in
-                // 显示collectionView
-                toVC.collectionView.hidden = false
-                
-                // 移除 过渡视图
-                tempView.removeFromSuperview()
-                
-                // 转场动画完成一定要记得调用 completeTransition, 否则系统不知道转场动画完成,无法交互
-                transitionContext.completeTransition(true)
-        }
-    }
-}
-
-// MARK: - 自定义dismiss动画的对象
-class JFPhotoBrowserDismissAnimation: NSObject, UIViewControllerAnimatedTransitioning {
-    
-    /// 动画时长
-    func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
-        return 0.25
-    }
-    
-    /// 转场动画
-    func animateTransition(transitionContext: UIViewControllerContextTransitioning) {
-        
-        // 获取 modal 出来的控制器的view
-        let fromView = transitionContext.viewForKey(UITransitionContextFromViewKey)
-        
-        // 获取 modal 出来的控制器
-        let formVC = transitionContext.viewControllerForKey(UITransitionContextFromViewControllerKey) as! JFPhotoBrowserViewController
-        
-        // 生成过渡视图
-        let tempView = formVC.dismissTempImageView()
-        
-        // 添加到容器视图
-        transitionContext.containerView()?.addSubview(tempView)
-        
-        // 隐藏collectionView
-        formVC.collectionView.hidden = true
-        
-        // 动画 fromView.alpha 由 1 - 0
-        UIView.animateWithDuration(transitionDuration(transitionContext), animations: { () -> Void in
-            // 透明
-            fromView?.alpha = 0
-            
-            // 过渡视图缩小到目标位置
-            tempView.frame = formVC.dismissTargetFrame()
-            }) { (_) -> Void in
-                fromView?.removeFromSuperview()
-                transitionContext.completeTransition(true)
-        }
-    }
-}
-
 // MARK: - 提供过渡视图
 extension JFPhotoBrowserViewController {
     
@@ -333,13 +241,14 @@ extension JFPhotoBrowserViewController {
         // 获取被点击的模型
         let model = models[index]
         
+        // 创建过渡视图
         let imageView = UIImageView(image: model.imageView?.image)
         
-        // 设置属性
+        // 设置图片显示模式、减掉超出部分
         imageView.contentMode = model.imageView!.contentMode
         imageView.clipsToBounds = true
         
-        // 设置frame
+        // 设置frame，这里需要转换坐标系
         imageView.frame = model.imageView!.superview!.convertRect(model.imageView!.frame, toCoordinateSpace: view)
         
         return imageView
@@ -347,26 +256,24 @@ extension JFPhotoBrowserViewController {
     
     /**
      计算放大后的frame,图片等比例放大到宽度等于屏幕宽度
-     - returns: 放大后的尺寸
+     - returns: 放大后的frame
      */
     func modalTargetFrame() -> CGRect {
+        
         // 获取图片
         let image = models[index].imageView!.image!
         
         // 计算高度
         // 放大后的高度 / 放大后的宽度 = 放大前的高度 / 放大前的宽度
-        var newHeight = UIScreen.mainScreen().bounds.width * image.size.height / image.size.width
+        let newHeight = kScreenW * image.size.height / image.size.width
         
         var offestY: CGFloat = 0
-        if newHeight < UIScreen.mainScreen().bounds.height {
+        if newHeight < kScreenH {
             // 短图,居中
-            offestY = (UIScreen.mainScreen().bounds.height - newHeight) * 0.5
-        } else {
-            // 长图,顶部开始显示,高度等于屏幕的高度
-            newHeight = UIScreen.mainScreen().bounds.height
+            offestY = (kScreenH - newHeight) * 0.5
         }
         
-        return CGRect(x: 0, y: offestY, width: UIScreen.mainScreen().bounds.width, height: newHeight)
+        return CGRect(x: 0, y: offestY, width: kScreenW, height: newHeight)
     }
     
     /**
@@ -374,11 +281,12 @@ extension JFPhotoBrowserViewController {
      - returns: 过渡视图
      */
     func dismissTempImageView() -> UIImageView {
+        
         // 获取当前显示的索引
-        let showIndexPath = collectionView.indexPathsForVisibleItems().first!
+        let indexPath = collectionView.indexPathsForVisibleItems().first!
         
         // 获取正在显示的cell
-        let cell = collectionView.cellForItemAtIndexPath(showIndexPath) as! JFPhotoBrowserViewCell
+        let cell = collectionView.cellForItemAtIndexPath(indexPath) as! JFPhotoBrowserViewCell
         
         //获取正在显示的imageView
         let showImageView = cell.imgView
@@ -386,12 +294,14 @@ extension JFPhotoBrowserViewController {
         // 生成过渡视图
         let tempImageView = UIImageView(image: showImageView.image)
         
-        // 设置相关属性
+        // 设置图片显示模式、减掉超出部分
         tempImageView.contentMode = UIViewContentMode.ScaleAspectFill
         tempImageView.clipsToBounds = true
         
         // 将cell的imageView坐标系转换到当前控制器的view的坐标系
         let rect = showImageView.superview?.convertRect(showImageView.frame, toCoordinateSpace: view)
+        
+        // 设置过渡视图的frame
         tempImageView.frame = rect!
         
         return tempImageView
@@ -399,22 +309,23 @@ extension JFPhotoBrowserViewController {
     
     /**
      缩小后的frame,缩略图cell的位置
-     - returns: 缩略图cell的位置
+     - returns: 缩略图的frame
      */
     func dismissTargetFrame() -> CGRect {
+        
         // 获取正在显示的cell的indexPath
-        let showIndexPath = collectionView.indexPathsForVisibleItems().first
+        let indexPath = collectionView.indexPathsForVisibleItems().first!
         
         // 获取对应的模型
-        let model = models[showIndexPath!.item]
+        let model = models[indexPath.item]
         
-        // 小图
-        let imageView = model.imageView
+        // 获取小图
+        let imageView = model.imageView!
         
         // 坐标系转换
-        let rect = imageView?.convertRect(imageView!.frame, toCoordinateSpace: view)
+        let rect = imageView.convertRect(imageView.frame, toCoordinateSpace: view)
         
-        return rect!
+        return rect
     }
     
 }

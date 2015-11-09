@@ -10,6 +10,7 @@ import UIKit
 
 class JFImageView: UIImageView {
 
+    // 重写父类transform属性，让最小缩放 不小于0.5
     override var transform: CGAffineTransform {
         didSet {
             if transform.a < 0.5 {
@@ -18,4 +19,5 @@ class JFImageView: UIImageView {
             }
         }
     }
+    
 }

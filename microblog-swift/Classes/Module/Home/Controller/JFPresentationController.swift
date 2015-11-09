@@ -13,12 +13,11 @@ class JFPresentationController: UIPresentationController {
     override func containerViewWillLayoutSubviews() {
         super.containerViewWillLayoutSubviews()
         
+        // 设置容器视图透明背景
+        containerView?.backgroundColor = UIColor(white: 0, alpha: 0.2)
+        
         // 呈现视图
-        presentedView()?.snp_makeConstraints(closure: { (make) -> Void in
-            make.centerX.equalTo(containerView!.snp_centerX)
-            make.top.equalTo(56)
-            make.size.equalTo(CGSize(width: 200, height: 300))
-        })
+        presentedView()?.frame = CGRectMake((kScreenW - 200) * 0.5, 56, 200, 300)
         
         // 添加点击手势
         let tap = UITapGestureRecognizer(target: self, action: "didTappedContainerView")
@@ -30,6 +29,6 @@ class JFPresentationController: UIPresentationController {
      */
     @objc private func didTappedContainerView() {
         NSNotificationCenter.defaultCenter().postNotificationName("PopoverDismiss", object: nil)
-        presentedViewController.dismissViewControllerAnimated(false, completion: nil)
+        presentedViewController.dismissViewControllerAnimated(true, completion: nil)
     }
 }
