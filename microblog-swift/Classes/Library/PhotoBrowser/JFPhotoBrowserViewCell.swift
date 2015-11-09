@@ -8,9 +8,26 @@
 
 import UIKit
 
+// MARK: - JFPhotoBrowserCell协议
+protocol JFPhotoBrowserCellDelegate: NSObjectProtocol {
+    
+    /// 关闭Modal出来的视图
+    func dismiss()
+    
+    /// 缩小时需要设置透明度的view
+    func viewForTransparent() -> UIView
+}
+
 class JFPhotoBrowserViewCell: UICollectionViewCell {
     
+    /// 最小缩放
     let JFPhotoBrowserCellMinimumZoomScale: CGFloat = 0.5
+    
+    /// 过渡动画代理
+    weak var transitionDelegate: JFPhotoBrowserCellDelegate?
+    
+    // 模型
+    var model: JFPhotoBrowserModel?
     
     /// 图片URL
     var imageUrl: NSURL? {
@@ -21,7 +38,7 @@ class JFPhotoBrowserViewCell: UICollectionViewCell {
                 return
             }
             
-            // 重置cell
+            // 重置cell各种属性，防止复用
             resetScrollView()
             
             // 菊花开始钻洞
@@ -50,8 +67,9 @@ class JFPhotoBrowserViewCell: UICollectionViewCell {
                     
                     // 设置imageView的frame
                     self.imgView.frame = CGRect(x: 0, y: 0, width: imageSize.width, height: imageSize.height)
+                    
                     // 不能使用 frame 来布局imageView的位置.在缩放后会停在origin的位置.无法显示完整
-                    self.scrollView.contentInset = UIEdgeInsets(top: offestY, left: 0, bottom: 0, right: offestY)
+                    self.scrollView.contentInset = UIEdgeInsets(top: offestY, left: 0, bottom: offestY, right: 0)
                 }
                 
             }
@@ -84,17 +102,6 @@ class JFPhotoBrowserViewCell: UICollectionViewCell {
         scrollView.contentOffset = CGPointZero
         imgView.transform = CGAffineTransformIdentity
     }
-    
-//    /// 覆盖父类的 transform
-//    override var transform: CGAffineTransform {
-//        didSet {
-//            // 当transform的缩放比例小于指定的最小缩放比例时,设置为指定的最小缩放比例
-//            if transform.a < JFPhotoBrowserCellMinimumZoomScale {
-//                print("缩放比例小于指定缩放比例")
-//                transform = CGAffineTransformMakeScale(JFPhotoBrowserCellMinimumZoomScale, JFPhotoBrowserCellMinimumZoomScale)
-//            }
-//        }
-//    }
     
     // MARK: - 构造方法
     required init?(coder aDecoder: NSCoder) {
@@ -144,8 +151,8 @@ class JFPhotoBrowserViewCell: UICollectionViewCell {
     }()
     
     // 图片
-    lazy var imgView: UIImageView = {
-        let imgView = UIImageView()
+    lazy var imgView: JFImageView = {
+        let imgView = JFImageView()
         imgView.contentMode = UIViewContentMode.ScaleAspectFill
         return imgView
     }()
@@ -166,6 +173,20 @@ extension JFPhotoBrowserViewCell: UIScrollViewDelegate {
     // 滚动中调用，使图片居中
     func scrollViewDidZoom(scrollView: UIScrollView) {
         
+        // 获取需要设置透明度的view
+        let view = transitionDelegate?.viewForTransparent()
+        
+        // 设置透明度
+        if imgView.transform.a < 1 {
+            view?.alpha = imgView.transform.a * 0.7 - 0.2
+        } else {
+            view?.alpha = 1
+        }
+        
+    }
+    
+    func scrollViewDidEndZooming(scrollView: UIScrollView, withView view: UIView?, atScale scale: CGFloat) {
+
         // 使 imageView显示在中间位置
         var offestX = (scrollView.bounds.width - imgView.frame.width) * 0.5
         var offestY = (scrollView.bounds.height - imgView.frame.height) * 0.5
@@ -174,17 +195,11 @@ extension JFPhotoBrowserViewCell: UIScrollViewDelegate {
         offestX = offestX < 0 ? 0 : offestX
         offestY = offestY < 0 ? 0 : offestY
         
-        // 添加动画
+        // 添加动画,动画到中间
         UIView.animateWithDuration(0.25) { () -> Void in
             scrollView.contentInset = UIEdgeInsets(top: offestY, left: offestX, bottom: offestY, right: offestX)
         }
-        
-    }
-    
-    func scrollViewDidEndZooming(scrollView: UIScrollView, withView view: UIView?, atScale scale: CGFloat) {
-        print("结束缩放")
-        
-        
+     
     }
     
 }

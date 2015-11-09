@@ -48,13 +48,14 @@ class JFStatusPictureViewCell: UICollectionViewCell {
         }
         
         gifView.snp_makeConstraints { (make) -> Void in
-            make.center.equalTo(contentView.snp_center)
+            make.right.equalTo(0)
+            make.bottom.equalTo(0)
         }
         
     }
     
     // 图片
-    private lazy var iconView: UIImageView = {
+    lazy var iconView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = UIViewContentMode.ScaleAspectFill
         imageView.clipsToBounds = true

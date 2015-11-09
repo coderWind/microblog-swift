@@ -81,8 +81,21 @@ class JFHomeViewController: UITableViewController {
             
             // 注册通知
             NSNotificationCenter.defaultCenter().addObserver(self, selector: "didSelectedPhotoNotification:", name: UICollectionViewCellDidSelectedPhotoNotification, object: nil)
+            
+            // popoverView消失的通知
+            NSNotificationCenter.defaultCenter().rac_addObserverForName("PopoverDismiss", object: nil).subscribeNext({ (_) -> Void in
+                // 获取导航栏标题按钮
+                let button = self.navigationItem.titleView as! JFTitleButton
+                button.selected = false
+            })
+            
         }
         
+    }
+    
+    deinit {
+        // 移除所有通知
+        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
     /**
@@ -95,13 +108,22 @@ class JFHomeViewController: UITableViewController {
             return
         }
         
-        guard let urls = notifocation.userInfo?[UICollectionViewCellDidSelectedPhotoUrlsKey] as? [NSURL] else {
-            print("urls没值")
+        guard let models = notifocation.userInfo?[UICollectionViewCellDidSelectedPhotoUrlsKey] as? [JFPhotoBrowserModel] else {
+            print("模型数组没值")
             return
         }
         
+        // 要modal的控制器
+        let controller = JFPhotoBrowserViewController(index: index, models: models)
+        
+        // 设置modal转场代理
+        controller.transitioningDelegate = controller
+        
+        // 设置modal控制器的modal样式
+        controller.modalPresentationStyle = UIModalPresentationStyle.Custom
+        
         // 图片浏览器
-        presentViewController(JFPhotoBrowserViewController(index: index, urls: urls), animated: true, completion: nil)
+        presentViewController(controller, animated: true, completion: nil)
         
     }
     
@@ -213,18 +235,33 @@ extension JFHomeViewController {
             // 自定义标题
             let titleButton = JFTitleButton(title: JFUserAccount.shareUserAccount.name!)
             navigationItem.titleView = titleButton
+            
             titleButton.rac_signalForControlEvents(UIControlEvents.TouchUpInside).subscribeNext({ (button) -> Void in
+                
                 // 改变箭头方向
                 titleButton.selected = !titleButton.selected
+                
                 // 标题下的控制器
-//                let vc = JFPopViewController(style: UITableViewStyle.Grouped)
-//                self.presentViewController(vc, animated: true, completion: nil)
+                let vc = JFPopViewController()
+                vc.transitioningDelegate = self
+                vc.modalPresentationStyle = UIModalPresentationStyle.Custom
+                self.presentViewController(vc, animated: false, completion: nil)
             })
+            
         } else {
             // 加载navigationBar上的注册和登陆
             navigationItem.leftBarButtonItem = UIBarButtonItem(title: "注册", style: UIBarButtonItemStyle.Plain, target: self, action: "loadOAuthViewController")
             navigationItem.rightBarButtonItem = UIBarButtonItem(title: "登陆", style: UIBarButtonItemStyle.Plain, target: self, action: "loadOAuthViewController")
         }
+    }
+    
+    /**
+     popoverView消失的通知
+     */
+    func popoverDismiss() {
+        // 获取导航栏标题按钮
+        let button = navigationItem.titleView as! JFTitleButton
+        button.selected = false
     }
     
     /**
@@ -360,5 +397,13 @@ extension JFHomeViewController {
         
     }
 
+}
+
+// MARK: - UIViewControllerTransitioningDelegate委托方法
+extension JFHomeViewController: UIViewControllerTransitioningDelegate {
+    
+    func presentationControllerForPresentedViewController(presented: UIViewController, presentingViewController presenting: UIViewController, sourceViewController source: UIViewController) -> UIPresentationController? {
+        return JFPresentationController(presentedViewController: presented, presentingViewController: presenting)
+    }
 }
 

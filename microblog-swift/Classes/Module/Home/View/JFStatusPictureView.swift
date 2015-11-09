@@ -174,13 +174,29 @@ extension JFStatusPictureView: UICollectionViewDataSource, UICollectionViewDeleg
     // 选中某个cell时调用
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
-        guard let urls = status?.largePictureURLs else {
-            print("url为空")
-            return
+        let count = status?.largePictureURLs?.count ?? 0
+        
+        // 创建模型数组
+        var models = [JFPhotoBrowserModel]()
+        
+        // 遍历创建模型
+        for index in 0..<count {
+            
+            // 创建模型
+            let model = JFPhotoBrowserModel()
+            
+            model.imageUrl = status?.largePictureURLs![index]
+            
+            let cell = collectionView.cellForItemAtIndexPath(NSIndexPath(forItem: index, inSection: 0)) as! JFStatusPictureViewCell
+            model.imageView = cell.iconView
+            
+            // 添加到模型数组
+            models.append(model)
         }
         
-        // 选中图片的索引 和 图片URL数组
-        let userInfo = [UICollectionViewCellDidSelectedPhotoIndexKey : indexPath.item, UICollectionViewCellDidSelectedPhotoUrlsKey : urls] as [NSObject : AnyObject]
+        // 选中图片的索引 和 图片模型数组
+        let userInfo = [UICollectionViewCellDidSelectedPhotoIndexKey : indexPath.item, UICollectionViewCellDidSelectedPhotoUrlsKey : models] as [String : AnyObject]
+        
         // 发送通知
         NSNotificationCenter.defaultCenter().postNotificationName(UICollectionViewCellDidSelectedPhotoNotification, object: nil, userInfo: userInfo)
         

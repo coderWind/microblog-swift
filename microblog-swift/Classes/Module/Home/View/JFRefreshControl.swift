@@ -23,7 +23,7 @@ class JFRefreshControl: UIRefreshControl {
         
         // 隐藏菊花
         tintColor = UIColor.clearColor()
-        
+        backgroundColor = UIColor.whiteColor()
         
         // 准备UI
         prepareUI()
