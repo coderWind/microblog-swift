@@ -13,8 +13,10 @@ class JFStatusCell: UITableViewCell {
     /// 微博模型
     var status: JFStatus? {
         didSet {
+            
             // 更新数据
-            contentLabel.text = status?.text
+            // 微博文本使用属性字符串
+            contentLabel.attributedText = status?.emoticonString
             
             // 将模型传递给topView
             topView.status = status

@@ -33,8 +33,12 @@ class JFStatusTopView: UIView {
                 timeLabel.text = NSDate.sinaDateToDate(sinaTime)?.dateDescription()
             }
             
-            // 来源
-            sourceLabel.text = status?.sourceString
+            // 微博来源
+//            // 通过字符串截取
+//            sourceLabel.text = status?.sourceString
+            
+            // 通过正则表达式
+            sourceLabel.text = status?.source?.linkSource() ?? ""
 
             
         }

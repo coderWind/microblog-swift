@@ -26,8 +26,19 @@ class JFStatus: NSObject {
     
     /// 微博ID
     var id: Int = 0
+    
     /// 微博信息内容
-    var text: String?
+    var text: String? {
+        didSet {
+            if text != nil {
+                emoticonString = JFEmoticon.stringToEmoticonString(text!, font: UIFont.systemFontOfSize(16))
+            }
+        }
+    }
+    
+    /// 带表情图片的属性文本
+    var emoticonString: NSAttributedString?
+    
     /// 微博来源
     var source: String?
     

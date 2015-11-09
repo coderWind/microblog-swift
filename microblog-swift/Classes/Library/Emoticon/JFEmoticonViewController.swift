@@ -19,7 +19,6 @@ class JFEmoticonViewController: UIViewController {
         prepareUI()
         
         view.backgroundColor = UIColor.whiteColor()
-        
     }
     
     // MARK: - 懒加载子控件

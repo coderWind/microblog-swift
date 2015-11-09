@@ -172,6 +172,8 @@ class JFEmotionPackage: NSObject {
 //        print("最近表情: \(packages[0].emoticons)")
         
     }
+    
+    
     // 调试打印
     override var description: String {
         return "\n\tid:\(id),group_name_cn:\(group_name_cn),emoticons:\(emoticons)"

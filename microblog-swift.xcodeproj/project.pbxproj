@@ -44,6 +44,7 @@
 		A5916C461BE5FFC100B26DE5 /* NSDate+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5916C451BE5FFC100B26DE5 /* NSDate+Extension.swift */; };
 		A5916C481BE6017600B26DE5 /* UIImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5916C471BE6017600B26DE5 /* UIImageView+Extension.swift */; };
 		A59291571BE096C900D647F5 /* JFItemButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59291561BE096C900D647F5 /* JFItemButton.swift */; };
+		A5929D4B1BF1056800828239 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5929D4A1BF1056800828239 /* String+Extension.swift */; };
 		A59C2DC21BEE05E9009AC523 /* JFPhotoBrowserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59C2DC11BEE05E9009AC523 /* JFPhotoBrowserViewController.swift */; };
 		A59C2DC41BEE0629009AC523 /* JFPhotoBrowserViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59C2DC31BEE0629009AC523 /* JFPhotoBrowserViewCell.swift */; };
 		A59E3C131BE3C41B00E9543C /* JFStatusTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59E3C121BE3C41B00E9543C /* JFStatusTopView.swift */; };
@@ -125,6 +126,7 @@
 		A5916C451BE5FFC100B26DE5 /* NSDate+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSDate+Extension.swift"; sourceTree = "<group>"; };
 		A5916C471BE6017600B26DE5 /* UIImageView+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extension.swift"; sourceTree = "<group>"; };
 		A59291561BE096C900D647F5 /* JFItemButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFItemButton.swift; sourceTree = "<group>"; };
+		A5929D4A1BF1056800828239 /* String+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		A59C2DC11BEE05E9009AC523 /* JFPhotoBrowserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFPhotoBrowserViewController.swift; sourceTree = "<group>"; };
 		A59C2DC31BEE0629009AC523 /* JFPhotoBrowserViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFPhotoBrowserViewCell.swift; sourceTree = "<group>"; };
 		A59E3C121BE3C41B00E9543C /* JFStatusTopView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFStatusTopView.swift; sourceTree = "<group>"; };
@@ -345,6 +347,7 @@
 				A59E3C181BE3E4F200E9543C /* UILabel+Extension.swift */,
 				A5916C451BE5FFC100B26DE5 /* NSDate+Extension.swift */,
 				A5916C471BE6017600B26DE5 /* UIImageView+Extension.swift */,
+				A5929D4A1BF1056800828239 /* String+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -870,6 +873,7 @@
 				A5A6EA871BE50D3800DD47F4 /* JFStatusNormalCell.swift in Sources */,
 				A59E3C131BE3C41B00E9543C /* JFStatusTopView.swift in Sources */,
 				A5C7F9611BDE0A54004EFA96 /* JFDiscoverViewController.swift in Sources */,
+				A5929D4B1BF1056800828239 /* String+Extension.swift in Sources */,
 				A59E3C171BE3E4C300E9543C /* UIButton+Extension.swift in Sources */,
 				A5916C481BE6017600B26DE5 /* UIImageView+Extension.swift in Sources */,
 				A59C2DC21BEE05E9009AC523 /* JFPhotoBrowserViewController.swift in Sources */,

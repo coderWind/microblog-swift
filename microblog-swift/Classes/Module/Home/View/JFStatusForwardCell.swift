@@ -14,8 +14,12 @@ class JFStatusForwardCell: JFStatusCell {
         didSet {
             
             let name = status?.retweeted_status?.user?.name ?? "名称为空"
-            let text = status?.retweeted_status?.text ?? "转发微博内容为空"
-            forwardLabel.text = "@\(name):\(text)"
+            let text = status?.retweeted_status?.emoticonString ?? NSAttributedString(string: "转发内容为空")
+            
+            let attrM = NSMutableAttributedString(string: "@\(name): ")
+            // 拼接属性文本
+            attrM.appendAttributedString(text)
+            forwardLabel.attributedText = attrM
             
             // 更新配图区约束
             pictureView.snp_updateConstraints { (make) -> Void in
