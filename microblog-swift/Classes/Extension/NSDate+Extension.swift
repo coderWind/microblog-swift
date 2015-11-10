@@ -9,6 +9,7 @@
 import Foundation
 
 extension NSDate {
+    
     /**
      将新浪日期转成系统日期 如:2015-05-24 04:12:00 +0000
      - parameter string: 新浪日期

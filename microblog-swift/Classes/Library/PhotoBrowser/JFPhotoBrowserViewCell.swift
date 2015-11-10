@@ -29,6 +29,8 @@ class JFPhotoBrowserViewCell: UICollectionViewCell {
     // 模型
     var model: JFPhotoBrowserModel?
     
+    var tempView: UIImageView?
+    
     /// 图片URL
     var imageUrl: NSURL? {
         didSet {
@@ -46,6 +48,10 @@ class JFPhotoBrowserViewCell: UICollectionViewCell {
             
             // 下载图片
             imgView.sd_setImageWithURL(imgUrl) { (image, error, _, _) -> Void in
+                
+                // 移除过渡视图
+                self.tempView?.removeFromSuperview()
+                print(self.tempView)
                 
                 // 菊花停止钻洞
                 self.loadIndicator.stopAnimating()
@@ -120,6 +126,16 @@ class JFPhotoBrowserViewCell: UICollectionViewCell {
         
         // 代理
         scrollView.delegate = self
+        
+        // 注册通知
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "removeTempView:", name: "RemoveTempView", object: nil)
+    }
+    
+    /**
+     通知
+     */
+    func removeTempView(notification: NSNotification) {
+        tempView = notification.userInfo!["tempView"] as? UIImageView
     }
     
     /**
@@ -159,7 +175,7 @@ class JFPhotoBrowserViewCell: UICollectionViewCell {
     
     // 菊花
     private lazy var loadIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.WhiteLarge)
-
+    
 }
 
 // MARK: - UIScrollViewDelegate 代理方法
@@ -186,7 +202,7 @@ extension JFPhotoBrowserViewCell: UIScrollViewDelegate {
     }
     
     func scrollViewDidEndZooming(scrollView: UIScrollView, withView view: UIView?, atScale scale: CGFloat) {
-
+        
         // 使 imageView显示在中间位置
         var offestX = (scrollView.bounds.width - imgView.frame.width) * 0.5
         var offestY = (scrollView.bounds.height - imgView.frame.height) * 0.5
@@ -195,11 +211,36 @@ extension JFPhotoBrowserViewCell: UIScrollViewDelegate {
         offestX = offestX < 0 ? 0 : offestX
         offestY = offestY < 0 ? 0 : offestY
         
-        // 添加动画,动画到中间
-        UIView.animateWithDuration(0.25) { () -> Void in
-            scrollView.contentInset = UIEdgeInsets(top: offestY, left: offestX, bottom: offestY, right: offestX)
+        // 当缩放比小于一定的值就自动缩放回去
+        if imgView.transform.a < 0.7 {
+            
+            // 缩放到缩略图的位置，再关闭控制器
+            let thumbImage = model!.imageView!
+            
+            let rect = thumbImage.superview?.convertRect(thumbImage.frame, toView: self)
+            
+            UIView.animateWithDuration(0.25, animations: { () -> Void in
+                
+                self.imgView.frame = CGRect(x: 0, y: 0, width: rect!.width, height: rect!.height)
+                scrollView.contentInset = UIEdgeInsets(top: rect!.origin.y, left: rect!.origin.x, bottom: 0, right: 0)
+                
+                self.scrollView.contentOffset.x = -rect!.origin.x
+                self.scrollView.contentOffset.y = -rect!.origin.y
+                
+                }, completion: { (_) -> Void in
+                    
+                    self.transitionDelegate?.dismiss()
+            })
+            
+        } else {
+            
+            // 添加动画,动画到中间
+            UIView.animateWithDuration(0.25) { () -> Void in
+                scrollView.contentInset = UIEdgeInsets(top: offestY, left: offestX, bottom: offestY, right: offestX)
+            }
+            
         }
-     
+        
     }
     
 }

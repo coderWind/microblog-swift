@@ -37,6 +37,8 @@ class JFPhotoBrowserViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        view.backgroundColor = UIColor.clearColor()
+        
         // 注册cell
         collectionView.registerClass(JFPhotoBrowserViewCell.self, forCellWithReuseIdentifier: cellIdentifier)
         
@@ -60,6 +62,8 @@ class JFPhotoBrowserViewController: UIViewController {
      */
     private func prepareCollectionView() {
         
+        // 背景颜色透明
+        collectionView.backgroundColor = UIColor.clearColor()
         // 每个item尺寸和屏幕一样大
         layout.itemSize = kScreenBounds.size
         // 每个item的间隔
@@ -195,6 +199,7 @@ extension JFPhotoBrowserViewController: UICollectionViewDataSource, UICollection
         
         cell.imageUrl = models[indexPath.item].imageUrl
         cell.model = models[indexPath.item]
+        cell.backgroundColor = UIColor.clearColor()
         
         // 设置代理
         cell.transitionDelegate = self
@@ -265,12 +270,14 @@ extension JFPhotoBrowserViewController {
         
         // 计算高度
         // 放大后的高度 / 放大后的宽度 = 放大前的高度 / 放大前的宽度
-        let newHeight = kScreenW * image.size.height / image.size.width
+        var newHeight = kScreenW * image.size.height / image.size.width
         
         var offestY: CGFloat = 0
         if newHeight < kScreenH {
             // 短图,居中
             offestY = (kScreenH - newHeight) * 0.5
+        } else {
+            newHeight = kScreenH
         }
         
         return CGRect(x: 0, y: offestY, width: kScreenW, height: newHeight)

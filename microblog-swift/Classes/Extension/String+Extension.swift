@@ -12,6 +12,7 @@ extension String {
     
     /// 扩展String,使用正则表达式获取来源
     func linkSource() -> String {
+        
         // 匹配规则
         let pattern = ">(.*?)</a>"
         
@@ -24,8 +25,11 @@ extension String {
         // 匹配个数
         let count = result?.numberOfRanges ?? 0
         
+        // 默认来源
         var text = "火星"
+        
         if count > 0 {
+            
             let range = result!.rangeAtIndex(1)
             
             // 使用范围截取字符串

@@ -23,7 +23,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // 设置window的根控制器
         defaultViewController()
-//        window?.rootViewController = JFPhotoSelectorViewController()
         
         // 设置为主窗口并显示
         window?.makeKeyAndVisible()
