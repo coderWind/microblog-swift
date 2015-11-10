@@ -40,25 +40,10 @@ class JFStatus: NSObject {
     var emoticonString: NSAttributedString?
     
     /// 微博来源
-    var source: String?
-    
-    var sourceString: String? {
-        get {
-            // 来源
-            if let source = source {
-                
-                let string = source as NSString
-                
-                if string.length > 0 {
-                    // 起点
-                    let location = string.rangeOfString("\">").location + 2
-                    // 长度
-                    let length = string.rangeOfString("</a>").location - location
-                    let newString = string.substringWithRange(NSMakeRange(location, length))
-                    return "来自 \(newString)"
-                }
-            }
-            return ""
+    var source: String? {
+        didSet {
+            // 在属性监视器里重新赋值属性不会再触发 didSet
+            source = source?.linkSource()
         }
     }
     

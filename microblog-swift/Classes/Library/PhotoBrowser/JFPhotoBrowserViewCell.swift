@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 // MARK: - JFPhotoBrowserCell协议
 protocol JFPhotoBrowserCellDelegate: NSObjectProtocol {
@@ -28,9 +29,7 @@ class JFPhotoBrowserViewCell: UICollectionViewCell {
     
     // 模型
     var model: JFPhotoBrowserModel?
-    
-    var tempView: UIImageView?
-    
+
     /// 图片URL
     var imageUrl: NSURL? {
         didSet {
@@ -48,10 +47,6 @@ class JFPhotoBrowserViewCell: UICollectionViewCell {
             
             // 下载图片
             imgView.sd_setImageWithURL(imgUrl) { (image, error, _, _) -> Void in
-                
-                // 移除过渡视图
-                self.tempView?.removeFromSuperview()
-                print(self.tempView)
                 
                 // 菊花停止钻洞
                 self.loadIndicator.stopAnimating()
@@ -79,6 +74,7 @@ class JFPhotoBrowserViewCell: UICollectionViewCell {
                 }
                 
             }
+            
         }
     }
     
@@ -127,15 +123,6 @@ class JFPhotoBrowserViewCell: UICollectionViewCell {
         // 代理
         scrollView.delegate = self
         
-        // 注册通知
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "removeTempView:", name: "RemoveTempView", object: nil)
-    }
-    
-    /**
-     通知
-     */
-    func removeTempView(notification: NSNotification) {
-        tempView = notification.userInfo!["tempView"] as? UIImageView
     }
     
     /**

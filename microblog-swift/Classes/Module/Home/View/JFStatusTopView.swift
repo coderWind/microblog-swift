@@ -34,12 +34,7 @@ class JFStatusTopView: UIView {
             }
             
             // 微博来源
-//            // 通过字符串截取
-//            sourceLabel.text = status?.sourceString
-            
-            // 通过正则表达式
-            sourceLabel.text = status?.source?.linkSource() ?? ""
-
+            sourceLabel.text = status?.source
             
         }
     }

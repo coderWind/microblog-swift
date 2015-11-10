@@ -11,8 +11,6 @@ import UIKit
 // MARK: - 自定义moadl动画的对象
 class JFPhotoBrowserModalAnimation: NSObject, UIViewControllerAnimatedTransitioning {
     
-    var tempView: UIImageView?
-    
     /// 动画时长
     func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
         return 0.25
@@ -28,13 +26,13 @@ class JFPhotoBrowserModalAnimation: NSObject, UIViewControllerAnimatedTransition
         let toView = transitionContext.viewForKey(UITransitionContextToViewKey)!
         
         // 创建 过渡视图
-        tempView = toVC.modalTempImageView()
+        let tempView = toVC.modalTempImageView()
         
         // 添加 toView 到 容器视图
         transitionContext.containerView()?.addSubview(toView)
         
         // 添加 过渡视图 到 容器视图
-        transitionContext.containerView()?.addSubview(tempView!)
+        transitionContext.containerView()?.addSubview(tempView)
         
         // 设置toView的alpha
         toView.alpha = 0
@@ -49,7 +47,7 @@ class JFPhotoBrowserModalAnimation: NSObject, UIViewControllerAnimatedTransition
             toView.alpha = 1
             
             // 放大动画
-            self.tempView!.frame = toVC.modalTargetFrame()
+            tempView.frame = toVC.modalTargetFrame()
             
             }) { (_) -> Void in
                 
@@ -57,10 +55,7 @@ class JFPhotoBrowserModalAnimation: NSObject, UIViewControllerAnimatedTransition
                 toVC.collectionView.hidden = false
                 
                 // 移除 过渡视图
-//                tempView.removeFromSuperview()
-                NSNotificationCenter.defaultCenter().postNotificationName("RemoveTempView", object: nil, userInfo: ["tempView" : self.tempView!])
-                
-                
+                tempView.removeFromSuperview()
                 // 转场动画完成
                 transitionContext.completeTransition(true)
         }

@@ -334,7 +334,7 @@ extension JFPhotoBrowserViewController {
         
         return rect
     }
-    
+
 }
 
 // MARK: - JFPhotoBrowserCellDelegate委托方法
