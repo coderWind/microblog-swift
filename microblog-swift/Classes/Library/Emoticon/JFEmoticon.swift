@@ -79,13 +79,11 @@ class JFEmoticon: NSObject {
     /// 将emoticon表情转换成属性文本
     func emoticonToAttrString(font: UIFont) -> NSAttributedString {
         
-        let pngPath = bundlePath
-        
         // 创建附件
         let attachment = JFTextAttachment()
         
         // 创建 image
-        let image = UIImage(contentsOfFile: pngPath)
+        let image = UIImage(contentsOfFile: bundlePath)
         
         // 将 image 添加到附件
         attachment.image = image
@@ -111,9 +109,11 @@ class JFEmoticon: NSObject {
     
     /// 根据字符串找到对应的表情模型
     class func stringToEmoticon(string: String) -> JFEmoticon? {
+        
         var emoticon: JFEmoticon? = nil
         
         for package in JFEmotionPackage.packages {
+            
             emoticon = package.emoticons?.filter({ (e1) -> Bool in
                 return e1.chs == string
             }).last
@@ -133,6 +133,7 @@ class JFEmoticon: NSObject {
      - returns: 带表情图片的属性文本
      */
     class func stringToEmoticonString(string: String, font: UIFont) -> NSAttributedString {
+        
         // 获取文本中的表情字符串
         
         // 定义匹配方案
@@ -152,6 +153,7 @@ class JFEmoticon: NSObject {
         
         // 从后面往前面遍历
         while count > 0 {
+            
             // 获取匹配结果的第一个匹配项
             let range = result[--count].rangeAtIndex(0)
             

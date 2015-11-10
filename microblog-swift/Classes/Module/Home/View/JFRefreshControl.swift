@@ -21,10 +21,6 @@ class JFRefreshControl: UIRefreshControl {
     override init() {
         super.init()
         
-        // 隐藏菊花
-        tintColor = UIColor.clearColor()
-        backgroundColor = UIColor.whiteColor()
-        
         // 准备UI
         prepareUI()
     }
@@ -118,22 +114,28 @@ class JFRefreshControl: UIRefreshControl {
     private func prepareUI() {
         
         // 添加子控件
-        addSubview(startRefreshView)
-        addSubview(startRefreshLabel)
+        addSubview(refreshingView)
+        refreshingView.addSubview(startRefreshView)
+        refreshingView.addSubview(startRefreshLabel)
         addSubview(pullBgView)
         pullBgView.addSubview(pullRefreshView)
         pullBgView.addSubview(pullFrefreshLabel)
         
         // 约束子控件
+        // 正在刷新的父view
+        refreshingView.snp_makeConstraints { (make) -> Void in
+            make.edges.equalTo(self.snp_edges)
+        }
+        
         // 开始刷新图标
         startRefreshView.snp_makeConstraints { (make) -> Void in
-            make.centerY.equalTo(self.snp_centerY)
+            make.centerY.equalTo(refreshingView.snp_centerY)
             make.left.equalTo(125)
         }
         
         // 开始刷新文字
         startRefreshLabel.snp_makeConstraints { (make) -> Void in
-            make.centerY.equalTo(self.snp_centerY)
+            make.centerY.equalTo(refreshingView.snp_centerY)
             make.left.equalTo(170)
         }
         
@@ -157,6 +159,13 @@ class JFRefreshControl: UIRefreshControl {
     }
     
     // MARK: - 懒加载
+    // 正在加载刷新的父view,为了挡住系统的菊花
+    lazy var refreshingView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.whiteColor()
+        return view
+    }()
+    
     /// 正在加载图标
     lazy var startRefreshView: UIImageView = {
         let imageView = UIImageView()
@@ -178,7 +187,6 @@ class JFRefreshControl: UIRefreshControl {
     /// 下拉刷新父view
     lazy var pullBgView: UIView = {
         let view = UIView()
-        view.sizeToFit()
         view.backgroundColor = UIColor.whiteColor()
         return view
     }()
